@@ -22,10 +22,23 @@
   }
   .demo-layout-transparent .mdl-layout__header,
   .demo-layout-transparent .mdl-layout__drawer-button {
-    /* This background is dark, so we set text to white. Use 87% black instead if
-    your background is light. */
     color: #757575;
   }
+
+  .material-icons.md-36 {
+    font-size: 36px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .profile-image {
+    display: block !important;
+    margin: 0 auto;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+  }
+
   </style>
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
 
@@ -53,18 +66,23 @@
     <main class="mdl-layout__content">
       <div class="demo-card-wide mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
-          <h2 class="mdl-card__title-text"><%= name %> 的 VoiceIn 名片</h2>
+          <img class="profile-image" src="<%= image %>" alt="" />
         </div>
         <div class="mdl-card__supporting-text">
-          <h4>關於</h4>
+          <h2 class="mdl-card__title-text"><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h2>
+          <h5><i class="material-icons md-36">face</i>關於</h5>
           <p>
-            <%= profile %>
+            <% if (profile === '') {%>
+              對方未填寫
+            <% } else {%>
+              <%= profile %>
+            <%}%>
           </p>
-          <h4>公司</h4>
+          <h5><i class="material-icons md-36">business</i>公司</h5>
           <p>
             <%= company %>
           </p>
-          <h4>來自</h4>
+          <h5><i class="material-icons md-36">location_on</i>來自</h5>
           <p>
             <%= location %>
           </p>
@@ -74,7 +92,7 @@
         </div>
         <div class="mdl-card__actions mdl-card--border">
           <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-            確認加入
+            <i class="material-icons md-36">done</i>確認加入
           </a>
         </div>
         <div class="mdl-card__menu">
@@ -85,7 +103,6 @@
       </div>
     </main>
   </div>
-
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 </body>
