@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
       console.log(userData);
     });
 
-  res.render('qrCode', {qrCodeUuid: qrCodeUuid});
+  res.render('qrcode', {qrCodeUuid: qrCodeUuid});
 });
 
 module.exports = router;
