@@ -127,9 +127,8 @@ gulp.task('serve', [], () => {
   gulp.watch(['public/images/*'], reload);
 });
 
-gulp.task('nodemon', function (cb) {
-
-	var started = false;
+gulp.task('nodemon', cb => {
+  let started = false;
 
 	return nodemon({
 		script: './bin/www'
