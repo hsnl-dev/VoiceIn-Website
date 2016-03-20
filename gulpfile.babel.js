@@ -30,7 +30,9 @@ import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import pkg from './package.json';
-import nodemon from 'gulp-nodemon'
+import nodemon from 'gulp-nodemon';
+import browserify from 'browserify';
+import vss from 'vinyl-source-stream';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -84,7 +86,7 @@ gulp.task('styles', () => {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', () =>
+gulp.task('scripts', () => {
     gulp.src([
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
@@ -99,8 +101,14 @@ gulp.task('scripts', () =>
       // Output files
       .pipe($.size({title: 'scripts'}))
       .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('public/dist/javascripts'))
-);
+      .pipe(gulp.dest('public/dist/javascripts/qrcode'))
+});
+
+gulp.task('bundle:qrcode', () => {
+  return browserify('public/javascripts/qrcode/entry.js').bundle()
+    .pipe(vss('bundle.js'))
+    .pipe(gulp.dest('public/dist/javascripts'));
+});
 
 // Clean output directory
 gulp.task('clean', () => del(['public/dist/*'], {dot: true}));
