@@ -12,6 +12,7 @@
   .demo-card-wide > .mdl-card__title {
     color: #fff;
     height: 176px;
+    background: url('images/qrcode/blurred-web-backgrounds.jpg') center / cover;
   }
   .demo-card-wide > .mdl-card__menu {
     color: #fff;
@@ -37,27 +38,39 @@
     <header class="mdl-layout__header mdl-layout__header--transparent">
       <div class="mdl-layout__header-row">
         <!-- Title -->
-        <span class="mdl-layout-title">VoiceIn 對方名片</span>
-        <!-- Add spacer, to align navigation to the right -->
+        <span class="mdl-layout-title">VoiceIn 名片</span>
       </div>
     </header>
     <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Title</span>
+      <span class="mdl-layout-title">VoiceIn 名片</span>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">VoiceIn 首頁</a>
+        <a class="mdl-navigation__link" href="">聯絡我們</a>
+        <a class="mdl-navigation__link" href="">常見問題</a>
+        <a class="mdl-navigation__link" href="">關於 VoiceIn</a>
       </nav>
     </div>
     <main class="mdl-layout__content">
       <div class="demo-card-wide mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
-          <h2 class="mdl-card__title-text">Welcome</h2>
+          <h2 class="mdl-card__title-text"><%= name %> 的 VoiceIn 名片</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Mauris sagittis pellentesque lacus eleifend lacinia...
+          <h4>關於</h4>
+          <p>
+            <%= profile %>
+          </p>
+          <h4>公司</h4>
+          <p>
+            <%= company %>
+          </p>
+          <h4>來自</h4>
+          <p>
+            <%= location %>
+          </p>
+          <p>
+            如果確認資訊無誤，即可點選確認加入按鈕加入對方!
+          </p>
         </div>
         <div class="mdl-card__actions mdl-card--border">
           <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">

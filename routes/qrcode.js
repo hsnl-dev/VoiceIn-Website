@@ -18,10 +18,8 @@ router.get('/', function(req, res, next) {
       return res.json();
     })
     .then(userData => {
-      console.log(userData);
+      res.render('qrcode', userData);
     });
-
-  res.render('qrcode', {qrCodeUuid: qrCodeUuid});
 });
 
 module.exports = router;
