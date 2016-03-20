@@ -92,7 +92,6 @@ gulp.task('scripts', () =>
       'public/javascripts/main.js'
       // Other scripts
     ])
-      .pipe($.newer('.tmp/scripts'))
       .pipe($.sourcemaps.init())
       .pipe($.babel())
       .pipe($.concat('main.min.js'))
