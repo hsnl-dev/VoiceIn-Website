@@ -16,14 +16,14 @@
     background: url('images/qrcode/blurred-web-backgrounds.jpg') center / cover;
   }
   .demo-card-wide > .mdl-card__menu {
-    color: #fff;
+    color: #E0E0E0;
   }
   .demo-layout-transparent {
-    background: #E0E0E0;
+    background: #9E9E9E;
   }
   .demo-layout-transparent .mdl-layout__header,
   .demo-layout-transparent .mdl-layout__drawer-button {
-    color: #757575;
+    color: #fff;
   }
 
   .material-icons.md-36 {
@@ -58,7 +58,7 @@
     <div class="mdl-layout__drawer">
       <span class="mdl-layout-title">VoiceIn 名片</span>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">VoiceIn 首頁</a>
+        <a class="mdl-navigation__link" href="/">VoiceIn 首頁</a>
         <a class="mdl-navigation__link" href="">聯絡我們</a>
         <a class="mdl-navigation__link" href="">常見問題</a>
         <a class="mdl-navigation__link" href="">關於 VoiceIn</a>
@@ -70,7 +70,7 @@
           <img class="profile-image" src="<%= image %>" alt="" />
         </div>
         <div class="mdl-card__supporting-text">
-          <h2 class="mdl-card__title-text"><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h2>
+          <h3><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h3>
           <h5><i class="material-icons md-36">face</i>關於</h5>
           <p>
             <% if (profile === '') {%>
@@ -87,13 +87,34 @@
           <p>
             <%= location %>
           </p>
+        </div>
+        <div class="mdl-card__supporting-text">
           <p>
-            如果確認資訊無誤，即可點選確認加入按鈕加入對方!
+            如果確認無誤，請輸入以下資料建立桌面 Icon.
           </p>
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="name">
+              <label class="mdl-textfield__label" for="sample1">姓名</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="phoneNumber">
+              <label class="mdl-textfield__label" for="sample2">請輸入手機號碼</label>
+              <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="company">
+              <label class="mdl-textfield__label" for="sample1">公司</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+              <textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea>
+              <label class="mdl-textfield__label" for="sample5">關於您...</label>
+            </div>
+          </form>
         </div>
         <div class="mdl-card__actions mdl-card--border">
           <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons md-36 confirm-btn">done</i>確認加入
+            <i class="material-icons md-36 confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>">done</i>確認加入
           </a>
         </div>
         <div class="mdl-card__menu">
@@ -105,6 +126,10 @@
     </main>
   </div>
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.2/backbone-min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.11.0/fetch.min.js"></script>
+  <script src="./dist/public/javascripts/qrcode/entry.bundle.js"></script>
 </body>
 </html>
