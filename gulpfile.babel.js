@@ -32,17 +32,19 @@ import pkg from './package.json';
 import nodemon from 'gulp-nodemon';
 import browserify from 'browserify';
 import vss from 'vinyl-source-stream';
+import rename from 'gulp-rename';
+import es from 'event-stream';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 // Lint JavaScript
-gulp.task('lint', () =>
-  gulp.src('public/javascripts/**/*.js')
-    .pipe($.eslint())
-    .pipe($.eslint.format())
-    .pipe($.if(!browserSync.active, $.eslint.failOnError()))
-);
+// gulp.task('lint', () =>
+//   gulp.src('public/javascripts/**/*.js')
+//     .pipe($.eslint())
+//     .pipe($.eslint.format())
+//     .pipe($.if(!browserSync.active, $.eslint.failOnError()))
+// );
 
 // Optimize images
 gulp.task('images', () =>
@@ -51,7 +53,7 @@ gulp.task('images', () =>
       progressive: true,
       interlaced: true,
     }))
-    .pipe(gulp.dest('public/dist/images/'))
+    .pipe(gulp.dest('./dist/public/images'))
     .pipe($.size({ title: 'images' }))
 );
 
@@ -80,38 +82,59 @@ gulp.task('styles', () => {
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.size({ title: 'styles' }))
     .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest('public/dist/stylesheets'));
+    .pipe(gulp.dest('./dist/public/stylesheets'));
 });
 
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', () => {
-  gulp.src([
+// gulp.task('scripts', () => {
+//   gulp.src([
+//
+//         // Note: Since we are not using useref in the scripts build pipeline,
+//         //       you need to explicitly list your scripts here in the right order
+//         //       to be correctly concatenated
+//         'public/javascripts/main.js',
+//
+//         // Other scripts
+//       ])
+//       .pipe($.sourcemaps.init())
+//       .pipe($.babel())
+//       .pipe($.concat('main.min.js'))
+//       .pipe($.uglify({ preserveComments: 'some' }))
+//
+//       // Output files
+//       .pipe($.size({ title: 'scripts' }))
+//       .pipe($.sourcemaps.write('.'))
+//       .pipe(gulp.dest('public/dist/javascripts'));
+// });
 
-        // Note: Since we are not using useref in the scripts build pipeline,
-        //       you need to explicitly list your scripts here in the right order
-        //       to be correctly concatenated
-        'public/javascripts/main.js',
+// gulp.task('bundle:qrcode', () => {
+//   return browserify('public/javascripts/qrcode/entry.js')
+//     .bundle()
+//     .pipe(vss('bundle.js'))
+//     .pipe(gulp.dest('public/dist/javascripts/qrcode'));
+// });
 
-        // Other scripts
-      ])
-      .pipe($.sourcemaps.init())
-      .pipe($.babel())
-      .pipe($.concat('main.min.js'))
-      .pipe($.uglify({ preserveComments: 'some' }))
+gulp.task('browserify', () => {
+  let files = [
+    './public/javascripts/qrcode/entry.js',
+  ];
 
-      // Output files
-      .pipe($.size({ title: 'scripts' }))
-      .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('public/dist/javascripts'));
-});
+  let tasks = files.map((entry) => {
+    return browserify({ entries: [entry] })
+            .bundle()
+            .pipe(vss(entry))
 
-gulp.task('bundle:qrcode', () => {
-  return browserify('public/javascripts/qrcode/entry.js')
-    .bundle()
-    .pipe(vss('bundle.js'))
-    .pipe(gulp.dest('public/dist/javascripts/qrcode'));
+            // rename them to have "bundle as postfix"
+            .pipe(rename({
+              extname: '.bundle.js',
+            }))
+            .pipe(gulp.dest('./dist'));
+  });
+
+  // create a merged stream
+  return es.merge.apply(null, tasks);
 });
 
 // Clean output directory
@@ -138,7 +161,7 @@ gulp.task('serve', [], () => {
 
   gulp.watch(['views/*.ejs'], reload);
   gulp.watch(['public/stylesheets/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['public/javascripts/*.js'], ['lint', 'scripts']);
+  gulp.watch(['public/javascripts/**'], ['browserify', reload]);
   gulp.watch(['public/images/*'], reload);
 });
 
@@ -148,7 +171,6 @@ gulp.task('nodemon', cb => {
   return nodemon({
     script: './bin/www',
   }).on('start', () => {
-
     // to avoid nodemon being started multiple times
     // thanks @matthisk
     if (!started) {
@@ -162,7 +184,7 @@ gulp.task('nodemon', cb => {
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['lint', 'scripts', 'images'],
+    ['browserify', 'images'],
     cb
   )
 );
