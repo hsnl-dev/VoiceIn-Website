@@ -15,19 +15,19 @@
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="VoiceIn">
+  <meta name="application-name" content="<%= name %>">
   <link rel="icon" sizes="192x192" href="<%= image %>">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="VoiceIn">
+  <meta name="apple-mobile-web-app-title" content="<%= name %>">
   <link rel="apple-touch-icon" href="<%= image %>">
   <!-- Wide card with share menu button -->
   <style>
 
   .demo-card-wide.mdl-card {
-    width: 512px;
+    width: 100%;
     margin: 0 auto;
   }
   .demo-card-wide > .mdl-card__title {
@@ -117,12 +117,12 @@
             <div class="mdl-textfield mdl-js-textfield">
               <input class="mdl-textfield__input" type="text" id="name">
               <label class="mdl-textfield__label" for="name">姓名</label>
-            </div>
+            </div><br/>
             <div class="mdl-textfield mdl-js-textfield">
               <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="phoneNumber">
               <label class="mdl-textfield__label" for="phoneNumber">請輸入手機號碼</label>
               <span class="mdl-textfield__error">只能輸入手機號碼喔!</span>
-            </div>
+            </div><br/>
             <div class="mdl-textfield mdl-js-textfield">
               <input class="mdl-textfield__input" type="text" id="company">
               <label class="mdl-textfield__label" for="company">公司</label>
