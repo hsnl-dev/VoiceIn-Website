@@ -105,7 +105,7 @@ gulp.task('styles', () => {
 //       // Output files
 //       .pipe($.size({ title: 'scripts' }))
 //       .pipe($.sourcemaps.write('.'))
-//       .pipe(gulp.dest('public/dist/javascripts'));
+//       .pipe(gulp.dest('./dist/public/javascripts'));
 // });
 
 // gulp.task('bundle:qrcode', () => {
