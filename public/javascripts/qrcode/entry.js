@@ -21,6 +21,8 @@ $(() => {
             location: '',
             availableStartTime: '00:00',
             availableEndTime: '23:59',
+
+            // profile: '',
           },
         });
 
@@ -33,7 +35,22 @@ $(() => {
         body: payload,
       };
 
-      fetch(`/qrcode/add/${qrCodeUuid}`, options);
+      fetch(`/qrcode/add/${qrCodeUuid}`, options)
+      .then( response => {
+        if (response.status >= 200 && response.status < 300) {
+          return response;
+        } else {
+          var error = new Error(response.statusText);
+          error.response = response;;
+          throw error;
+        }
+      }).then(res => {
+        return res.json();
+      }).then(data => {
+        window.location = `/icon/${data.iconId}`;
+      }).catch(error => {
+        console.log('request failed', error);
+      });
     },
 
     render: () => {
