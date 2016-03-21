@@ -47,9 +47,13 @@ $(() => {
       }).then(res => {
         return res.json();
       }).then(data => {
-        window.location = `/icon/${data.iconId}`;
+        if (data.iconId) {
+          sweetAlert({ title: '成功加入', text: '只剩下最後一步了!', timer: 2000,   showConfirmButton: true });
+          window.location = `/icon/${data.iconId}`;
+        }
       }).catch(error => {
         console.log('request failed', error);
+        sweetAlert('Oops...', '抱歉，請稍後再嘗試!', 'error');
       });
     },
 
