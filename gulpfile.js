@@ -22,19 +22,18 @@
 // You can read more about the new JavaScript features here:
 // https://babeljs.io/docs/learn-es2015/
 'use strict';
-import path from 'path';
-import gulp from 'gulp';
-import del from 'del';
-import runSequence from 'run-sequence';
-import browserSync from 'browser-sync';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import pkg from './package.json';
-import nodemon from 'gulp-nodemon';
-import browserify from 'browserify';
-import vss from 'vinyl-source-stream';
-import rename from 'gulp-rename';
-import es from 'event-stream';
-
+const path = require('path');
+const gulp = require('gulp');
+const del = require('del');
+const runSequence = require('run-sequence');
+const browserSync = require('browser-sync');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const pkg = require('./package.json');
+const nodemon = require('gulp-nodemon');
+const browserify = require('browserify');
+const vss = require('vinyl-source-stream');
+const rename = require('gulp-rename');
+const es = require('event-stream');
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
