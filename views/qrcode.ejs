@@ -16,14 +16,14 @@
     background: url('images/qrcode/blurred-web-backgrounds.jpg') center / cover;
   }
   .demo-card-wide > .mdl-card__menu {
-    color: #fff;
+    color: #E0E0E0;
   }
   .demo-layout-transparent {
-    background: #E0E0E0;
+    background: #9E9E9E;
   }
   .demo-layout-transparent .mdl-layout__header,
   .demo-layout-transparent .mdl-layout__drawer-button {
-    color: #757575;
+    color: #fff;
   }
 
   .material-icons.md-36 {
@@ -70,7 +70,7 @@
           <img class="profile-image" src="<%= image %>" alt="" />
         </div>
         <div class="mdl-card__supporting-text">
-          <h2><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h2>
+          <h3><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h3>
           <h5><i class="material-icons md-36">face</i>關於</h5>
           <p>
             <% if (profile === '') {%>
@@ -87,6 +87,30 @@
           <p>
             <%= location %>
           </p>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <p>
+            如果確認無誤，請輸入以下資料建立桌面 Icon.
+          </p>
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="name">
+              <label class="mdl-textfield__label" for="sample1">姓名</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="phoneNumber">
+              <label class="mdl-textfield__label" for="sample2">請輸入手機號碼</label>
+              <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="company">
+              <label class="mdl-textfield__label" for="sample1">公司</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+              <textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea>
+              <label class="mdl-textfield__label" for="sample5">關於您...</label>
+            </div>
+          </form>
         </div>
         <div class="mdl-card__actions mdl-card--border">
           <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
