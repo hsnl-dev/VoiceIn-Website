@@ -114,16 +114,16 @@
             *電話號碼對方將不會看見，請放心。
           </p>
           <form class="user-information-form" action="#">
-            <div class="mdl-textfield mdl-js-textfield">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="name">
               <label class="mdl-textfield__label" for="name">姓名</label>
             </div><br/>
-            <div class="mdl-textfield mdl-js-textfield">
-              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="phoneNumber">
-              <label class="mdl-textfield__label" for="phoneNumber">請輸入手機號碼</label>
-              <span class="mdl-textfield__error">只能輸入手機號碼喔!</span>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" pattern="^(\+886){1,1}([0-9]{9})$" id="phoneNumber">
+              <label class="mdl-textfield__label" for="phoneNumber">請輸入手機號碼(+886開頭)</label>
+              <span class="mdl-textfield__error">只能輸入手機號碼，例如 +886988123456 </span>
             </div><br/>
-            <div class="mdl-textfield mdl-js-textfield">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="company">
               <label class="mdl-textfield__label" for="company">公司</label>
             </div>
