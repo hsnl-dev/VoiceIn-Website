@@ -58,7 +58,7 @@
     <div class="mdl-layout__drawer">
       <span class="mdl-layout-title">VoiceIn 名片</span>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">VoiceIn 首頁</a>
+        <a class="mdl-navigation__link" href="/">VoiceIn 首頁</a>
         <a class="mdl-navigation__link" href="">聯絡我們</a>
         <a class="mdl-navigation__link" href="">常見問題</a>
         <a class="mdl-navigation__link" href="">關於 VoiceIn</a>
@@ -70,7 +70,7 @@
           <img class="profile-image" src="<%= image %>" alt="" />
         </div>
         <div class="mdl-card__supporting-text">
-          <h2 class="mdl-card__title-text"><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h2>
+          <h2><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h2>
           <h5><i class="material-icons md-36">face</i>關於</h5>
           <p>
             <% if (profile === '') {%>
@@ -86,9 +86,6 @@
           <h5><i class="material-icons md-36">location_on</i>來自</h5>
           <p>
             <%= location %>
-          </p>
-          <p>
-            如果確認資訊無誤，即可點選確認加入按鈕加入對方!
           </p>
         </div>
         <div class="mdl-card__actions mdl-card--border">
@@ -106,5 +103,7 @@
   </div>
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.11.0/fetch.min.js"></script>
+  <script src="/dist/javascripts/qrcode/bundle.js"></script>
 </body>
 </html>

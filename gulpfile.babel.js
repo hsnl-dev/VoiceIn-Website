@@ -17,7 +17,6 @@
  *
  */
 
-
 // This gulpfile makes use of new JavaScript features.
 // Babel handles this without us having to do anything. It just works.
 // You can read more about the new JavaScript features here:
@@ -50,10 +49,10 @@ gulp.task('images', () =>
   gulp.src(['public/images/**/*'])
     .pipe($.imagemin({
       progressive: true,
-      interlaced: true
+      interlaced: true,
     }))
     .pipe(gulp.dest('public/dist/images/'))
-    .pipe($.size({title: 'images'}))
+    .pipe($.size({ title: 'images' }))
 );
 
 // Compile and automatically prefix stylesheets
@@ -67,18 +66,19 @@ gulp.task('styles', () => {
     'opera >= 23',
     'ios >= 7',
     'android >= 4.4',
-    'bb >= 10'
+    'bb >= 10',
   ];
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    'public/stylesheets/**/*.css'
+    'public/stylesheets/**/*.css',
   ])
     .pipe($.sourcemaps.init())
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
+
     // Concatenate and minify styles
     .pipe($.if('*.css', $.cssnano()))
-    .pipe($.size({title: 'styles'}))
+    .pipe($.size({ title: 'styles' }))
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('public/dist/stylesheets'));
 });
@@ -87,46 +87,53 @@ gulp.task('styles', () => {
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
 gulp.task('scripts', () => {
-    gulp.src([
-      // Note: Since we are not using useref in the scripts build pipeline,
-      //       you need to explicitly list your scripts here in the right order
-      //       to be correctly concatenated
-      'public/javascripts/main.js'
-      // Other scripts
-    ])
+  gulp.src([
+
+        // Note: Since we are not using useref in the scripts build pipeline,
+        //       you need to explicitly list your scripts here in the right order
+        //       to be correctly concatenated
+        'public/javascripts/main.js',
+
+        // Other scripts
+      ])
       .pipe($.sourcemaps.init())
       .pipe($.babel())
       .pipe($.concat('main.min.js'))
-      .pipe($.uglify({preserveComments: 'some'}))
+      .pipe($.uglify({ preserveComments: 'some' }))
+
       // Output files
-      .pipe($.size({title: 'scripts'}))
+      .pipe($.size({ title: 'scripts' }))
       .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('public/dist/javascripts/qrcode'))
+      .pipe(gulp.dest('public/dist/javascripts'));
 });
 
 gulp.task('bundle:qrcode', () => {
-  return browserify('public/javascripts/qrcode/entry.js').bundle()
+  return browserify('public/javascripts/qrcode/entry.js')
+    .bundle()
     .pipe(vss('bundle.js'))
-    .pipe(gulp.dest('public/dist/javascripts'));
+    .pipe(gulp.dest('public/dist/javascripts/qrcode'));
 });
 
 // Clean output directory
-gulp.task('clean', () => del(['public/dist/*'], {dot: true}));
+gulp.task('clean', () => del(['public/dist/*'], { dot: true }));
 
 // Watch files for changes & reload
 gulp.task('serve', [], () => {
   browserSync({
-    proxy: "http://localhost:3000",
+    proxy: 'http://localhost:3000',
     notify: false,
+
     // Customize the Browsersync console logging prefix
     logPrefix: 'VoiceIn',
+
     // Allow scroll syncing across breakpoints
     scrollElementMapping: ['main', '.mdl-layout'],
+
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    port: 5000
+    port: 5000,
   });
 
   gulp.watch(['views/*.ejs'], reload);
@@ -138,16 +145,17 @@ gulp.task('serve', [], () => {
 gulp.task('nodemon', cb => {
   let started = false;
 
-	return nodemon({
-		script: './bin/www'
-	}).on('start', () => {
-		// to avoid nodemon being started multiple times
-		// thanks @matthisk
-		if (!started) {
-			cb();
-			started = true;
-		}
-	});
+  return nodemon({
+    script: './bin/www',
+  }).on('start', () => {
+
+    // to avoid nodemon being started multiple times
+    // thanks @matthisk
+    if (!started) {
+      cb();
+      started = true;
+    }
+  });
 });
 
 // Build production files, the default task
