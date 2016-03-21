@@ -1,13 +1,21 @@
 $(function () {
-  fetch('https://offline-news-api.herokuapp.com/stories')
-  .then(function (response) {
-    if (response.status >= 400) {
-      throw new Error('Bad response from server');
-    }
+  let FormView = Backbone.View.extend({
+    el: '.vcard-content',
+    events: {
+      'click .confirm-btn': 'addProvider',
+    },
+    initialize: function () {
+      console.log(this);
+    },
 
-    return response.json();
-  })
-  .then(function (stories) {
-    console.log(stories);
+    addProvider: function (e) {
+      console.log(e);
+    },
+
+    render: function () {
+
+    },
   });
+
+  let formView = new FormView();
 });

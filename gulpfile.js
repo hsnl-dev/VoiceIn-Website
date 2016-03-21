@@ -35,6 +35,7 @@ const vss = require('vinyl-source-stream');
 const rename = require('gulp-rename');
 const es = require('event-stream');
 const $ = gulpLoadPlugins();
+const babel = require('babelify');
 const reload = browserSync.reload;
 
 // Lint JavaScript
@@ -122,6 +123,9 @@ gulp.task('browserify', () => {
 
   let tasks = files.map((entry) => {
     return browserify({ entries: [entry] })
+            .transform(babel.configure({
+              presets: ['es2015'],
+            }))
             .bundle()
             .pipe(vss(entry))
 

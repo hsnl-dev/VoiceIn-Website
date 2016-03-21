@@ -64,7 +64,7 @@
         <a class="mdl-navigation__link" href="">關於 VoiceIn</a>
       </nav>
     </div>
-    <main class="mdl-layout__content">
+    <main class="mdl-layout__content vcard-content">
       <div class="demo-card-wide mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
           <img class="profile-image" src="<%= image %>" alt="" />
@@ -92,7 +92,7 @@
           <p>
             如果確認無誤，請輸入以下資料建立桌面 Icon.
           </p>
-          <form action="#">
+          <form class="user-information-form" action="#">
             <div class="mdl-textfield mdl-js-textfield">
               <input class="mdl-textfield__input" type="text" id="name">
               <label class="mdl-textfield__label" for="sample1">姓名</label>
@@ -113,14 +113,9 @@
           </form>
         </div>
         <div class="mdl-card__actions mdl-card--border">
-          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons md-36 confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>">done</i>確認加入
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>">
+            <i class="material-icons md-36">done</i>確認加入
           </a>
-        </div>
-        <div class="mdl-card__menu">
-          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons">share</i>
-          </button>
         </div>
       </div>
     </main>

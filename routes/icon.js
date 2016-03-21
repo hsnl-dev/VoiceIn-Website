@@ -10,7 +10,14 @@ let headers = {
 };
 
 router.get('/:iconId/', (error, req, res) => {
-  res.send('');
+  fetch(`${api.apiRoute}/${api.latestVersion}/providers/${qrCodeUuid}`, {
+    headers: headers,
+  }).then(response => {
+    return response.json();
+  }).then(data => {
+    console.log(data);
+    res.send('');
+  });
 });
 
 module.exports = router;
