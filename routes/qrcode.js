@@ -42,17 +42,7 @@ router.get('/', (req, res, next) => {
 // This route deals with adding new icon.
 router.post('/add/:qrCodeUuid', (req, res, next) => {
   let qrCodeUuid = req.params.qrCodeUuid;
-  let payload = JSON.stringify({
-    providerUuid: qrCodeUuid,
-    customer: {
-      name: 'Harry',
-      phoneNumber: '+886944555555',
-      company: 'HSNL',
-      location: 'tw',
-      availableStartTime: '00:00',
-      availableEndTime:'23:59',
-    },
-  });
+  let payload = JSON.stringify(req.body);
 
   fetch(`${api.apiRoute}/${api.latestVersion}/icons`, {
     method: 'POST',
