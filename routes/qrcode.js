@@ -57,7 +57,7 @@ router.post('/add/:qrCodeUuid', (req, res, next) => {
       return res.json();
     }
   }).then(response => {
-    if (response.iconId !== 'undefined') {
+    if (response.iconId) {
       console.log(response.iconId);
       res.send(response);
     } else {
