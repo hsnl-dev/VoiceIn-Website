@@ -19,6 +19,13 @@ router.get('/', (req, res, next) => {
     headers: headers,
   })
     .then(res => {
+      if (res.status >= 400) {
+        console.log('error');
+        let error = new Error('Something happened..');
+        error.response = res;
+        throw(error);
+      }
+
       return res.json();
     })
     .then(userData => {
@@ -37,6 +44,9 @@ router.get('/', (req, res, next) => {
           res.render('provider-information', userData);
         }
       });
+    }).catch(err => {
+      console.log(err);
+      res.render('user-not-found');
     });
 });
 
@@ -63,7 +73,7 @@ router.post('/add/:qrCodeUuid', (req, res, next) => {
       res.send(response);
     } else {
       res.status(response.status);
-      res.send('');
+      res.end();
     }
 
   });
