@@ -33,6 +33,7 @@ router.get('/', (req, res, next) => {
           let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
           userData.image = base64data;
           userData.qrCodeUuid = qrCodeUuid;
+          console.log(userData);
           res.render('provider-information', userData);
         }
       });
