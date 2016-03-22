@@ -30,7 +30,7 @@
     width: 100%;
     margin: 0 auto;
   }
-  
+
   .demo-card-wide > .mdl-card__title {
     color: #fff;
     height: 176px;
@@ -112,9 +112,10 @@
             <%= location %>
           </p>
         </div>
+        <% if (type !== 'special') { %>
         <div class="mdl-card__supporting-text">
           <p>
-            如果確認無誤，請輸入以下資料建立桌面 Icon.<br/>
+            如果確認無誤，請輸入以下資料建立主畫面 Icon.<br/>
             *電話號碼對方將不會看見，請放心。
           </p>
           <form class="user-information-form" action="#">
@@ -137,6 +138,17 @@
             </div> -->
           </form>
         </div>
+        <% } else {%>
+          <div class="mdl-card__supporting-text">
+            <p>
+              這是為您特製的 QRCode 聯絡 Icon，請放心將此網頁加至主畫面
+            </p>
+          </div>
+
+          <input type="hidden" id="name" value="<%= customerName %>">
+          <input type="hidden"  id="phoneNumber" value="<%= customerPhoneNum %>">
+          <input type="hidden" id="company" value="<%= customerCompany %>">
+        <% } %>
         <div class="mdl-card__actions mdl-card--border">
           <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>">
             <i class="material-icons md-36">done</i>確認加入
