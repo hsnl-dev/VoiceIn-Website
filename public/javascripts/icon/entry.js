@@ -8,30 +8,33 @@ $(function () {
     initialize: function () {
       console.log(this);
     },
-    buttuonClose: function(event){
+
+    buttuonClose: function (event) {
       let errdialog = $('dialog.error-dialog').get(0);
-      if (! errdialog.showModal) {
+      if (!errdialog.showModal) {
         dialogPolyfill.registerDialog(errdialog);
       }
+
       console.log(event);
       errdialog.close();
     },
+
     initCall: function (e) {
       console.log(e);
       let iconUuid = $('.icon-info').data('iconid');
       let dialog = $('dialog.progress-dialog').get(0);
       let errdialog = $('dialog.error-dialog').get(0);
-      if (! dialog.showModal) {
+      if (!dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
         dialogPolyfill.registerDialog(errdialog);
       }
+
       dialog.showModal();
       let options = {
-        method:'POST'
-      }
+        method:'POST',
+      };
       fetch(`/icon/${iconUuid}/call`, options)
-       .then( response => {
-
+       .then(response => {
 
          if (response.status >= 200 && response.status < 300) {
            dialog.close();

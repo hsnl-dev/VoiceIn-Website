@@ -18,12 +18,14 @@ router.get('/:id', (req, res, next) => {
   })
     .then(res => {
       if (!res.ok) {
-           throw Error(res.statusText);
+        throw Error(res.statusText);
       }
+
       return res.json();
     })
     .then(userData => {
       console.log(userData);
+
       // res.send(userData);
       let options = {
         url: `${api.apiRoute}/${api.latestVersion}/avatars/${userData.provider.profilePhotoId}?size=mid`,
@@ -38,30 +40,25 @@ router.get('/:id', (req, res, next) => {
           res.render('icon', userData);
         }
       });
+
       // console.log(options);
       // // get the user's avatars and response.
       // console.log(options);
-
-
-
     })
-    .catch(function(error) {
+    .catch((error) => {
       console.log(error);
     });
 });
-router.post('/:id/call', (req, res, next) =>{
+router.post('/:id/call', (req, res, next) => {
   let iconId = req.params.id;
   console.log(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}/calls`);
 
-
   fetch(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}/calls`, {
     headers: headers,
-    method: 'POST'
+    method: 'POST',
   })
     .then(response => {
       res.status(response.status).end();
     });
-
-
 });
 module.exports = router;
