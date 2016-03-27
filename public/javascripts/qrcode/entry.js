@@ -16,7 +16,7 @@ $(() => {
           providerUuid: qrCodeUuid,
           customer: {
             name: $('#name').val(),
-            phoneNumber: $('#phoneNumber').val(),
+            phoneNumber: `+886${$('#phoneNumber').val()}`,
             company: $('#company').val(),
             location: '',
             availableStartTime: '00:00',
@@ -36,7 +36,7 @@ $(() => {
       };
 
       fetch(`/qrcode/add/${qrCodeUuid}`, options)
-      .then( response => {
+      .then(response => {
         if (response.status >= 200 && response.status < 300) {
           return response;
         } else {

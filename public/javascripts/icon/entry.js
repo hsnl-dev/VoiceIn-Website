@@ -6,7 +6,13 @@ $(function () {
       'click #err-close': 'buttuonClose',
     },
     initialize: function () {
-      console.log(this);
+      let addtohome = addToHomescreen({
+        detectHomescreen: true,
+        autostart: false,
+        message: '請點選按鈕，再點選加至主畫面(Add to Home Screen)，將此網頁加到主畫面。',
+        lifespan: 60,
+      });
+      addtohome.show();
     },
 
     buttuonClose: function (event) {
@@ -31,7 +37,7 @@ $(function () {
 
       dialog.showModal();
       let options = {
-        method:'POST',
+        method: 'POST',
       };
       fetch(`/icon/${iconUuid}/call`, options)
        .then(response => {

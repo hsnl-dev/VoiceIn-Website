@@ -16,5 +16,6 @@
     "tests"
   ],
   "dependencies": {
+    "add-to-homescreen": "^3.2.2"
   }
 }
