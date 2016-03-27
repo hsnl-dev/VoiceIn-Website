@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require('isomorphic-fetch');
-const request = require('request').defaults({ encoding: null });
+const request = require('request').defaults({encoding: null});
 const api = require('../config/api-url');
 
 let headers = {
