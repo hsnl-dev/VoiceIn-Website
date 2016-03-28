@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require('isomorphic-fetch');
-const request = require('request').defaults({encoding: null});
+const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 
 let headers = {
@@ -41,12 +41,12 @@ router.get('/', (req, res, next) => {
           userData.image = base64data;
           userData.qrCodeUuid = qrCodeUuid;
           console.log(userData);
-          res.render('provider-information', userData);
+          res.render('provider', userData);
         }
       });
     }).catch(err => {
       console.log(err);
-      res.render('user-not-found');
+      res.render('not-found');
     });
 });
 

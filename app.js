@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const routes = require('./routes/index');
-const qrCode = require('./routes/qrcode');
+const provider = require('./routes/provider');
 const icon = require('./routes/icon');
 
 const app = express();
@@ -21,13 +21,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/dist', express.static(path.join(__dirname, '/dist')));
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 console.log(__dirname);
 
 app.use('/', routes);
-app.use('/qrcode', qrCode);
+app.use('/qrcode', provider);
 app.use('/icon', icon);
 
 // catch 404 and forward to error handler

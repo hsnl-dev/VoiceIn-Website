@@ -31,6 +31,17 @@
       width: 75%;
       border: none;
       box-shadow: 0 9px 46px 8px rgba(0, 0, 0, 0.14), 0 11px 15px -7px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.2);
+      z-index: 9;
+    }
+
+    .edit-dialog {
+      /* center the edit dialog */
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
     }
 
     .mdl-layout__content {
@@ -47,7 +58,7 @@
     .demo-card-wide > .mdl-card__title {
       color: #fff;
       height: 190px;
-      background: url('../images/qrcode/blurred-web-backgrounds.jpg') center / cover;
+      background: url('/dist/public/images/qrcode/blurred-web-backgrounds.jpg') center / cover;
     }
 
     .demo-card-wide > .mdl-card__menu {
@@ -60,7 +71,15 @@
 
     .demo-layout-transparent .mdl-layout__header,
     .demo-layout-transparent .mdl-layout__drawer-button {
-      color: black;
+      color: white;
+    }
+
+    .mdl-layout__drawer-button {
+      border-radius: 50%;
+      vertical-align: middle;
+      box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12) , 0 1px 1px 0 rgba(0,0,0,.24);
+      line-height: normal;
+      background: #ff4081;
     }
 
     .material-icons.md-36 {
@@ -143,20 +162,24 @@
           <h3><%= provider.userName %></h3>
           <h5><i class="material-icons md-36">face</i>關於</h5>
           <p>
-            <% if (provider.profile === '') {%>
-              對方未填寫
+              <% if (provider.profile === '') {%>
+                對方未填寫
               <% } else {%>
                 <%= provider.profile %>
-                <%}%>
-              </p>
-              <h5><i class="material-icons md-36">business</i>公司</h5>
-              <p>
-                <%= provider.company %>
-              </p>
-              <h5><i class="material-icons md-36">location_on</i>來自</h5>
-              <p>
-                <%= provider.location %>
-              </p>
+              <%}%>
+          </p>
+          <h5><i class="material-icons md-36">business</i>公司</h5>
+          <p>
+            <%= provider.company %>
+          </p>
+          <h5><i class="material-icons md-36">location_on</i>來自</h5>
+          <p>
+            <%= provider.location %>
+          </p>
+
+          <button class="edit-btn mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            修改您的資料
+          </button>
         </div>
       </div>
     </main>
@@ -166,14 +189,15 @@
         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect confirm-btn">
           <i class="material-icons md-36">phone</i>撥電話
         </a>
-        <% } else {%>
-          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect sorry-btn">
-            <i class="material-icons md-36">phone_locked</i>抱歉，對方目前無法接聽電話
-          </a>
-          <%}%>
+      <% } else {%>
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect sorry-btn">
+          <i class="material-icons md-36">phone_locked</i>抱歉，對方目前無法接聽電話
+        </a>
+      <%}%>
     </div>
   </div>
 
+  <!-- Modal -->
   <dialog class="mdl-dialog progress-dialog">
     <h4 class="mdl-dialog__title">請稍後</h4>
     <div class="mdl-dialog__content">
@@ -196,6 +220,38 @@
     </div>
   </dialog>
 
+  <dialog class="mdl-dialog edit-dialog">
+    <h4 class="mdl-dialog__title">修改您的資料</h4>
+    <div class="mdl-dialog__content">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="name" value="<%= name %>">
+        <label class="mdl-textfield__label" for="name">姓名</label>
+      </div><br/>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label phonenumber-field">
+        <input class="mdl-textfield__input" pattern="[0-9]{10}" id="phoneNumber" type="tel" inputmode="numeric" value="<%= phoneNumber.replace('+886', ''); %>">
+        <label class="mdl-textfield__label" for="phoneNumber">請輸入台灣手機號碼</label>
+        <span class="mdl-textfield__error">只能輸入手機號碼，例如 0988123456 </span>
+      </div><br/>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="company" value="<%= company %>">
+        <label class="mdl-textfield__label" for="company">公司</label>
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button
+        class="edit-dialog-btn--saved mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+        data-icon-uuid="<%= iconId %>" data-save-text="儲存中..." data-done-text="儲存"
+      >
+        儲存
+      </button>
+      <button class="edit-dialog-btn--closed mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+        取消
+      </button>
+    </div>
+  </dialog>
+
 
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" charset="utf-8"></script>
@@ -204,6 +260,6 @@
   <script src="../bower_components/add-to-homescreen/src/addtohomescreen.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.11.0/fetch.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js"></script>
-  <script src="../dist/public/javascripts/icon/entry.bundle.js"></script>
+  <script src="/dist/public/javascripts/icon/entry.bundle.js"></script>
 </body>
 </html>
