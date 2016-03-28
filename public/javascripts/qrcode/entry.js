@@ -1,12 +1,20 @@
 $(() => {
   const api = require('../config/api-url.js');
+  const $dialog = document.querySelector('#dialog');
+
   let FormView = Backbone.View.extend({
     el: '.vcard-content',
     events: {
       'click .confirm-btn': 'addProvider',
     },
     initialize: () => {
+      if (!$dialog.showModal) {
+        dialogPolyfill.registerDialog($dialog);
+      }
 
+      $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {
+        $dialog.close();
+      });
     },
 
     addProvider: (e) => {
@@ -25,6 +33,14 @@ $(() => {
             // profile: '',
           },
         });
+
+      let isInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
+
+      if (isInValid) {
+        $('.notification-text').html('請輸入正確的電話號碼。');
+        $dialog.showModal();
+        return false;
+      }
 
       let options = {
         method: 'POST',
@@ -48,12 +64,14 @@ $(() => {
         return res.json();
       }).then(data => {
         if (data.iconId) {
-          sweetAlert({ title: '成功加入', text: '只剩下最後一步了!', timer: 2000,   showConfirmButton: true });
+          $('.notification-text').html('成功加入，只剩下最後一步了!');
+          $dialog.showModal();
           window.location = `/icon/${data.iconId}`;
         }
       }).catch(error => {
         console.log('request failed', error);
-        sweetAlert('Oops...', '抱歉，請稍後再嘗試!', 'error');
+        $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
+        $dialog.showModal();
       });
     },
 
