@@ -6,6 +6,8 @@ $(function () {
       'click #err-close': 'buttuonClose',
       'click .ath-btn': 'showAtnModal',
       'click .already-ath-btn': 'hideAtnSection',
+      'click .edit-btn': 'showEditModal',
+      'click .edit-dialog-btn--closed': 'hideEditModal',
     },
     initialize: function () {
       let isHideAtnSection = localStorage.getItem('hideAtnSection');
@@ -19,6 +21,20 @@ $(function () {
           autostart: true,
         });
       }
+    },
+
+    showEditModal: function (e) {
+      let dialog = document.querySelector('.edit-dialog');
+      if (!dialog.showModal) {
+        dialogPolyfill.registerDialog(dialog);
+      }
+
+      dialog.show();
+    },
+
+    hideEditModal: function (e) {
+      let dialog = document.querySelector('.edit-dialog');
+      dialog.close();
     },
 
     hideAtnSection: function (e) {
