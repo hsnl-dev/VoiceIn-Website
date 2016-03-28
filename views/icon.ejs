@@ -24,67 +24,78 @@
   <meta name="apple-mobile-web-app-title" content="<%= provider.userName %>">
   <link rel="apple-touch-icon" href="<%= image %>">
   <style>
-  .mdl-dialog {
-    width: 75%;
-    border: none;
-    box-shadow: 0 9px 46px 8px rgba(0, 0, 0, 0.14), 0 11px 15px -7px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.2);
-  }
+    body {
 
-  .demo-card-wide.mdl-card {
-    width: 100%;
-    margin: 0 auto;
-  }
+    }
+    .mdl-dialog {
+      width: 75%;
+      border: none;
+      box-shadow: 0 9px 46px 8px rgba(0, 0, 0, 0.14), 0 11px 15px -7px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.2);
+    }
 
-  .demo-card-wide > .mdl-card__title {
-    color: #fff;
-    height: 190px;
-    background: url('../images/qrcode/blurred-web-backgrounds.jpg') center / cover;
-  }
+    .mdl-layout__content {
+      /*height: 100%;*/
+    }
 
-  .demo-card-wide > .mdl-card__menu {
-    color: #E0E0E0;
-  }
+    .demo-card-wide.mdl-card {
+      width: 100%;
+      /*height: 100%;*/
+      margin: 0 auto;
+      padding-bottom: 120px;
+    }
 
-  .demo-layout-transparent {
-    background: #9E9E9E;
-  }
+    .demo-card-wide > .mdl-card__title {
+      color: #fff;
+      height: 190px;
+      background: url('../images/qrcode/blurred-web-backgrounds.jpg') center / cover;
+    }
 
-  .demo-layout-transparent .mdl-layout__header,
-  .demo-layout-transparent .mdl-layout__drawer-button {
-    color: black;
-  }
+    .demo-card-wide > .mdl-card__menu {
+      color: #E0E0E0;
+    }
 
-  .material-icons.md-36 {
-    font-size: 36px;
-    vertical-align: middle;
-    margin-right: 5px;
-  }
+    .demo-layout-transparent {
+      background: #9E9E9E;
+    }
 
-  .profile-image {
-    display: block !important;
-    margin: 0 auto;
-    border-radius: 100px;
-    -moz-border-radius: 100px;
-    -webkit-border-radius: 100px;
-  }
+    .demo-layout-transparent .mdl-layout__header,
+    .demo-layout-transparent .mdl-layout__drawer-button {
+      color: black;
+    }
 
-  .mdl-progress {
-    width: 100% !important;
-  }
+    .material-icons.md-36 {
+      font-size: 36px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
 
-  .caller-bar {
-    position: fixed;
-    bottom: 0;
-    background-color: white !important;
-  }
+    .profile-image {
+      display: block !important;
+      margin: 0 auto;
+      border-radius: 100px;
+      -moz-border-radius: 100px;
+      -webkit-border-radius: 100px;
+    }
 
-  .icon-info {
-    margin-bottom: 50px;
-  }
+    .mdl-progress {
+      width: 100% !important;
+    }
 
-  .ath-container {
-    opacity: 0.8;
-  }
+    .caller-bar {
+      position: fixed;
+      bottom: 0;
+      background-color: white !important;
+      z-index: 4;
+    }
+
+    .ath-container {
+      opacity: 0.8;
+    }
+
+    .ath-btn, .already-ath-btn {
+      text-decoration: none;
+      cursor: pointer;
+    }
 
   </style>
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
@@ -121,6 +132,14 @@
         </div>
 
         <div class="mdl-card__supporting-text icon-info" data-iconid="<%= iconId %>">
+          <span class="ath-section">
+            <button class="ath-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+              如何將此頁加至主畫面?
+            </button>
+            <button class="already-ath-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              不再顯示
+            </button>
+          </span>
           <h3><%= provider.userName %></h3>
           <h5><i class="material-icons md-36">face</i>關於</h5>
           <p>
@@ -139,20 +158,19 @@
                 <%= provider.location %>
               </p>
         </div>
-
-        <div class="mdl-card__actions mdl-card--border caller-bar">
-          <% if (isTargetEnable){ %>
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect confirm-btn">
-              <i class="material-icons md-36">phone</i>撥電話
-            </a>
-            <% } else {%>
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect sorry-btn">
-                <i class="material-icons md-36">phone_locked</i>抱歉，對方目前無法接聽電話
-              </a>
-              <%}%>
-        </div>
       </div>
     </main>
+    <div class="mdl-card__actions mdl-card--border caller-bar">
+      <% if (isTargetEnable){ %>
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect confirm-btn">
+          <i class="material-icons md-36">phone</i>撥電話
+        </a>
+        <% } else {%>
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect sorry-btn">
+            <i class="material-icons md-36">phone_locked</i>抱歉，對方目前無法接聽電話
+          </a>
+          <%}%>
+    </div>
   </div>
 
   <dialog class="mdl-dialog progress-dialog">

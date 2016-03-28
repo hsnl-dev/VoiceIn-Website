@@ -4,15 +4,30 @@ $(function () {
     events: {
       'click .confirm-btn': 'initCall',
       'click #err-close': 'buttuonClose',
+      'click .ath-btn': 'showAtnModal',
+      'click .already-ath-btn': 'hideAtnSection',
     },
     initialize: function () {
-      let addtohome = addToHomescreen({
-        detectHomescreen: true,
-        autostart: false,
-        message: '請點選按鈕，再點選加至主畫面(Add to Home Screen)，將此網頁加到主畫面。',
-        lifespan: 60,
-      });
-      addtohome.show();
+      let isHideAtnSection = localStorage.getItem('hideAtnSection');
+
+      if (isHideAtnSection) {
+        $('.ath-section').hide();
+      } else {
+        this.addtohome = addToHomescreen({
+          message: '請點選按鈕，再點選加至主畫面(Add to Home Screen)，將此網頁加到主畫面。',
+          lifespan: 0,
+          autostart: true,
+        });
+      }
+    },
+
+    hideAtnSection: function (e) {
+      localStorage.setItem('hideAtnSection', true);
+      $('.ath-section').hide();
+    },
+
+    showAtnModal: function (e) {
+      this.addtohome.show(true);
     },
 
     buttuonClose: function (event) {
