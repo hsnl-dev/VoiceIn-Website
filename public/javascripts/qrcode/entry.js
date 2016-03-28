@@ -34,7 +34,7 @@ $(() => {
           },
         });
 
-      let isInValid = $('.phonenumber-field').hasClass('is-invalid');
+      let isInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
 
       if (isInValid) {
         $('.notification-text').html('請輸入正確的電話號碼。');
