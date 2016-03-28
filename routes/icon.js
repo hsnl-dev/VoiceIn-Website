@@ -26,7 +26,6 @@ router.get('/:id', (req, res, next) => {
     .then(userData => {
       console.log(userData);
 
-      // res.send(userData);
       let options = {
         url: `${api.apiRoute}/${api.latestVersion}/avatars/${userData.provider.profilePhotoId}?size=mid`,
         headers: headers,
@@ -40,13 +39,10 @@ router.get('/:id', (req, res, next) => {
           res.render('icon', userData);
         }
       });
-
-      // console.log(options);
-      // // get the user's avatars and response.
-      // console.log(options);
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
+      res.render('not-found');
     });
 });
 router.post('/:id/call', (req, res, next) => {
