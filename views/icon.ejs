@@ -224,23 +224,26 @@
     <h4 class="mdl-dialog__title">修改您的資料</h4>
     <div class="mdl-dialog__content">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="name">
+        <input class="mdl-textfield__input" type="text" id="name" value="<%= name %>">
         <label class="mdl-textfield__label" for="name">姓名</label>
       </div><br/>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label phonenumber-field">
-        <input class="mdl-textfield__input" pattern="[0-9]{10}" id="phoneNumber" type="tel" inputmode="numeric">
+        <input class="mdl-textfield__input" pattern="[0-9]{10}" id="phoneNumber" type="tel" inputmode="numeric" value="<%= phoneNumber.replace('+886', ''); %>">
         <label class="mdl-textfield__label" for="phoneNumber">請輸入台灣手機號碼</label>
         <span class="mdl-textfield__error">只能輸入手機號碼，例如 0988123456 </span>
       </div><br/>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="company">
+        <input class="mdl-textfield__input" type="text" id="company" value="<%= company %>">
         <label class="mdl-textfield__label" for="company">公司</label>
       </div>
     </div>
     <div class="mdl-dialog__actions">
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+      <button
+        class="edit-dialog-btn--saved mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+        data-icon-uuid="<%= iconId %>" data-save-text="儲存中..." data-done-text="儲存"
+      >
         儲存
       </button>
       <button class="edit-dialog-btn--closed mdl-button mdl-js-button mdl-button--raised mdl-button--accent">

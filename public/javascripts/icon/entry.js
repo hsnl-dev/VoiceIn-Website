@@ -3,11 +3,12 @@ $(function () {
     el: 'body',
     events: {
       'click .confirm-btn': 'initCall',
-      'click #err-close': 'buttuonClose',
+      'click #err-close': 'buttonClose',
       'click .ath-btn': 'showAtnModal',
       'click .already-ath-btn': 'hideAtnSection',
       'click .edit-btn': 'showEditModal',
       'click .edit-dialog-btn--closed': 'hideEditModal',
+      'click .edit-dialog-btn--saved': 'saveUserData',
     },
     initialize: function () {
       let isHideAtnSection = localStorage.getItem('hideAtnSection');
@@ -37,6 +38,51 @@ $(function () {
       dialog.close();
     },
 
+    saveUserData: function (e) {
+      let $buttonClicked = $(e.currentTarget);
+      let iconUuid = $buttonClicked.data('icon-uuid');
+      let payload = JSON.stringify({
+        name: $('#name').val(),
+        phoneNumber: `+886${$('#phoneNumber').val()}`,
+        company: $('#company').val(),
+        location: '',
+        availableStartTime: '00:00',
+        availableEndTime: '23:59',
+        isEnable: 'true',
+
+        // profile: '',
+      });
+      let options = {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: payload,
+      };
+
+      let isInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
+
+      if (isInValid) {
+        alert('電話號碼格式有誤');
+      }
+
+      $buttonClicked.html($buttonClicked.data('save-text'));
+
+      fetch(`/icon/${iconUuid}/edit`, options)
+      .then(response => {
+        if (response >= 400) {
+          let err = new Error('Error!!!!!!!!!!');
+          throw err;
+        } else {
+          $buttonClicked.html($buttonClicked.data('done-text'));
+        }
+      }).catch(err => {
+        alert('抱歉，儲存失敗，請再嘗試一次。');
+        console.error(err);
+      });
+    },
+
     hideAtnSection: function (e) {
       localStorage.setItem('hideAtnSection', true);
       $('.ath-section').hide();
@@ -46,7 +92,7 @@ $(function () {
       this.addtohome.show(true);
     },
 
-    buttuonClose: function (event) {
+    buttonClose: function (event) {
       let errdialog = $('dialog.error-dialog').get(0);
       if (!errdialog.showModal) {
         dialogPolyfill.registerDialog(errdialog);

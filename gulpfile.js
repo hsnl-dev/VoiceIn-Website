@@ -119,7 +119,7 @@ gulp.task('styles', () => {
 gulp.task('browserify', () => {
   let files = [
     './public/javascripts/qrcode/entry.js',
-    './public/javascripts/icon/entry.js'
+    './public/javascripts/icon/entry.js',
   ];
 
   let tasks = files.map((entry) => {

@@ -45,6 +45,7 @@ router.get('/:id', (req, res, next) => {
       res.render('not-found');
     });
 });
+
 router.post('/:id/call', (req, res, next) => {
   let iconId = req.params.id;
   console.log(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}/calls`);
@@ -57,4 +58,31 @@ router.post('/:id/call', (req, res, next) => {
       res.status(response.status).end();
     });
 });
+
+router.put('/:id/edit', (req, res, next) => {
+  let iconId = req.params.id;
+  let payload = JSON.stringify(req.body);
+  let updateRoute = `${api.apiRoute}/${api.latestVersion}/icons/${iconId}`;
+  let options = {
+    headers: headers,
+    method: 'PUT',
+    body: payload,
+  };
+  console.log(options);
+
+  fetch(updateRoute, options)
+  .then(response => {
+    if (response.status >= 400) {
+      let err = new Error('Some damn err...');
+      err.response = response;
+      throw err;
+    } else {
+      res.status(response.status).end();
+    }
+  }).catch(err => {
+    console.error(err);
+    res.status(err.response.status).end();
+  });
+});
+
 module.exports = router;
