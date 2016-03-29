@@ -118,9 +118,10 @@
 
   </style>
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-  <link rel="stylesheet" href="../bower_components/add-to-homescreen/style/addtohomescreen.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/bower_components/add-to-homescreen/style/addtohomescreen.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.css">
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="/bower_components/md-date-time-picker/dist/css/md-date-time-picker.css">
   <!-- Material Design icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
@@ -176,10 +177,31 @@
           <p>
             <%= provider.location %>
           </p>
-
-          <button class="edit-btn mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-            修改您的資料
+          <h5>方便通話時間</h5>
+          <button class="period-btn--started mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            <%= availableStartTime %>
           </button>
+          至
+          <button class="period-btn--ended mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            <%= availableEndTime %>
+          </button>
+          <h5>允許對方來電?</h5>
+            <label class="isEnable-switch mdl-switch mdl-js-switch mdl-js-ripple-effect" for="isEnable-switch">
+            <% if (isEnable === true) {%>
+              <input type="checkbox" class="mdl-switch__input" checked>
+            <%} else {%>
+              <input type="checkbox" class="mdl-switch__input">
+            <% } %>
+            <span class="mdl-switch__label"></span>
+          </label>
+
+          <br/><br/>
+
+          <div class="edit-btn-section">
+            <button class="edit-btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+              修改您的資料
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -254,11 +276,14 @@
 
 
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <script src="/bower_components/draggabilly/dist/draggabilly.pkgd.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.2/backbone-min.js" charset="utf-8"></script>
-  <script src="../bower_components/add-to-homescreen/src/addtohomescreen.min.js" charset="utf-8"></script>
+  <script src="/bower_components/add-to-homescreen/src/addtohomescreen.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.11.0/fetch.min.js"></script>
+  <script src="/bower_components/md-date-time-picker/dist/js/md-date-time-picker.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js"></script>
   <script src="/dist/public/javascripts/icon/entry.bundle.js"></script>
 </body>
