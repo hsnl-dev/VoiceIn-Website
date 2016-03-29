@@ -9,9 +9,17 @@ $(function () {
       'click .edit-btn': 'showEditModal',
       'click .edit-dialog-btn--closed': 'hideEditModal',
       'click .edit-dialog-btn--saved': 'saveUserData',
+      'click .period-btn--started': 'openStartTimePicker',
+      'click .period-btn--ended': 'openEndTimePicker',
+      'click #mddtp-time__ok': 'setTimeMoment',
+      'click .isEnable-switch': 'toggleEnableSwitch',
     },
     initialize: function () {
       let isHideAtnSection = localStorage.getItem('hideAtnSection');
+      this.mdTimePicker = new mdDateTimePicker({
+        type: 'time',
+      });
+      this.editTimeState = 'start';
 
       if (isHideAtnSection) {
         $('.ath-section').hide();
@@ -22,6 +30,46 @@ $(function () {
           autostart: true,
         });
       }
+
+    },
+
+    toggleEnableSwitch:function (e) {
+      let $toggleSwitch = $(e.currentTarget);
+      let $userInfoSaveBtn = $('.edit-dialog-btn--saved');
+
+      $toggleSwitch.toggleClass('is-checked');
+
+      // Save the data
+      $userInfoSaveBtn.click();
+    },
+
+    setTimeMoment: function (e) {
+      let editTimeState = this.editTimeState;
+      let $periodStart = $('.period-btn--started');
+      let $periodEnd = $('.period-btn--ended');
+      let $userInfoSaveBtn = $('.edit-dialog-btn--saved');
+
+      if (editTimeState === 'start') {
+        let time = (this.mdTimePicker.time().format('HH:mm'));
+        $periodStart.html(time);
+      } else {
+        let time = (this.mdTimePicker.time().format('HH:mm'));
+        $periodEnd.html(time);
+      }
+
+      // Save the data
+      $userInfoSaveBtn.click();
+    },
+
+    openStartTimePicker: function (e) {
+      this.mdTimePicker.toggle();
+      let time = this.mdTimePicker.time();
+      this.editTimeState = 'start';
+    },
+
+    openEndTimePicker: function (e) {
+      this.mdTimePicker.toggle();
+      this.editTimeState = 'end';
     },
 
     showEditModal: function (e) {
@@ -39,19 +87,20 @@ $(function () {
     },
 
     saveUserData: function (e) {
-      let $buttonClicked = $(e.currentTarget);
+      let $buttonClicked = $('.edit-dialog-btn--saved');
       let iconUuid = $buttonClicked.data('icon-uuid');
       let payload = JSON.stringify({
         name: $('#name').val(),
         phoneNumber: `+886${$('#phoneNumber').val()}`,
         company: $('#company').val(),
         location: '',
-        availableStartTime: '00:00',
-        availableEndTime: '23:59',
-        isEnable: 'true',
+        availableStartTime: $('.period-btn--started').text().replace(/\n|" "/g, ''),
+        availableEndTime: $('.period-btn--ended').text().replace(/\n|" "/g, ''),
+        isEnable: $('.isEnable-switch').hasClass('is-checked').toString(),
 
         // profile: '',
       });
+
       let options = {
         method: 'PUT',
         headers: {
@@ -98,12 +147,10 @@ $(function () {
         dialogPolyfill.registerDialog(errdialog);
       }
 
-      console.log(event);
       errdialog.close();
     },
 
     initCall: function (e) {
-      console.log(e);
       let iconUuid = $('.icon-info').data('iconid');
       let dialog = $('dialog.progress-dialog').get(0);
       let errdialog = $('dialog.error-dialog').get(0);
