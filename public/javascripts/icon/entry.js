@@ -113,7 +113,7 @@ $(function () {
       let isInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
 
       if (isInValid) {
-        alert('電話號碼格式有誤');
+        console.log('電話號碼格式有誤');
       }
 
       $buttonClicked.html($buttonClicked.data('save-text'));
