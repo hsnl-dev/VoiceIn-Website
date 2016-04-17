@@ -64,9 +64,13 @@ $(() => {
         return res.json();
       }).then(data => {
         if (data.iconId) {
+          let host = 'https://voice-in.herokuapp.com';
+
           $('.notification-text').html('成功加入，只剩下最後一步了!');
           $dialog.showModal();
-          window.location = `/icon/${data.iconId}`;
+
+          let newWindow = window.open(`${host}/icon/${data.iconId}`, '_blank');
+          newWindow.focus();
         }
       }).catch(error => {
         console.log('request failed', error);
