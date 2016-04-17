@@ -65,16 +65,19 @@ $(() => {
       }).then(data => {
         if (data.iconId) {
           let host = 'https://voice-in.herokuapp.com';
+          let url = `${host}/icon/${data.iconId}`;
 
           $('.notification-text').html('成功加入，只剩下最後一步了!');
           $dialog.showModal();
 
-          let url = `${host}/icon/${data.iconId}`;
+          var a = window.document.createElement('a');
+          a.target = '_blank';
+          a.href = url;
 
           // Dispatch fake click
-          let e = window.document.createEvent('MouseEvents');
+          var e = window.document.createEvent('MouseEvents');
           e.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-          $buttonClicked.dispatchEvent(e);
+          a.dispatchEvent(e);
         }
       }).catch(error => {
         console.log('request failed', error);
