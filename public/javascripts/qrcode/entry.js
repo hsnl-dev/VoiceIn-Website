@@ -69,8 +69,12 @@ $(() => {
           $('.notification-text').html('成功加入，只剩下最後一步了!');
           $dialog.showModal();
 
-          let newWindow = window.open(`${host}/icon/${data.iconId}`, '_blank');
-          newWindow.focus();
+          let url = `${host}/icon/${data.iconId}`;
+
+          // Dispatch fake click
+          let e = window.document.createEvent('MouseEvents');
+          e.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+          $buttonClicked.dispatchEvent(e);
         }
       }).catch(error => {
         console.log('request failed', error);
