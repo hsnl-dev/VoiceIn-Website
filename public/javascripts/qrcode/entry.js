@@ -65,12 +65,12 @@ $(() => {
       }).then(data => {
         if (data.iconId) {
           let host = 'https://voice-in.herokuapp.com';
-          let url = `${host}/icon/${data.iconId}`;
+          let url = `/icon/${data.iconId}`;
 
           $('.notification-text').html('成功加入，只剩下最後一步了!');
           $dialog.showModal();
 
-          window.location(url);
+          window.location = url;
         }
       }).catch(error => {
         console.log('request failed', error);
