@@ -124,13 +124,61 @@
       padding: 20px 24px 24px 24px;
       color: rgba(0,0,0, 0.54);
     }
+
+    /* CSS For tutorial section  */
+    .switch-to-safari-alert {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #E3F2FD;
+      text-align: center;
+    }
+
+    .tutorial-section {
+      text-align: left;
+    }
   </style>
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.2/dialog-polyfill.min.css" media="screen" title="dialog-polyfill" charset="utf-8">
   <!-- Material Design icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./dist/public/stylesheets/helpers/style.css" media="screen" title="generalHelpers" charset="utf-8">
+  <link rel="stylesheet" href="./dist/public/stylesheets/helpers/md-color.css" media="screen" title="md-color" charset="utf-8">
 </head>
 <body>
+
+  <div class="switch-to-safari-alert content-hidden">
+    <header>
+      <h5>請改用 iOS 版 <i class="fa fa-safari" aria-hidden="true"></i> Safari 開啟</h5>
+    </header>
+    <section class="mdl-grid tutorial-section">
+      <div class="mdl-cell mdl-cell--12-col md-gray-500">
+        <i class="fa fa-book" aria-hidden="true"></i> 使用教學
+        <ol>
+          <li>
+            請"長按"以下按鈕並從跳出的選單中，點選拷貝
+            <br/>
+              <a href="#" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent copy-url-link">長按我</a>
+          </li>
+          <li>
+            開起手機內建的 <i class="fa fa-safari" aria-hidden="true"></i> Safari 瀏覽器
+          </li>
+          <li>
+            於 Safari 瀏覽器開啟一個新分頁
+          </li>
+          <li>
+            並點選 Safari 瀏覽器上的網址欄，貼上剛剛所拷貝的網址按下 Go 即可
+          </li>
+        </ol>
+      </div>
+
+    </section>
+    <footer>
+    </footer>
+  </div>
 
   <div class="demo-layout-transparent mdl-layout mdl-js-layout">
     <header class="mdl-layout__header mdl-layout__header--transparent">
