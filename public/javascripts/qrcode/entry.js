@@ -1,5 +1,6 @@
 $(() => {
   const api = require('../config/api-url.js');
+  const isWebView = require('../utils/ua-detector.js');
   const $dialog = document.querySelector('#dialog');
 
   let FormView = Backbone.View.extend({
@@ -8,8 +9,20 @@ $(() => {
       'click .confirm-btn': 'addProvider',
     },
     initialize: () => {
+      let $switchToSafariAlert = $('.switch-to-safari-alert');
+
       if (!$dialog.showModal) {
         dialogPolyfill.registerDialog($dialog);
+      }
+
+      // insert the current url to link.
+      $('.copy-url-link').attr('href', window.location.href);
+
+      // Check user agent to determine if show the tutorial view.
+      if (isWebView(window)) {
+        $switchToSafariAlert.addClass('content-hidden');
+      } else {
+        $switchToSafariAlert.removeClass('content-hidden');
       }
 
       $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {
