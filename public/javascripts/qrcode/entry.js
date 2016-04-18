@@ -20,9 +20,9 @@ $(() => {
 
       // Check user agent to determine if show the tutorial view.
       if (isWebView(window)) {
-        $switchToSafariAlert.addClass('content-hidden');
-      } else {
         $switchToSafariAlert.removeClass('content-hidden');
+      } else {
+        $switchToSafariAlert.addClass('content-hidden');
       }
 
       $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {

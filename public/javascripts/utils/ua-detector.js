@@ -8,7 +8,7 @@ function isWebView(_window) {
   let isSafari = /safari/.test(userAgent);
   let isIos = /iphone|ipod|ipad/.test(userAgent);
 
-  return !isStandalone && !isSafari && isIos;
+  return isIos && !isStandalone && !isSafari;
 }
 
 module.exports = exports = isWebView;
