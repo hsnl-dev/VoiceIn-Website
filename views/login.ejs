@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="VoiceIn, Vcard App, contact book.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceIn 登入</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <style media="screen">
+      html, body {
+        background: #eee;
+      }
+      .login-container .login-section {
+        max-width: 450px;
+        padding: 0;
+        padding-top: 100px;
+        display: flex;
+        width: 100%;
+        margin: 0 auto;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container mdl-layout mdl-js-layout">
+      <main class="mdl-layout__content">
+        <div class="login-section mdl-grid">
+          <div class="mdl-card on-the-road-again mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__media mdl-color-text--grey-50">
+
+            </div>
+            <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
+              <!-- Textfield with Floating Label -->
+              <label for="">登入 VoiceIn</label>
+              <form action="/account/loginRequest" method="POST">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input name="username" class="mdl-textfield__input" type="text" pattern="[0-9]{10}" id="phone-number-input">
+                  <label class="mdl-textfield__label" for="phone-number-input">手機號碼...</label>
+                  <span class="mdl-textfield__error">請輸入正確格式之手機號碼</span>
+                </div>
+                <!-- Accent-colored raised button -->
+                <span class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent send-code-btn">
+                  發送認證碼
+                </span>
+                <br><br>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input name="password" class="mdl-textfield__input" type="text" pattern="[0-9]{6}" id="validation-code">
+                  <label class="mdl-textfield__label" for="validation-code">認證碼...</label>
+                  <span class="mdl-textfield__error">認證碼為六位數</span>
+                </div>
+                <br/>
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary login-btn">
+                  登入
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  </body>
+</html>
