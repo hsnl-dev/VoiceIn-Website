@@ -43,8 +43,6 @@ app.use('/dist', express.static(path.join(__dirname, '/dist')));
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
 console.log(__dirname);
-const flash = require('connect-flash');
-app.use(flash());
 
 // route
 app.use('/', routes);

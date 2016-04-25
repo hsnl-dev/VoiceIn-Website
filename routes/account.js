@@ -17,7 +17,7 @@ module.exports = function (passport) {
 
   /* GET login page. */
   router.get('/login', function (req, res) {
-    res.render('login', { message: req.flash('message') });
+    res.render('login', {});
   });
 
   /* Handle Login POST */
