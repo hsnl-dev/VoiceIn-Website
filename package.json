@@ -49,6 +49,7 @@
     "gulp-uncss": "^1.0.0",
     "gulp-useref": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "mongoose": "^4.4.13",
     "morgan": "~1.5.3",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

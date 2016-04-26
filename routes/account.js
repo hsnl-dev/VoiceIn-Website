@@ -1,22 +1,19 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
-
-const isAuthenticated = function (req, res, next) {
-  // if user is authenticated in the session, call the next() to call the next request handler
-  // Passport adds this method to request object. A middleware is allowed to add properties to
-  // request and response objects
+const User = require('../models/user');
+const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
 
-  // if the user is not authenticated then redirect him to the login page
   res.redirect('/');
 };
 
-module.exports = function (passport) {
+module.exports = (passport) => {
 
   /* GET login page. */
-  router.get('/login', function (req, res) {
+  router.get('/login', (req, res) => {
     res.render('login', {});
   });
 
@@ -28,9 +25,28 @@ module.exports = function (passport) {
   }));
 
   /* Handle Logout */
-  router.get('/signout', function (req, res) {
+  router.get('/signout', (req, res) => {
     req.logout();
     res.redirect('/');
+  });
+
+  router.get('/me', (req, res, next) => {
+    User.findOne({ _id:'218ba36a-3717-4322-94c8-5847a15c691d' }, (err, user) => {
+      console.log(err, user);
+      user.credit = user.credit.toFixed(2);
+      res.render('me', { user: user });
+    });
+  });
+
+  router.post('/me/update', (req, res, next) => {
+    let payload = req.body;
+    User.findOneAndUpdate({ _id:'218ba36a-3717-4322-94c8-5847a15c691d' }, payload, {}, (err) => {
+      if (!err) {
+        res.redirect('/account/me');
+      } else {
+        res.redirect('/account/me');
+      }
+    });
   });
 
   return router;

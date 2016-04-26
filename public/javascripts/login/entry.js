@@ -50,5 +50,38 @@ $(() => {
     },
   });
 
+  let UserInforView = Backbone.View.extend({
+    el: 'body',
+    events: {
+      'click .user-edit-btn': 'toggleToEditView',
+      'click .user-unedit-btn': 'unToggleToEditView',
+      'click .user-save-btn': 'updateUserInformation',
+    },
+    initialize: () => {
+      let template = _.template($('#info-template').html(), {});
+      $('.user-information-section').html(template);
+    },
+
+    toggleToEditView: () => {
+      let template = _.template($('#edit-template').html(), {});
+      $('.user-information-section').html(template);
+    },
+
+    unToggleToEditView: () => {
+      let template = _.template($('#info-template').html(), {});
+      $('.user-information-section').html(template);
+    },
+
+    updateUserInformation: () => {
+      $('.update-form').submit();
+    },
+
+    render: () => {
+
+    },
+  });
+
   let formView = new FormView();
+  let userInforView = new UserInforView();
+
 });
