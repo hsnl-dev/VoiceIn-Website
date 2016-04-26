@@ -10,7 +10,7 @@ const routes = require('./routes/index');
 const provider = require('./routes/provider');
 const icon = require('./routes/icon');
 const auth = require('./routes/auth');
-
+const validation = require('./api-route/v1/validation-resource');
 const app = express();
 
 // Configuring Passport
@@ -52,6 +52,9 @@ app.use('/auth', auth);
 
 const accpuntRoutes = require('./routes/account')(passport);
 app.use('/account', accpuntRoutes);
+
+// API Route
+app.use('/api/v1/validations', validation);
 
 // Initialize Passport
 const initPassport = require('./passport/init');

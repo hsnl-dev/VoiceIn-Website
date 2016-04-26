@@ -2,4 +2,5 @@
 module.exports = exports = {
   apiRoute: 'https://voicein.herokuapp.com/api',
   latestVersion: 'v2',
+  webSeverApiVersion: 'v1',
 };

@@ -12,7 +12,7 @@ const isAuthenticated = function (req, res, next) {
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res) {
   console.log(req.user);
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'voiceIn' });
 });
 
 module.exports = router;
