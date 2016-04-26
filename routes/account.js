@@ -2,6 +2,14 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const request = require('request').defaults({ encoding: null });
+const api = require('../config/api-url');
+
+let headers = {
+  apiKey: process.env.apiKey,
+  'Content-Type': 'application/json',
+};
+
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
@@ -36,8 +44,23 @@ module.exports = (passport) => {
     console.log(req.session);
     User.findOne({ _id: req.session.uuid }, (err, user) => {
       console.log(err, user);
-      user.credit = user.credit.toFixed(2);
-      res.render('me', { user: user });
+
+      let options = {
+        url: `${api.apiRoute}/${api.latestVersion}/avatars/${user.profilePhotoId}?size=mid`,
+        headers: headers,
+      };
+      let image = '';
+
+      // get the user's avatars and response.
+      request.get(options, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+          let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+          image = base64data;
+          user.credit = user.credit.toFixed(2);
+          res.render('me', { user: user, image: image });
+        }
+      });
+
     });
   });
 
