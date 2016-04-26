@@ -33,6 +33,10 @@
 
         .user-image {
           width: 100px;
+          border-radius: 50px;
+          -o-border-radius: 50px;
+          -webkit-border-radius: 50px;
+          -moz-border-radius: 50px;
         }
 
       </style>
@@ -43,7 +47,11 @@
           <div class="user-section mdl-grid">
             <div class="mdl-card mdl-cell mdl-cell--12-col">
               <div class="mdl-card__media mdl-color-text--grey-50 user-header">
-                <img class="user-image" src="/dist/public/images/general/user.ico" alt="" />
+                <% if (image !== '') { %>
+                  <img class="user-image" src="<%= image %>" alt="" />
+                <% } else {%>
+                  <img class="user-image" src="/dist/public/images/general/user.ico" alt="" />
+                <% } %>
               </div>
               <div class="mdl-color-text--grey-600 mdl-card__supporting-text user-information-section">
 
