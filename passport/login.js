@@ -40,7 +40,7 @@ module.exports = function (passport) {
       .then(userData => {
         console.log(userData);
         req.session.token = userData.token;
-        done(null, { _id: req.session.uuid });
+        done(null, { _id: userData.userUuid });
 
       })
       .catch((error) => {

@@ -11,13 +11,16 @@ $(() => {
     sendCode: () => {
       console.log('SEND CODE!');
       let phoneNumber = $('#phone-number-input').val();
+      let $loginBtn = $('.login-btn');
+      let $sendCodebtn = $('.send-code-btn');
       let payload = JSON.stringify({
         phoneNumber: phoneNumber,
         mode: $('input:radio[name=push-opt]:checked').val(),
       });
 
       console.log(payload);
-      $('.login-btn').prop('disabled', true);
+      $loginBtn.prop('disabled', true);
+      $sendCodebtn.html($sendCodebtn.data('send'));
 
       let options = {
         method: 'POST',
@@ -33,11 +36,13 @@ $(() => {
         if (response.status >= 200 && response.status < 300) {
           console.log(response.status);
           $('.login-btn').prop('disabled', false);
+          $sendCodebtn.html($sendCodebtn.data('normal'));
           return response;
         } else {
           var error = new Error(response.statusText);
           error.response = response;
-          $('.login-btn').prop('disabled', true);
+          $loginBtn.prop('disabled', true);
+          $sendCodebtn.html($sendCodebtn.data('send'));
           throw error;
         }
       }).then(res => {
