@@ -10,11 +10,13 @@ let headers = {
 };
 
 router.post('/', (req, res, next) => {
-  let phoneNumber = req.query.phoneNumber;
+  let phoneNumber = req.body.phoneNumber;
   let payload = JSON.stringify({
     mode: 'weblogin',
     phoneNumber: `+886${phoneNumber}`,
   });
+
+  console.log(payload);
 
   fetch(`${api.apiRoute}/${api.latestVersion}/accounts/validations`, {
     headers: headers,
@@ -26,12 +28,14 @@ router.post('/', (req, res, next) => {
         throw Error(res.statusText);
       }
 
-      console.log(res.statusText);
+      console.log(res.status);
       return res.json();
     })
     .then(userData => {
       console.log(userData);
-
+      var sess = req.session;
+      sess.uuid = userData.userUuid;
+      res.send(res.status).end();
     })
     .catch((error) => {
       console.error(error);

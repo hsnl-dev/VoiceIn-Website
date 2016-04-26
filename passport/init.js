@@ -17,8 +17,10 @@ module.exports = function (passport) {
     //   console.log('deserializing user:', user);
     //   done(err, user);
     // });
-    console.log(id);
-    done(null, { name: 'Calvin' });
+    console.log('deserializing' + id);
+    done(null, { id: id });
+
+    // {id: id} is user obj
   });
 
   // Setting up Passport Strategies for Login and SignUp/Registration

@@ -37,9 +37,7 @@ $(() => {
           throw error;
         }
       }).then(res => {
-        return res.json();
-      }).then(data => {
-        // dealing with data.
+        console.log(res);
       }).catch(error => {
         console.log('request failed', error);
       });
