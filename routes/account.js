@@ -42,7 +42,7 @@ module.exports = (passport) => {
   router.get('/me', isAuthenticated, (req, res, next) => {
     console.log(req.user);
     console.log(req.session);
-    User.findOne({ _id: req.session.uuid }, (err, user) => {
+    User.findOne({ _id: req.user.id }, (err, user) => {
       console.log(err, user);
 
       let options = {
