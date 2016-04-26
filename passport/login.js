@@ -13,11 +13,10 @@ module.exports = function (passport) {
   },
   function (req, username, password, done) {
     console.log(username, password);
-    let phoneNumber = req.body.phoneNumber;
 
     let payload = JSON.stringify({
       code: password,
-      phoneNumber: `+886${phoneNumber}`,
+      phoneNumber: `+886${username}`,
       password: null,
       mode: 'disposablePass',
     });
@@ -32,6 +31,7 @@ module.exports = function (passport) {
       .then(res => {
         if (!res.ok) {
           throw Error(res.statusText);
+          done(null, false, req.flash('message', '登入失敗，請確定手機或登入碼正確'));
         }
 
         console.log(res);
@@ -39,12 +39,13 @@ module.exports = function (passport) {
       })
       .then(userData => {
         console.log(userData);
+        req.session.token = userData.token;
         done(null, { _id: req.session.uuid });
 
       })
       .catch((error) => {
         console.error(error);
-        done(err);
+        done(null, false, req.flash('message', '登入失敗，請確定手機或登入碼正確'));
       });
   }));
 };

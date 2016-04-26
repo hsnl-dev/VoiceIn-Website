@@ -17,6 +17,7 @@ $(() => {
       });
 
       console.log(payload);
+      $('.login-btn').prop('disabled', true);
 
       let options = {
         method: 'POST',
@@ -30,10 +31,13 @@ $(() => {
       fetch(`/api/v1/validations/`, options)
       .then(response => {
         if (response.status >= 200 && response.status < 300) {
+          console.log(response.status);
+          $('.login-btn').prop('disabled', false);
           return response;
         } else {
           var error = new Error(response.statusText);
-          error.response = response;;
+          error.response = response;
+          $('.login-btn').prop('disabled', true);
           throw error;
         }
       }).then(res => {

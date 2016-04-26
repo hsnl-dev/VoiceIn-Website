@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const dbConfig = require('./config/db.js').production;
 const mongoose = require('mongoose');
+const flash = require('connect-flash');
+
 mongoose.connect(dbConfig.url);
 
 // Routes
@@ -31,6 +33,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(flash());
 
 app.use(expressSession({
     secret: 'voicein-secret-key-hswirq1',

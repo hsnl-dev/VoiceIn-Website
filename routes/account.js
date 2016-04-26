@@ -14,14 +14,15 @@ module.exports = (passport) => {
 
   /* GET login page. */
   router.get('/login', (req, res) => {
-    res.render('login', {});
+    console.log(req);
+    res.render('login', { message: req.flash('message') });
   });
 
   /* Handle Login POST */
   router.post('/loginRequest', passport.authenticate('login', {
     successRedirect: '/account/me',
     failureRedirect: '/account/login',
-    failureFlash: false,
+    failureFlash: true,
   }));
 
   /* Handle Logout */

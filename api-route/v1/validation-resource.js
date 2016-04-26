@@ -11,8 +11,10 @@ let headers = {
 
 router.post('/', (req, res, next) => {
   let phoneNumber = req.body.phoneNumber;
+  let mode = req.body.mode;
+
   let payload = JSON.stringify({
-    mode: 'weblogin',
+    mode: mode === 'app' ? 'weblogin' : null,
     phoneNumber: `+886${phoneNumber}`,
   });
 

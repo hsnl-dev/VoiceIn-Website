@@ -39,6 +39,9 @@
             <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
               <!-- Textfield with Floating Label -->
               <h5>登入 VoiceIn 服務</h5>
+              <% if (message) {%>
+                <span style="color: red;"><%= message %></span>
+              <% } %>
               <form class="login-form" action="/account/loginRequest" method="POST">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                   <input name="username" class="mdl-textfield__input" type="text" pattern="[0-9]{10}" id="phone-number-input">
@@ -69,7 +72,7 @@
                   <span class="mdl-textfield__error">登入碼為六位數</span>
                 </div>
                 <br/>
-                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary login-btn">
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary login-btn" disabled="true">
                   登入
                 </button>
               </form>
