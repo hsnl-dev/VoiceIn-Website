@@ -15,7 +15,7 @@ const isAuthenticated = (req, res, next) => {
     return next();
   }
 
-  res.redirect('/');
+  res.redirect('/account/login');
 };
 
 module.exports = (passport) => {
@@ -66,7 +66,7 @@ module.exports = (passport) => {
 
   router.post('/me/update', isAuthenticated, (req, res, next) => {
     let payload = req.body;
-    User.findOneAndUpdate({ _id: req.session.uuid }, payload, {}, (err) => {
+    User.findOneAndUpdate({ _id: req.user.id }, payload, {}, (err) => {
       if (!err) {
         res.redirect('/account/me');
       } else {
