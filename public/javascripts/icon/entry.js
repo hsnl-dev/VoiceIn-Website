@@ -170,9 +170,15 @@ $(function () {
            dialog.close();
            return response;
          } else {
-           var error = new Error(response.statusText);
-           error.response = response;;
-           throw error;
+           if (response.status === 402) {
+             // payment required.
+             $('.error-dialog p').html('對方點數不足，無法撥打。');
+           }  else {
+             let error = new Error(response.statusText);
+             error.response = response;
+             throw error;
+           }
+
          }
        })
        .catch(error => {

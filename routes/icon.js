@@ -72,7 +72,7 @@ router.put('/:id/edit', (req, res, next) => {
 
   fetch(updateRoute, options)
   .then(response => {
-    if (response.status >= 400) {
+    if (response.status >= 400 && response.status !== 402) {
       let err = new Error('Some damn err...');
       err.response = response;
       throw err;
