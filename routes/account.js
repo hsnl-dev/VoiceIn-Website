@@ -149,9 +149,9 @@ module.exports = (passport) => {
             status: statusStr,
           }),
         })
-          .then(res => {
-            if (!res.ok) {
-              throw Error(res.statusText);
+          .then(resp => {
+            if (!resp.ok) {
+              throw Error(resp.statusText);
             }else {
               res.status(200).send('1|OK');
             }
@@ -194,9 +194,9 @@ module.exports = (passport) => {
             status: statusStr,
           }),
         })
-          .then(res => {
-            if (!res.ok) {
-              throw Error(res.statusText);
+          .then(resp => {
+            if (!resp.ok) {
+              throw Error(resp.statusText);
             }else {
               res.status(200).send('1|OK');
             }
