@@ -3,9 +3,17 @@ $(() => {
     el: '.login-form',
     events: {
       'click .send-code-btn': 'sendCode',
+      'click .login-btn': 'changeLoginBtnState',
     },
     initialize: () => {
 
+    },
+
+    changeLoginBtnState: () => {
+      let $loginBtn = $('.login-btn');
+      $loginBtn.html($loginBtn.data('login'));
+      $('.login-btn').prop('disabled', true);
+      $('.login-form').submit();
     },
 
     sendCode: () => {
