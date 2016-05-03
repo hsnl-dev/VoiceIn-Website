@@ -139,7 +139,33 @@ module.exports = (passport) => {
 
   });
 
-  router.post('/buy/allpay/success', isAuthenticated, (req, res, next) => {
+  router.post('/buy/allpay/success', (req, res, next) => {
+    if (allpay.isDataValid(req.body)) {
+      let statusStr = req.RtnCode === 1 ? 'success' : 'fail';
+      fetch(`${api.apiRoute}/${api.latestVersion}/payments/${res.body.MerchantTradeNo}/actions/changePayment`, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            status: statusStr,
+          }),
+        })
+          .then(res => {
+            if (!res.ok) {
+              throw Error(res.statusText);
+            }else {
+              res.status(200).send('1|OK');
+            }
+
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(200).send('0|ErrorMessage');
+          });
+    }
+
+    console.log(req.body.MerchantTradeNo, req.body.RtnCode);
+    res.status(200).send('0|ErrorMessage');
+
     // { MerchantID: '2000132',
     // MerchantTradeNo: '245A27B010FC11E6',
     // PayAmt: '300',
@@ -156,13 +182,34 @@ module.exports = (passport) => {
     // CheckMacValue: 'BE6723FCFFB3721B8FA81A6BFF82005A' },
 
     // TODO: Add points to user if payment is successful.
-    console.log(req.body.MerchantTradeNo, req.body.RtnCode);
-    res.status(200).end();
   });
 
   router.post('/buy/allpay/sandbox', (req, res, next) => {
+    if (allpay.isDataValid(req.body)) {
+      let statusStr = req.RtnCode === 1 ? 'success' : 'fail';
+      fetch(`${api.apiRoute}/${api.latestVersion}/payments/${res.body.MerchantTradeNo}/actions/changePayment`, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            status: statusStr,
+          }),
+        })
+          .then(res => {
+            if (!res.ok) {
+              throw Error(res.statusText);
+            }else {
+              res.status(200).send('1|OK');
+            }
+
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(200).send('0|ErrorMessage');
+          });
+    }
+
     console.log(req.body.MerchantTradeNo, req.body.RtnCode);
-    res.status(200).end();
+    res.status(200).send('0|ErrorMessage');
   });
 
   router.post('/buy/allpay/fail', isAuthenticated, (req, res, next) => {
