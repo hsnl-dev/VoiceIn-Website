@@ -115,26 +115,56 @@ module.exports = (passport) => {
     console.log(process.env.NODE_ENV);
     console.log(req.session.token);
 
-    let payload = req.body;
+    let reqBody = req.body;
     let merchantNo = uuid.v4().split('-')[0].toUpperCase() + uuid.v4().split('-')[4].toUpperCase();
     allpay.aioCheckOut({
       MerchantTradeNo: merchantNo,
       MerchantTradeDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '/'),
-      TotalAmount: payload.points,
-      TradeDesc: 'VoiceIn ${payload.points} 點數購買',
+      TotalAmount: reqBody.points,
+      TradeDesc: 'VoiceIn ${reqBody.points} 點數購買',
       Items: [{
           name: '商品一',
           quantity: '1',
-          price: payload.points,
+          price: reqBody.points,
         },
       ],
       ReturnURL: isProduction ? 'https://voice-in.herokuapp.com/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/sandbox',
       ChoosePayment: 'ALL',
     }, function (err, result) {
-      //TODO: Save the payment record
 
-      let form = result.html;
-      res.send(form).end();
+      let paymentRoute = `${api.apiRoute}/${api.latestVersion}/payments`;
+      let payload = JSON.stringify({
+        money: reqBody.points,
+        method: null,
+        status: 'pending',
+        payId: merchantNo,
+      });
+
+      headers.token = req.session.token;
+
+      let options = {
+        headers: headers,
+        method: 'POST',
+        body: payload,
+      };
+
+      console.log(options);
+
+      fetch(paymentRoute, options)
+      .then(response => {
+        if (response.status >= 400) {
+          let err = new Error('Some damn err...');
+          err.response = response;
+          throw err;
+        } else {
+          let form = result.html;
+          res.send(form).end();
+        }
+      }).catch(err => {
+        console.error(err);
+        res.status(err.response.status).end();
+      });
+
     });
 
   });
