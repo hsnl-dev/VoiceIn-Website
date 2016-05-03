@@ -14,7 +14,6 @@ mongoose.connect(dbConfig.url);
 const routes = require('./routes/index');
 const provider = require('./routes/provider');
 const icon = require('./routes/icon');
-const auth = require('./routes/auth');
 const validation = require('./api-route/v1/validation-resource');
 const app = express();
 
@@ -54,7 +53,6 @@ console.log(__dirname);
 app.use('/', routes);
 app.use('/qrcode', provider);
 app.use('/icon', icon);
-app.use('/auth', auth);
 
 const accpuntRoutes = require('./routes/account')(passport);
 app.use('/account', accpuntRoutes);

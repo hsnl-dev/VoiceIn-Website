@@ -4,6 +4,16 @@ const router = express.Router();
 const User = require('../models/user');
 const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
+const Allpay = require('allpay');
+const uuid = require('node-uuid');
+
+let allpay = new Allpay({
+  merchantID: '2000132',
+  hashKey: '5294y06JbISpM5x9',
+  hashIV: 'v77hoKGq4kWxNNIS',
+  mode: 'test',
+  debug: true,
+});
 
 let headers = {
   apiKey: process.env.apiKey,
@@ -23,7 +33,7 @@ module.exports = (passport) => {
   /* GET login page. */
   router.get('/login', (req, res) => {
     console.log(req);
-    res.render('login', { message: req.flash('message') });
+    res.render('account/login', { message: req.flash('message') });
   });
 
   /* Handle Login POST */
@@ -57,7 +67,7 @@ module.exports = (passport) => {
           let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
           image = base64data;
           user.credit = user.credit.toFixed(2);
-          res.render('me', { user: user, image: image });
+          res.render('account/me', { user: user, image: image });
         }
       });
 
@@ -73,6 +83,42 @@ module.exports = (passport) => {
         res.redirect('/account/me');
       }
     });
+  });
+
+  router.get('/buy', (req, res, next) => {
+    res.render('account/buy');
+  });
+
+  router.post('/buy/allpay', (req, res, next) => {
+    console.log(req.body);
+    let payload = req.body;
+
+    allpay.aioCheckOut({
+      MerchantTradeNo: uuid.v1().split('-')[0].toUpperCase() + uuid.v1().split('-')[1].toUpperCase() + uuid.v1().split('-')[2].toUpperCase(),
+      MerchantTradeDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '/'),
+      TotalAmount: payload.points,
+      TradeDesc: 'VoiceIn ${payload.points} 點數購買',
+      Items: [{
+          name: '商品一',
+          quantity: '1',
+          price: payload.points,
+        },
+      ],
+      ReturnURL: 'https://voice-in.herokuapp.com/account/buy/allpay/success',
+      ChoosePayment: 'ALL',
+    }, function (err, result) {
+      let form = result.html;
+      res.send(form).end();
+    });
+
+  });
+
+  router.post('/buy/allpay/success', (req, res, next) => {
+    console.log(req);
+  });
+
+  router.post('/buy/allpay/fail', (req, res, next) => {
+
   });
 
   return router;

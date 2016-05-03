@@ -17,13 +17,6 @@
         background: #eee;
       }
 
-      .user-container .user-section {
-        padding: 0;
-        display: flex;
-        margin: 0 auto;
-        flex-shrink: 0;
-      }
-
       .user-header {
         background: url('/dist/public/images/qrcode/blurred-web-backgrounds.jpg') center / cover;
         padding: 50px;
@@ -81,7 +74,7 @@
 
       <main class="mdl-layout__content mdl-color--grey-100">
         <div class="mdl-grid demo-content">
-          <div class="user-container user-section mdl-card mdl-cell mdl-cell--8-col">
+          <div class="user-container user-section mdl-card mdl-cell mdl-cell--6-col">
             <div class="mdl-card__media mdl-color-text--grey-50 user-header">
               <% if (image !== '') { %>
                 <img class="user-image" src="<%= image %>" alt="" />
