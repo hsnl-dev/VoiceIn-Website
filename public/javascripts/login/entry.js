@@ -42,7 +42,7 @@ $(() => {
           var error = new Error(response.statusText);
           error.response = response;
           $loginBtn.prop('disabled', true);
-          $sendCodebtn.html($sendCodebtn.data('send'));
+          $sendCodebtn.html($sendCodebtn.data('fail'));
           throw error;
         }
       }).then(res => {

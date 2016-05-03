@@ -22,6 +22,7 @@ let headers = {
 };
 
 const isAuthenticated = (req, res, next) => {
+  // If not production (sandbox), login directly for convinience.
   if (!isProduction || req.isAuthenticated()) {
     return next();
   }
@@ -75,6 +76,29 @@ module.exports = (passport) => {
     });
   });
 
+  router.get('/card', isAuthenticated, (req, res, next) => {
+    User.findOne({ _id: req.user.id }, (err, user) => {
+      console.log(err, user);
+
+      let options = {
+        url: `${api.apiRoute}/${api.latestVersion}/avatars/${user.profilePhotoId}?size=mid`,
+        headers: headers,
+      };
+      let image = '';
+
+      // get the user's avatars and response.
+      request.get(options, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+          let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+          image = base64data;
+          user.credit = user.credit.toFixed(2);
+          res.render('account/card', { user: user, image: image });
+        }
+      });
+
+    });
+  });
+
   router.post('/me/update', isAuthenticated, (req, res, next) => {
     let payload = req.body;
     User.findOneAndUpdate({ _id: req.user.id }, payload, {}, (err) => {
@@ -109,6 +133,8 @@ module.exports = (passport) => {
       ReturnURL: isProduction ? 'https://voice-in.herokuapp.com/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/sandbox',
       ChoosePayment: 'ALL',
     }, function (err, result) {
+      //TODO: Save the payment record
+
       let form = result.html;
       res.send(form).end();
     });
@@ -130,6 +156,8 @@ module.exports = (passport) => {
     // TradeDate: '2016/05/03 14:55:58',
     // TradeNo: '1605031455581117',
     // CheckMacValue: 'BE6723FCFFB3721B8FA81A6BFF82005A' },
+
+    // TODO: Add points to user if payment is successful.
     console.log(req.body.MerchantTradeNo, req.body.RtnCode);
     res.status(200).end();
   });

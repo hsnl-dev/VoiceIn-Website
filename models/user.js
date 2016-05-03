@@ -8,6 +8,7 @@ module.exports = exports = mongoose.model('accounts', {
   profile: String,
   company: String,
   profilePhotoId: String,
+  qrCodeUuid: String,
   email: String,
   jobTitle: String,
   credit: Number,
