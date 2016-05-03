@@ -12,7 +12,7 @@ $(() => {
     changeLoginBtnState: () => {
       let $loginBtn = $('.login-btn');
       $loginBtn.html($loginBtn.data('login'));
-      $('.login-btn').prop('disabled', true);
+      $loginBtn.prop('disabled', true);
       $('.login-form').submit();
     },
 
