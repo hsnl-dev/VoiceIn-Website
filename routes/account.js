@@ -6,14 +6,16 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const Allpay = require('allpay');
 const uuid = require('node-uuid');
+const allpaySecret = process.env.ALLPAY_MODE === 'production' ? require('../config/secret').allpaySecret : require('../config/secret').testAllpaySecret;
 let headers = require('../config/secret').webServiceHeader;
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 let allpay = new Allpay({
-  merchantID: isProduction ? '1078967' : '2000132',
-  hashKey: isProduction ? 'E0XUrGq721IYK3bx' : '5294y06JbISpM5x9',
-  hashIV: isProduction ? 'awM2Qfkk5sF5XwTG' : 'v77hoKGq4kWxNNIS',
-  mode: isProduction ? 'production' : 'test',
+  merchantID: allpaySecret.merchantID,
+  hashKey: allpaySecret.hashKey,
+  hashIV: allpaySecret.hashIV,
+  mode: allpaySecret.mode,
   debug: true,
 });
 
@@ -115,32 +117,63 @@ module.exports = (passport) => {
     console.log(process.env.NODE_ENV);
     console.log(req.session.token);
 
-    let payload = req.body;
+    let reqBody = req.body;
     let merchantNo = uuid.v4().split('-')[0].toUpperCase() + uuid.v4().split('-')[4].toUpperCase();
     allpay.aioCheckOut({
       MerchantTradeNo: merchantNo,
       MerchantTradeDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '/'),
-      TotalAmount: payload.points,
-      TradeDesc: 'VoiceIn ${payload.points} 點數購買',
+      TotalAmount: reqBody.points,
+      TradeDesc: 'VoiceIn ${reqBody.points} 點數購買',
       Items: [{
           name: '商品一',
           quantity: '1',
-          price: payload.points,
+          price: reqBody.points,
         },
       ],
       ReturnURL: isProduction ? 'https://voice-in.herokuapp.com/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/sandbox',
       ChoosePayment: 'ALL',
     }, function (err, result) {
-      //TODO: Save the payment record
 
-      let form = result.html;
-      res.send(form).end();
+      let paymentRoute = `${api.apiRoute}/${api.latestVersion}/payments`;
+      let payload = JSON.stringify({
+        money: reqBody.points,
+        method: null,
+        status: 'pending',
+        payId: merchantNo,
+      });
+
+      headers.token = req.session.token;
+
+      let options = {
+        headers: headers,
+        method: 'POST',
+        body: payload,
+      };
+
+      console.log(options);
+
+      fetch(paymentRoute, options)
+      .then(response => {
+        if (response.status >= 400) {
+          let err = new Error('Some damn err...');
+          err.response = response;
+          throw err;
+        } else {
+          let form = result.html;
+          res.send(form).end();
+        }
+      }).catch(err => {
+        console.error(err);
+        res.status(err.response.status).end();
+      });
+
     });
 
   });
 
   router.post('/buy/allpay/success', (req, res, next) => {
-    if (true) {
+
+    if (allpay.isDataValid(req.body)) {
       let statusStr = req.RtnCode === '1' ? 'success' : 'fail';
       fetch(`${api.apiRoute}/${api.latestVersion}/payments/${req.body.MerchantTradeNo}/actions/changePayment`, {
           method: 'POST',
@@ -152,19 +185,16 @@ module.exports = (passport) => {
           .then(resp => {
             if (!resp.ok) {
               throw Error(resp.statusText);
-            }else {
-              res.status(200).send('1|OK');
+            } else {
+              res.status(200).send('1|OK').end();
             }
 
           })
           .catch(err => {
             console.log(err);
-            res.status(200).send('0|ErrorMessage');
+            res.status(200).send('0|ErrorMessage').end();
           });
     }
-
-    console.log(req.body.MerchantTradeNo, req.body.RtnCode);
-    res.status(200).send('0|ErrorMessage');
 
     // { MerchantID: '2000132',
     // MerchantTradeNo: '245A27B010FC11E6',
@@ -185,8 +215,8 @@ module.exports = (passport) => {
   });
 
   router.post('/buy/allpay/sandbox', (req, res, next) => {
-    if (true) {
-      let statusStr = req.RtnCode === 1 ? 'success' : 'fail';
+    if (allpay.isDataValid(req.body)) {
+      let statusStr = req.RtnCode === '1' ? 'success' : 'fail';
       fetch(`${api.apiRoute}/${api.latestVersion}/payments/${res.body.MerchantTradeNo}/actions/changePayment`, {
           method: 'POST',
           headers: headers,
@@ -197,19 +227,18 @@ module.exports = (passport) => {
           .then(resp => {
             if (!resp.ok) {
               throw Error(resp.statusText);
-            }else {
-              res.status(200).send('1|OK');
+            } else {
+              res.status(200).send('1|OK').end();
             }
 
           })
           .catch(err => {
             console.log(err);
-            res.status(200).send('0|ErrorMessage');
+            res.status(200).send('0|ErrorMessage').end();
           });
     }
 
     console.log(req.body.MerchantTradeNo, req.body.RtnCode);
-    res.status(200).send('0|ErrorMessage');
   });
 
   router.post('/buy/allpay/fail', isAuthenticated, (req, res, next) => {
