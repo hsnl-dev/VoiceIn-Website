@@ -91,7 +91,7 @@ module.exports = (passport) => {
 
   router.post('/buy/allpay', (req, res, next) => {
     console.log(req.body);
-    console.log(app.get('env'));
+    console.log(process.env.NODE_ENV);
     let payload = req.body;
 
     allpay.aioCheckOut({
@@ -130,7 +130,7 @@ module.exports = (passport) => {
     // TradeNo: '1605031455581117',
     // CheckMacValue: 'BE6723FCFFB3721B8FA81A6BFF82005A' },
     console.log(req.MerchantTradeNo, req.RtnCode);
-    res.send('').end();
+    res.status(200).end();
   });
 
   router.post('/buy/allpay/fail', (req, res, next) => {
