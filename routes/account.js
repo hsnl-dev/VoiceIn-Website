@@ -170,7 +170,6 @@ module.exports = (passport) => {
   });
 
   router.post('/buy/allpay/success', (req, res, next) => {
-    delete req.body.CheckMacValue;
     if (allpay.isDataValid(req.body)) {
       let statusStr = req.RtnCode === 1 ? 'success' : 'fail';
       fetch(`${api.apiRoute}/${api.latestVersion}/payments/${res.body.MerchantTradeNo}/actions/changePayment`, {
@@ -216,7 +215,6 @@ module.exports = (passport) => {
   });
 
   router.post('/buy/allpay/sandbox', (req, res, next) => {
-    delete req.body.CheckMacValue;
     if (allpay.isDataValid(req.body)) {
       let statusStr = req.RtnCode === 1 ? 'success' : 'fail';
       fetch(`${api.apiRoute}/${api.latestVersion}/payments/${res.body.MerchantTradeNo}/actions/changePayment`, {
