@@ -129,8 +129,8 @@ module.exports = (passport) => {
     // TradeDate: '2016/05/03 14:55:58',
     // TradeNo: '1605031455581117',
     // CheckMacValue: 'BE6723FCFFB3721B8FA81A6BFF82005A' },
-    console.log(req.body);
-    res.status(200).end();
+    console.log(req.MerchantTradeNo, req.RtnCode);
+    res.send('').end();
   });
 
   router.post('/buy/allpay/fail', (req, res, next) => {
