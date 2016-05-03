@@ -142,7 +142,7 @@ module.exports = (passport) => {
   router.post('/buy/allpay/success', (req, res, next) => {
     if (true) {
       let statusStr = req.RtnCode === 1 ? 'success' : 'fail';
-      fetch(`${api.apiRoute}/${api.latestVersion}/payments/${res.body.MerchantTradeNo}/actions/changePayment`, {
+      fetch(`${api.apiRoute}/${api.latestVersion}/payments/${req.body.MerchantTradeNo}/actions/changePayment`, {
           method: 'POST',
           headers: headers,
           body: JSON.stringify({
