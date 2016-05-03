@@ -91,6 +91,7 @@ module.exports = (passport) => {
 
   router.post('/buy/allpay', (req, res, next) => {
     console.log(req.body);
+    console.log(app.get('env'));
     let payload = req.body;
 
     allpay.aioCheckOut({
