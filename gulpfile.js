@@ -121,6 +121,7 @@ gulp.task('browserify', () => {
     './public/javascripts/qrcode/entry.js',
     './public/javascripts/icon/entry.js',
     './public/javascripts/login/entry.js',
+    './public/javascripts/buy/entry.js',
   ];
 
   let tasks = files.map((entry) => {
