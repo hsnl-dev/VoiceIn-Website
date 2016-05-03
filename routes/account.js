@@ -6,12 +6,13 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const Allpay = require('allpay');
 const uuid = require('node-uuid');
+const env = process.env.NODE_ENV === 'production';
 
 let allpay = new Allpay({
-  merchantID: '2000132',
-  hashKey: '5294y06JbISpM5x9',
-  hashIV: 'v77hoKGq4kWxNNIS',
-  mode: 'test',
+  merchantID: env ? '1078967' : '2000132',
+  hashKey: env ? 'E0XUrGq721IYK3bx' : '5294y06JbISpM5x9',
+  hashIV: env ? 'awM2Qfkk5sF5XwTG' : 'v77hoKGq4kWxNNIS',
+  mode: env ? 'production' : 'test',
   debug: true,
 });
 
@@ -105,7 +106,7 @@ module.exports = (passport) => {
           price: payload.points,
         },
       ],
-      ReturnURL: 'https://voice-in.herokuapp.com/account/buy/allpay/success',
+      ReturnURL: env === 'production' ? 'https://voice-in.herokuapp.com/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/sandbox',
       ChoosePayment: 'ALL',
     }, function (err, result) {
       let form = result.html;
@@ -129,7 +130,12 @@ module.exports = (passport) => {
     // TradeDate: '2016/05/03 14:55:58',
     // TradeNo: '1605031455581117',
     // CheckMacValue: 'BE6723FCFFB3721B8FA81A6BFF82005A' },
-    console.log(req.MerchantTradeNo, req.RtnCode);
+    console.log(req.body.MerchantTradeNo, req.body.RtnCode);
+    res.status(200).end();
+  });
+
+  router.post('/buy/allpay/sandbox', (req, res, next) => {
+    console.log(req.body.MerchantTradeNo, req.body.RtnCode);
     res.status(200).end();
   });
 
