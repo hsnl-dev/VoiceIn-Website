@@ -17,7 +17,7 @@ module.exports = function (passport) {
     //   console.log('deserializing user:', user);
     //   done(err, user);
     // });
-    console.log('deserializing' + id);
+    console.log('deserializing ' + id);
     done(null, { id: id });
 
     // {id: id} is user obj
