@@ -1,5 +1,5 @@
 const express = require('express');
-const debug = require('debug');
+const debug = require('debug')('app:appjs');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
