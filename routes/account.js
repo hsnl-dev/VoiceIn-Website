@@ -91,6 +91,7 @@ module.exports = (passport) => {
 
   router.post('/buy/allpay', (req, res, next) => {
     console.log(req.body);
+    console.log(app.get('env'));
     let payload = req.body;
 
     allpay.aioCheckOut({
@@ -114,7 +115,22 @@ module.exports = (passport) => {
   });
 
   router.post('/buy/allpay/success', (req, res, next) => {
-    console.log(req);
+    // { MerchantID: '2000132',
+    // MerchantTradeNo: '245A27B010FC11E6',
+    // PayAmt: '300',
+    // PaymentDate: '2016/05/03 14:57:15',
+    // PaymentType: 'Credit_CreditCard',
+    // PaymentTypeChargeFee: '8',
+    // RedeemAmt: '0',
+    // RtnCode: '1',
+    // RtnMsg: '交易成功',
+    // SimulatePaid: '0',
+    // TradeAmt: '300',
+    // TradeDate: '2016/05/03 14:55:58',
+    // TradeNo: '1605031455581117',
+    // CheckMacValue: 'BE6723FCFFB3721B8FA81A6BFF82005A' },
+    console.log(req.MerchantTradeNo, req.RtnCode);
+    res.send('').end();
   });
 
   router.post('/buy/allpay/fail', (req, res, next) => {
