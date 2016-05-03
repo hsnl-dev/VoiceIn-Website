@@ -6,14 +6,16 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const Allpay = require('allpay');
 const uuid = require('node-uuid');
+const allpaySecret = process.env.ALLPAY_MODE === 'production' ? require('../config/secret').allpaySecret : require('../config/secret').testAllpaySecret;
 let headers = require('../config/secret').webServiceHeader;
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 let allpay = new Allpay({
-  merchantID: isProduction ? '1078967' : '2000132',
-  hashKey: isProduction ? 'E0XUrGq721IYK3bx' : '5294y06JbISpM5x9',
-  hashIV: isProduction ? 'awM2Qfkk5sF5XwTG' : 'v77hoKGq4kWxNNIS',
-  mode: isProduction ? 'production' : 'test',
+  merchantID: allpaySecret.merchantID,
+  hashKey: allpaySecret.hashKey,
+  hashIV: allpaySecret.hashKey,
+  mode: allpaySecret.hashKey,
   debug: true,
 });
 
