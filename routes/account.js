@@ -14,8 +14,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 let allpay = new Allpay({
   merchantID: allpaySecret.merchantID,
   hashKey: allpaySecret.hashKey,
-  hashIV: allpaySecret.hashKey,
-  mode: allpaySecret.hashKey,
+  hashIV: allpaySecret.hashIV,
+  mode: allpaySecret.mode,
   debug: true,
 });
 
