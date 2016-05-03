@@ -6,6 +6,7 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const Allpay = require('allpay');
 const uuid = require('node-uuid');
+const headers = require('../config/secret').webServiceHeader;
 const isProduction = process.env.NODE_ENV === 'production';
 
 let allpay = new Allpay({
@@ -15,11 +16,6 @@ let allpay = new Allpay({
   mode: isProduction ? 'production' : 'test',
   debug: true,
 });
-
-let headers = {
-  apiKey: process.env.apiKey,
-  'Content-Type': 'application/json',
-};
 
 const isAuthenticated = (req, res, next) => {
   // If not production (sandbox), login directly for convinience.

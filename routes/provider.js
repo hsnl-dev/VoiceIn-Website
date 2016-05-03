@@ -4,11 +4,7 @@ const router = express.Router();
 const fetch = require('isomorphic-fetch');
 const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
-
-let headers = {
-  apiKey: process.env.apiKey,
-  'Content-Type': 'application/json',
-};
+const headers = require('../config/secret').webServiceHeader;
 
 router.get('/', (req, res, next) => {
   let qrCodeUuid = req.query.id;
