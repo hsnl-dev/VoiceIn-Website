@@ -6,13 +6,13 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const Allpay = require('allpay');
 const uuid = require('node-uuid');
-const env = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 let allpay = new Allpay({
-  merchantID: env ? '1078967' : '2000132',
-  hashKey: env ? 'E0XUrGq721IYK3bx' : '5294y06JbISpM5x9',
-  hashIV: env ? 'awM2Qfkk5sF5XwTG' : 'v77hoKGq4kWxNNIS',
-  mode: env ? 'production' : 'test',
+  merchantID: isProduction ? '1078967' : '2000132',
+  hashKey: isProduction ? 'E0XUrGq721IYK3bx' : '5294y06JbISpM5x9',
+  hashIV: isProduction ? 'awM2Qfkk5sF5XwTG' : 'v77hoKGq4kWxNNIS',
+  mode: isProduction ? 'production' : 'test',
   debug: true,
 });
 
@@ -106,7 +106,7 @@ module.exports = (passport) => {
           price: payload.points,
         },
       ],
-      ReturnURL: env === 'production' ? 'https://voice-in.herokuapp.com/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/sandbox',
+      ReturnURL: isProduction ? 'https://voice-in.herokuapp.com/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/sandbox',
       ChoosePayment: 'ALL',
     }, function (err, result) {
       let form = result.html;
