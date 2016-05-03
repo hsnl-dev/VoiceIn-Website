@@ -184,19 +184,16 @@ module.exports = (passport) => {
           .then(resp => {
             if (!resp.ok) {
               throw Error(resp.statusText);
-            }else {
-              res.status(200).send('1|OK');
+            } else {
+              res.status(200).send('1|OK').end();
             }
 
           })
           .catch(err => {
             console.log(err);
-            res.status(200).send('0|ErrorMessage');
+            res.status(200).send('0|ErrorMessage').end();
           });
     }
-
-    console.log(req.body.MerchantTradeNo, req.body.RtnCode);
-    res.status(200).send('0|ErrorMessage');
 
     // { MerchantID: '2000132',
     // MerchantTradeNo: '245A27B010FC11E6',
@@ -229,19 +226,18 @@ module.exports = (passport) => {
           .then(resp => {
             if (!resp.ok) {
               throw Error(resp.statusText);
-            }else {
-              res.status(200).send('1|OK');
+            } else {
+              res.status(200).send('1|OK').end();
             }
 
           })
           .catch(err => {
             console.log(err);
-            res.status(200).send('0|ErrorMessage');
+            res.status(200).send('0|ErrorMessage').end();
           });
     }
 
     console.log(req.body.MerchantTradeNo, req.body.RtnCode);
-    res.status(200).send('0|ErrorMessage');
   });
 
   router.post('/buy/allpay/fail', isAuthenticated, (req, res, next) => {
