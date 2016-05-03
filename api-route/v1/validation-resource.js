@@ -25,13 +25,14 @@ router.post('/', (req, res, next) => {
     method: 'POST',
     body: payload,
   })
-    .then(res => {
-      if (!res.ok) {
-        throw Error(res.statusText);
+    .then(resp => {
+      if (!resp.ok) {
+        // throw Error(res.statusText);
+        res.send(resp.status).end();
       }
 
-      console.log(res.status);
-      return res.json();
+      console.log(resp.status);
+      return resp.json();
     })
     .then(userData => {
       console.log(userData);

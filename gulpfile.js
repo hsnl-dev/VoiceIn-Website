@@ -122,6 +122,7 @@ gulp.task('browserify', () => {
     './public/javascripts/icon/entry.js',
     './public/javascripts/login/entry.js',
     './public/javascripts/buy/entry.js',
+    './public/javascripts/card/entry.js',
   ];
 
   let tasks = files.map((entry) => {
