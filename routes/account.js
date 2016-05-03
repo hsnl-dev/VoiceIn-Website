@@ -22,7 +22,7 @@ let headers = {
 };
 
 const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  if (!isProduction || req.isAuthenticated()) {
     return next();
   }
 
@@ -86,17 +86,17 @@ module.exports = (passport) => {
     });
   });
 
-  router.get('/buy', (req, res, next) => {
+  router.get('/buy', isAuthenticated, (req, res, next) => {
     res.render('account/buy');
   });
 
-  router.post('/buy/allpay', (req, res, next) => {
+  router.post('/buy/allpay', isAuthenticated, (req, res, next) => {
     console.log(req.body);
     console.log(process.env.NODE_ENV);
     let payload = req.body;
-
+    let merchantNo = uuid.v4().split('-')[0].toUpperCase() + uuid.v4().split('-')[4].toUpperCase();
     allpay.aioCheckOut({
-      MerchantTradeNo: uuid.v1().split('-')[0].toUpperCase() + uuid.v1().split('-')[1].toUpperCase() + uuid.v1().split('-')[2].toUpperCase(),
+      MerchantTradeNo: merchantNo,
       MerchantTradeDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '/'),
       TotalAmount: payload.points,
       TradeDesc: 'VoiceIn ${payload.points} 點數購買',
@@ -115,7 +115,7 @@ module.exports = (passport) => {
 
   });
 
-  router.post('/buy/allpay/success', (req, res, next) => {
+  router.post('/buy/allpay/success', isAuthenticated, (req, res, next) => {
     // { MerchantID: '2000132',
     // MerchantTradeNo: '245A27B010FC11E6',
     // PayAmt: '300',
@@ -139,7 +139,7 @@ module.exports = (passport) => {
     res.status(200).end();
   });
 
-  router.post('/buy/allpay/fail', (req, res, next) => {
+  router.post('/buy/allpay/fail', isAuthenticated, (req, res, next) => {
 
   });
 
