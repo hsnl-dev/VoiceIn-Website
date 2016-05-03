@@ -76,6 +76,12 @@
           right: 15px;
       }
 
+      .download-btn {
+        position: absolute;
+        left: 10px;
+        z-index: 10;
+      }
+
     </style>
   </head>
   <body>
@@ -133,7 +139,6 @@
                 </span>
                 </li>
               </ul>
-
             </div>
           </div>
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored download-btn">
@@ -155,7 +160,7 @@
     <script src="/public/javascripts/card/dom-to-image.js"></script>
     <script src="/dist/public/javascripts/card/entry.bundle.js"></script>
     <script type="text/javascript">
-      $(() => {
+      $(function () {
         $('#qrcode').qrcode(
           {
             render: 'canvas',
