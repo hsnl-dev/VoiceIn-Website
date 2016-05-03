@@ -6,7 +6,7 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const Allpay = require('allpay');
 const uuid = require('node-uuid');
-const headers = require('../config/secret').webServiceHeader;
+let headers = require('../config/secret').webServiceHeader;
 const isProduction = process.env.NODE_ENV === 'production';
 
 let allpay = new Allpay({
@@ -113,6 +113,8 @@ module.exports = (passport) => {
   router.post('/buy/allpay', isAuthenticated, (req, res, next) => {
     console.log(req.body);
     console.log(process.env.NODE_ENV);
+    console.log(req.session.token);
+
     let payload = req.body;
     let merchantNo = uuid.v4().split('-')[0].toUpperCase() + uuid.v4().split('-')[4].toUpperCase();
     allpay.aioCheckOut({

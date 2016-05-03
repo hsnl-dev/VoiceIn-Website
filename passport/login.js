@@ -1,6 +1,7 @@
 'use strict';
 const LocalStrategy = require('passport-local').Strategy;
 const api = require('../config/api-url');
+const fetch = require('isomorphic-fetch');
 
 let headers = {
   apiKey: process.env.apiKey,
@@ -39,9 +40,12 @@ module.exports = function (passport) {
       })
       .then(userData => {
         console.log(userData);
-        req.session.token = userData.token;
-        done(null, { _id: userData.userUuid });
 
+        // store the token to session
+        req.session.token = userData.token;
+
+        // set the user-uuid
+        done(null, { _id: userData.userUuid });
       })
       .catch((error) => {
         console.error(error);
