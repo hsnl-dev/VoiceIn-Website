@@ -23,7 +23,7 @@ module.exports = (passport) => {
   /* GET login page. */
   router.get('/login', (req, res) => {
     console.log(req);
-    res.render('login', { message: req.flash('message') });
+    res.render('account/login', { message: req.flash('message') });
   });
 
   /* Handle Login POST */
@@ -57,7 +57,7 @@ module.exports = (passport) => {
           let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
           image = base64data;
           user.credit = user.credit.toFixed(2);
-          res.render('me', { user: user, image: image });
+          res.render('account/me', { user: user, image: image });
         }
       });
 
@@ -73,6 +73,10 @@ module.exports = (passport) => {
         res.redirect('/account/me');
       }
     });
+  });
+
+  router.get('/buy', (req, res, next) => {
+    res.render('account/buy');
   });
 
   return router;
