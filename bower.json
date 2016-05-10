@@ -1,5 +1,5 @@
 {
-  "name": "voiceIn",
+  "name": "voicein",
   "main": "app.js",
   "authors": [
     "lockys <locky4567@gmail.com>"
@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "add-to-homescreen": "^3.2.2",
-    "md-date-time-picker": "^1.0.0"
+    "add-to-homescreen": "3.2.2",
+    "md-date-time-picker": "1.0.0"
   }
 }
