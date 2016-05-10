@@ -4,7 +4,6 @@ $(function () {
     events: {
       'click .confirm-btn': 'initCall',
       'click #err-close': 'buttonClose',
-      'click .ath-btn': 'showAtnModal',
       'click .already-ath-btn': 'hideAtnSection',
       'click .edit-btn': 'showEditModal',
       'click .edit-dialog-btn--closed': 'hideEditModal',
@@ -24,11 +23,15 @@ $(function () {
       if (isHideAtnSection) {
         $('.ath-section').hide();
       } else {
-        this.addtohome = addToHomescreen({
-          message: '請點選按鈕，再點選加至主畫面(Add to Home Screen)，將此網頁加到主畫面。',
-          lifespan: 0,
-          autostart: true,
-        });
+        if (document.referrer !== '') {
+          this.addtohome = addToHomescreen({
+            message: '請點選 <img src="/dist/public/images/icon/ios-sharing.png" width="20" style="vertical-align: top;"/>，再點選 <img src="/dist/public/images/icon/ios-add-to-screen.png" width="25"/> 加至主畫面，將此聯絡人加到主畫面。',
+            lifespan: 0,
+            displayPace: 0,
+            autostart: true,
+            startDelay: 0,
+          });
+        }
       }
 
     },
@@ -135,10 +138,6 @@ $(function () {
     hideAtnSection: function (e) {
       localStorage.setItem('hideAtnSection', true);
       $('.ath-section').hide();
-    },
-
-    showAtnModal: function (e) {
-      this.addtohome.show(true);
     },
 
     buttonClose: function (event) {
