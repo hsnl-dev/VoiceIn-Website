@@ -10,6 +10,8 @@ $(() => {
     },
     initialize: () => {
       let $switchToSafariAlert = $('.switch-to-safari-alert');
+      let parser = new UAParser();
+      let result = parser.getResult();
 
       if (!$dialog.showModal) {
         dialogPolyfill.registerDialog($dialog);
@@ -24,6 +26,9 @@ $(() => {
       } else {
         $switchToSafariAlert.addClass('content-hidden');
       }
+
+      $('.ua-section').html(`${result.browser.name} ${result.device.model} ${result.device.type}`);
+      console.log(result);
 
       $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {
         $dialog.close();
