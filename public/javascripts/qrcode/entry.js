@@ -1,6 +1,5 @@
 $(() => {
   const api = require('../config/api-url.js');
-  const isWebView = require('../utils/ua-detector.js');
   const $dialog = document.querySelector('#dialog');
 
   let FormView = Backbone.View.extend({
@@ -12,6 +11,8 @@ $(() => {
       let $switchToSafariAlert = $('.switch-to-safari-alert');
       let parser = new UAParser();
       let result = parser.getResult();
+      let isMobileSafari = result.browser.name === 'Mobile Safari' && result.device.type === 'mobile';
+      let isMobileChromeOniPhone = result.browser.name === 'Chrome' && result.device.vendor === 'Apple';
 
       if (!$dialog.showModal) {
         dialogPolyfill.registerDialog($dialog);
@@ -21,13 +22,13 @@ $(() => {
       $('.copy-url-link').attr('href', window.location.href);
 
       // Check user agent to determine if show the tutorial view.
-      if (isWebView(window)) {
+      if (!isMobileSafari || isMobileChromeOniPhone) {
         $switchToSafariAlert.removeClass('content-hidden');
       } else {
         $switchToSafariAlert.addClass('content-hidden');
       }
 
-      $('.ua-section').html(`${result.browser.name} ${result.device.model} ${result.device.type}`);
+      $('.ua-section').html(`${result.browser.name} ${result.device.model} ${result.device.vendor}`);
       console.log(result);
 
       $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {

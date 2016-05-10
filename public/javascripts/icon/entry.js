@@ -12,22 +12,33 @@ $(function () {
       'click .period-btn--ended': 'openEndTimePicker',
       'click #mddtp-time__ok': 'setTimeMoment',
       'click .isEnable-switch': 'toggleEnableSwitch',
+      'click .android-ath-close-btn': 'closeAndroidTutorial',
     },
     initialize: function () {
+      let parser = new UAParser();
+      let result = parser.getResult();
+      let isMobileSafari = result.browser.name === 'Mobile Safari' && result.device.type === 'mobile';
+      let isMobileChromeOniPhone = result.browser.name === 'Chrome' && result.device.vendor === 'Apple';
+
       this.mdTimePicker = new mdDateTimePicker({
         type: 'time',
       });
       this.editTimeState = 'start';
 
       if (document.referrer !== '') {
-        this.addtohome = addToHomescreen({
-          message: '請點選 <img src="/dist/public/images/icon/ios-sharing.png" width="20" style="vertical-align: top;"/>，再點選 <img src="/dist/public/images/icon/ios-add-to-screen.png" width="25"/> 加至主畫面，將此聯絡人加到主畫面。',
-          lifespan: 0,
-          displayPace: 0,
-          autostart: false,
-          startDelay: 0,
-        });
-        this.addtohome.show();
+        // To determine if show the ath tutorial based on browser and timing.
+        if (isMobileSafari) {
+          this.addtohome = addToHomescreen({
+            message: '請點選 <img src="/dist/public/images/icon/ios-sharing.png" width="20" style="vertical-align: top;"/>，再點選 <img src="/dist/public/images/icon/ios-add-to-screen.png" width="25"/> 加至主畫面，將此聯絡人加到主畫面。',
+            lifespan: 0,
+            displayPace: 0,
+            autostart: false,
+            startDelay: 0,
+          });
+          this.addtohome.show();
+        } else {
+          $('.android-ath-section').removeClass('content-hidden');
+        }
       }
 
     },
@@ -184,7 +195,11 @@ $(function () {
        });
     },
 
-    render: function () {
+    closeAndroidTutorial: () => {
+      $('.android-ath-section').addClass('content-hidden');
+    },
+
+    render: () => {
 
     },
   });

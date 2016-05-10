@@ -102,6 +102,22 @@
       opacity: 0.8;
     }
 
+    .android-ath-section {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      opacity: 0.8;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -o-border-radius: 5px;
+      -moz-border-radius: 5px;
+      background: #eee;
+      padding: 5px;
+      padding-top: 2px;
+      padding-left: 5px;
+      width: 50%;
+    }
+
     .edit-dialog {
       /* center the edit dialog */
       position: absolute;
@@ -119,7 +135,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link rel="stylesheet" href="/bower_components/md-date-time-picker/dist/css/mdDateTimePicker.min.css">
-  <!-- Material Design icons -->
+  <link rel="stylesheet" href="/dist/public/stylesheets/helpers/style.css" media="screen" charset="utf-8">
+<!-- Material Design icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
@@ -140,6 +157,12 @@
         <a class="mdl-navigation__link" href="">常見問題</a>
         <a class="mdl-navigation__link" href="">關於 VoiceIn</a>
       </nav>
+    </div>
+
+    <div class="android-ath-section content-hidden">
+      <i class="material-icons md-30 android-ath-close-btn" style="float: left;">close</i> <br/><br/>
+      請確認是使用 Chrome 瀏覽器開啟，若是，請點選右上角的 <i class="material-icons md-24" style="vertical-align: middle;">more_vert</i>
+      鍵後，選擇加至主頁面，將此聯絡人加到主畫面。
     </div>
 
     <main class="mdl-layout__content vcard-content">
@@ -274,6 +297,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.11.0/fetch.min.js"></script>
   <script src="/bower_components/md-date-time-picker/dist/js/Globals/mdDateTimePicker.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.10/ua-parser.min.js" charset="utf-8"></script>
   <script src="/dist/public/javascripts/icon/entry.bundle.js"></script>
 </body>
 </html>
