@@ -14,24 +14,19 @@ $(function () {
       'click .isEnable-switch': 'toggleEnableSwitch',
     },
     initialize: function () {
-      let isHideAtnSection = localStorage.getItem('hideAtnSection');
       this.mdTimePicker = new mdDateTimePicker({
         type: 'time',
       });
       this.editTimeState = 'start';
 
-      if (isHideAtnSection) {
-        $('.ath-section').hide();
-      } else {
-        if (document.referrer !== '') {
-          this.addtohome = addToHomescreen({
+      if (document.referrer !== '') {
+        this.addtohome = addToHomescreen({
             message: '請點選 <img src="/dist/public/images/icon/ios-sharing.png" width="20" style="vertical-align: top;"/>，再點選 <img src="/dist/public/images/icon/ios-add-to-screen.png" width="25"/> 加至主畫面，將此聯絡人加到主畫面。',
             lifespan: 0,
             displayPace: 0,
             autostart: true,
             startDelay: 0,
           });
-        }
       }
 
     },
