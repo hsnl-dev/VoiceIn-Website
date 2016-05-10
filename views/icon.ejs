@@ -103,7 +103,8 @@
     }
 
     .android-ath-section {
-      position: absolute;
+      position: fixed;
+      z-index: 999;
       right: 10px;
       top: 10px;
       opacity: 0.8;
@@ -115,7 +116,7 @@
       padding: 5px;
       padding-top: 2px;
       padding-left: 5px;
-      width: 50%;
+      width: 75%;
     }
 
     .edit-dialog {
@@ -159,7 +160,7 @@
       </nav>
     </div>
 
-    <div class="android-ath-section content-hidden">
+    <div class="android-ath-section">
       <i class="material-icons md-30 android-ath-close-btn" style="float: left;">close</i> <br/><br/>
       請確認是使用 Chrome 瀏覽器開啟，若是，請點選右上角的 <i class="material-icons md-24" style="vertical-align: middle;">more_vert</i>
       鍵後，選擇加至主頁面，將此聯絡人加到主畫面。
