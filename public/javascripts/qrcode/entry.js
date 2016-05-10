@@ -22,7 +22,7 @@ $(() => {
       if (isWebView(window)) {
         $switchToSafariAlert.removeClass('content-hidden');
       } else {
-        $switchToSafariAlert.removeClass('content-hidden');
+        $switchToSafariAlert.addClass('content-hidden');
       }
 
       $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {
