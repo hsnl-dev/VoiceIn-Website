@@ -11,8 +11,9 @@ $(() => {
       let $switchToSafariAlert = $('.switch-to-safari-alert');
       let parser = new UAParser();
       let result = parser.getResult();
+      let isApple = result.device.vendor === 'Apple';
       let isMobileSafari = result.browser.name === 'Mobile Safari' && result.device.type === 'mobile';
-      let isMobileChromeOniPhone = result.browser.name === 'Chrome' && result.device.vendor === 'Apple';
+      let isMobileChrome = result.browser.name === 'Chrome';
 
       if (!$dialog.showModal) {
         dialogPolyfill.registerDialog($dialog);
@@ -21,9 +22,13 @@ $(() => {
       // insert the current url to link.
       $('.copy-url-link').attr('href', window.location.href);
 
-      // Check user agent to determine if show the tutorial view.
-      if (!isMobileSafari || isMobileChromeOniPhone) {
-        $switchToSafariAlert.removeClass('content-hidden');
+      if (isApple) {
+        // Check user agent to determine if show the tutorial view.
+        if (!isMobileSafari || isMobileChrome) {
+          $switchToSafariAlert.removeClass('content-hidden');
+        } else {
+          $switchToSafariAlert.addClass('content-hidden');
+        }
       } else {
         $switchToSafariAlert.addClass('content-hidden');
       }
