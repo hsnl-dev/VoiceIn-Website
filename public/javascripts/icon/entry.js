@@ -17,8 +17,9 @@ $(function () {
     initialize: function () {
       let parser = new UAParser();
       let result = parser.getResult();
+      let isApple = result.device.vendor === 'Apple';
       let isMobileSafari = result.browser.name === 'Mobile Safari' && result.device.type === 'mobile';
-      let isMobileChromeOniPhone = result.browser.name === 'Chrome' && result.device.vendor === 'Apple';
+      let isMobileChrome = result.browser.name === 'Chrome';
 
       this.mdTimePicker = new mdDateTimePicker({
         type: 'time',
@@ -27,7 +28,7 @@ $(function () {
 
       if (document.referrer !== '') {
         // To determine if show the ath tutorial based on browser and timing.
-        if (isMobileSafari) {
+        if (isApple) {
           this.addtohome = addToHomescreen({
             message: '請點選 <img src="/dist/public/images/icon/ios-sharing.png" width="20" style="vertical-align: top;"/>，再點選 <img src="/dist/public/images/icon/ios-add-to-screen.png" width="25"/> 加至主畫面，將此聯絡人加到主畫面。',
             lifespan: 0,
