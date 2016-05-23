@@ -16,6 +16,7 @@ const routes = require('./routes/index');
 const provider = require('./routes/provider');
 const icon = require('./routes/icon');
 const validation = require('./api-route/v1/validation-resource');
+const alpha = require('./routes/alpha');
 const app = express();
 
 // Configuring Passport
@@ -55,8 +56,11 @@ app.use('/', routes);
 app.use('/qrcode', provider);
 app.use('/icon', icon);
 
-const accpuntRoutes = require('./routes/account')(passport);
-app.use('/account', accpuntRoutes);
+// temporary route for test user.
+app.use('/alpha', alpha);
+
+const accountRoutes = require('./routes/account')(passport);
+app.use('/account', accountRoutes);
 
 // API Route
 app.use('/api/v1/validations', validation);
