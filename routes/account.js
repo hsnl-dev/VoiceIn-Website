@@ -49,7 +49,7 @@ module.exports = (passport) => {
     res.redirect('/');
   });
 
-  router.get('/me', isAuthenticated, (req, res, next) => {
+  router.get('/me', isAuthenticated, (req, res) => {
     console.log(req.user);
     console.log(req.session);
     User.findOne({ _id: req.user.id }, (err, user) => {
@@ -65,6 +65,7 @@ module.exports = (passport) => {
       request.get(options, (error, response, body) => {
         if (!error && response.statusCode == 200) {
           let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+
           image = base64data;
           user.credit = user.credit.toFixed(2);
           res.render('account/me', { user: user, image: image });
@@ -74,7 +75,7 @@ module.exports = (passport) => {
     });
   });
 
-  router.get('/card', isAuthenticated, (req, res, next) => {
+  router.get('/card', isAuthenticated, (req, res) => {
     User.findOne({ _id: req.user.id }, (err, user) => {
       console.log(err, user);
 
@@ -88,6 +89,7 @@ module.exports = (passport) => {
       request.get(options, (error, response, body) => {
         if (!error && response.statusCode == 200) {
           let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+
           image = base64data;
           user.credit = user.credit.toFixed(2);
           res.render('account/card', { user: user, image: image });
@@ -97,8 +99,9 @@ module.exports = (passport) => {
     });
   });
 
-  router.post('/me/update', isAuthenticated, (req, res, next) => {
+  router.post('/me/update', isAuthenticated, (req, res) => {
     let payload = req.body;
+
     User.findOneAndUpdate({ _id: req.user.id }, payload, {}, (err) => {
       if (!err) {
         res.redirect('/account/me');
@@ -108,17 +111,18 @@ module.exports = (passport) => {
     });
   });
 
-  router.get('/buy', isAuthenticated, (req, res, next) => {
+  router.get('/buy', isAuthenticated, (req, res) => {
     res.render('account/buy');
   });
 
-  router.post('/buy/allpay', isAuthenticated, (req, res, next) => {
+  router.post('/buy/allpay', isAuthenticated, (req, res) => {
     console.log(req.body);
     console.log(process.env.NODE_ENV);
     console.log(req.session.token);
 
     let reqBody = req.body;
     let merchantNo = uuid.v4().split('-')[0].toUpperCase() + uuid.v4().split('-')[4].toUpperCase();
+
     allpay.aioCheckOut({
       MerchantTradeNo: merchantNo,
       MerchantTradeDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '/'),
@@ -156,10 +160,12 @@ module.exports = (passport) => {
       .then(response => {
         if (response.status >= 400) {
           let err = new Error('Some damn err...');
+
           err.response = response;
           throw err;
         } else {
           let form = result.html;
+
           res.send(form).end();
         }
       }).catch(err => {
@@ -171,10 +177,11 @@ module.exports = (passport) => {
 
   });
 
-  router.post('/buy/allpay/success', (req, res, next) => {
+  router.post('/buy/allpay/success', (req, res) => {
 
     if (allpay.isDataValid(req.body)) {
       let statusStr = req.body.RtnCode === '1' ? 'success' : 'fail';
+
       fetch(`${api.apiRoute}/${api.latestVersion}/payments/${req.body.MerchantTradeNo}/actions/changePayment`, {
           method: 'POST',
           headers: headers,
@@ -214,9 +221,10 @@ module.exports = (passport) => {
     // TODO: Add points to user if payment is successful.
   });
 
-  router.post('/buy/allpay/sandbox', (req, res, next) => {
+  router.post('/buy/allpay/sandbox', (req, res) => {
     if (allpay.isDataValid(req.body)) {
       let statusStr = req.body.RtnCode === '1' ? 'success' : 'fail';
+
       fetch(`${api.apiRoute}/${api.latestVersion}/payments/${res.body.MerchantTradeNo}/actions/changePayment`, {
           method: 'POST',
           headers: headers,
@@ -241,7 +249,7 @@ module.exports = (passport) => {
     console.log(req.body.MerchantTradeNo, req.body.RtnCode);
   });
 
-  router.post('/buy/allpay/fail', isAuthenticated, (req, res, next) => {
+  router.post('/buy/allpay/fail', isAuthenticated, () => {
 
   });
 
