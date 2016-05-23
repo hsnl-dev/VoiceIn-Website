@@ -48,6 +48,7 @@ a img{
 .land-header .mdl-menu__container {
   z-index: 50;
   margin: 0 !important;
+
 }
 
 
@@ -78,7 +79,7 @@ a img{
 
 .land-header {
   overflow: visible;
-
+  background: #F5F5F5;
 }
 
   .land-header .material-icons {
@@ -191,21 +192,26 @@ a img{
 .logo-font {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   line-height: 1;
-  color: #767777;
+  color: #455A64;
   font-weight: 500;
 }
-
-.android-slogan {
+.land-slogan-font {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1;
+  color: #FFF;
+  font-weight: 500;
+}
+.land-slogan {
   font-size: 60px;
   padding-top: 160px;
 }
 
-.android-sub-slogan {
+.land-sub-slogan {
   font-size: 21px;
   padding-top: 24px;
 }
 
-.android-create-character {
+.land-create-character {
   font-size: 21px;
   padding-top: 400px;
 }
@@ -309,9 +315,9 @@ a img{
   }
 
 
-.android-wear-section {
+.land-qrcode-section{
   position: relative;
-  background: url('images/wear.png') center top no-repeat;
+  background: url('/dist/public/images/landing/title-bg.jpeg') center top no-repeat;
   background-size: cover;
   height: 800px;
 }
@@ -471,7 +477,25 @@ a img{
 .android-link-menu:hover {
   cursor: pointer;
 }
-
+.ghost-button-transition {
+  display: inline-block;
+  width: 200px;
+  padding: 8px;
+  color: #fff;
+  border: 2px solid #fff;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+  transition: background-color 0.2s ease-out,
+              color 0.2s ease-out;
+}
+.ghost-button-transition:hover,
+.ghost-button-transition:active {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: #000;
+  transition: background-color 0.3s ease-in,
+              color 0.3s ease-in;
+}
 
 /**** Mobile layout ****/
 @media (max-width: 900px) {
@@ -548,4 +572,5 @@ a img{
   .android-footer .mdl-mega-footer--bottom-section {
     display: none;
   }
+
 }
