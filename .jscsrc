@@ -2,4 +2,6 @@
   "preset": "airbnb",
   "fileExtensions": [".js", "jscs"],
   "maximumLineLength": 150,
+  "disallowUnusedParams": true,
+  "requirePaddingNewLineAfterVariableDeclaration": true,
 }
