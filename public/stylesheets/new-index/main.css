@@ -83,7 +83,8 @@ a img{
 
 .land-header {
   overflow: visible;
-  background: #F5F5F5;
+  background: white;
+  border-bottom: 1px solid lightgray;
 }
 
 .land-header .material-icons {
@@ -92,7 +93,7 @@ a img{
 
 
 .land-header .mdl-navigation__link {
-  color: #757575;
+  color: black;
   font-weight: 700;
   font-size: 14px;
 }
@@ -149,7 +150,6 @@ a img{
   order: 3;
 }
 
-
 .land-drawer {
   border-right: none;
 }
@@ -185,8 +185,9 @@ a img{
   height: 800px;
   width: auto;
   background-color: #f3f3f3;
-  background: url('/dist/public/images/landing/title-bg.jpeg') center 30% no-repeat;
+  background: url('/dist/public/images/landing/background-main.jpg') center no-repeat;
   background-size: cover;
+  background-position: 50% 80%;
 }
 .land-slogan-section-overlay{
   background-color:rgba(0, 0, 0, 0.3);
@@ -194,12 +195,6 @@ a img{
 
 }
 
-/*.logo-font {
-font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-line-height: 1;
-color: #455A64;
-font-weight: 500;
-}*/
 .land-slogan-font {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   line-height: 1;
@@ -242,6 +237,7 @@ font-weight: 500;
   position: relative;
   padding-top: 60px;
   padding-bottom: 80px;
+  background-image: url('http://cdn.backgroundhost.com/backgrounds/subtlepatterns/blizzard.png');
 }
 
 .land-080-pic {
@@ -251,7 +247,7 @@ font-weight: 500;
   overflow-x: auto;
 }
 
-.android-screen {
+.land-080-pic {
   text-align: center;
 }
 
@@ -259,22 +255,6 @@ font-weight: 500;
   margin-top: 16px;
   display: block;
   z-index: 2;
-}
-
-.android-image-link {
-  text-decoration: none;
-}
-
-.android-auto {
-  display: inline-block;
-  width: 300px;
-  overflow: hidden;
-}
-
-.android-auto .android-screen-image {
-  display: block;
-  height: 300px;
-  z-index: 1;
 }
 
 .land-qrcode-section{
@@ -360,7 +340,7 @@ font-weight: 500;
   color: #eeeeee;
 }
 
-.android-customized-section-image {
+.land-customized-section-image {
   background: url('images/devices.jpg') center top no-repeat;
   background-size: cover;
   height: 400px;
@@ -379,45 +359,61 @@ font-weight: 500;
   margin-right: auto;
 }
 
+
 .land-try-band .land-section-title {
   margin-left: 12px;
   padding-bottom: 24px;
 }
 
-.android-card-container {
+.land-more-section {
+  padding: 80px 0;
+  max-width: 1044px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.android-card-container .mdl-card__media {
+.land-more-section .land-section-title {
+  margin-left: 12px;
+  padding-bottom: 24px;
+}
+
+.land-card-container {
+}
+
+.land-card-container .mdl-card__media {
   overflow: hidden;
-  background: transparent;
+  background: #B2DFDB;
+  text-align: center;
 }
 
-.android-card-container .mdl-card__media img {
-  width: 100%;
+.land-card-container .mdl-card__media img {
+  width: 128px;
+  margin: 15px;
+
 }
 
-.android-card-container .mdl-card__title {
+.land-card-container .mdl-card__title {
   background: transparent;
   height: auto;
 }
 
-.android-card-container .mdl-card__title-text {
+.land-card-container .mdl-card__title-text {
   color: black;
   height: auto;
 }
 
-.android-card-container .mdl-card__supporting-text {
+.land-card-container .mdl-card__supporting-text {
   height: auto;
   color: black;
   padding-bottom: 56px;
 }
 
-.android-card-container .mdl-card__actions {
+.land-card-container .mdl-card__actions {
   position: absolute;
   bottom: 0;
 }
 
-.android-card-container .mdl-card__actions a {
+.land-card-container .mdl-card__actions a {
   border-top: none;
   font-size: 16px;
 }
@@ -485,7 +481,7 @@ font-weight: 500;
 
 /**** Mobile layout ****/
 @media (max-width: 900px) {
-  .android-navigation-container {
+  .land-navigation-container {
     display: none;
   }
 
@@ -501,15 +497,12 @@ font-weight: 500;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
-  consecutive "+" operators in some cases. Therefore, we need to use both
-  here to cover all the bases. */
   .android.android-search-box.is-focused ~ .land-mobile-title,
   .android-search-box.is-focused + .android-navigation-container + .land-mobile-title {
     opacity: 0;
   }
 
-  .android-more-button {
+  .land-more-button {
     display: none;
   }
 
