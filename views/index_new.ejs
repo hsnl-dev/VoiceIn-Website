@@ -194,6 +194,8 @@ limitations under the License
             <br/>
             現在加入測試我們將贈送每一位測試者 500 點的通話額度
             <br/>
+            若對於我們有任何批評指教，可以於右下角回饋喔! 謝謝
+            <br/>
             *測試名額將有限
             <br>
             <br>
@@ -232,5 +234,18 @@ limitations under the License
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" charset="utf-8"></script>
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="public/javascripts/third-party/device.min.js" charset="utf-8"></script>
+  <script>
+  Userback = window.Userback || {};
+    (function(id) {
+        if (document.getElementById(id)) {return;}
+        var s = document.createElement('script');
+        s.id = id;
+        s.src = 'https://app.userback.io/widget.js';
+        var parent_node = document.head || document.body;
+        parent_node.appendChild(s);
+    })('userback-sdk');
+
+    Userback.access_token = '43|52|eW8DGCVEw01J4x7HfxHcTzSicoYncTvrPE5vh0aO0by4JFMYdu';
+  </script>
   </body>
 </html>
