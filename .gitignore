@@ -5,3 +5,7 @@ dist/
 app.yaml
 npm-debug.log
 /nbproject/private/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
