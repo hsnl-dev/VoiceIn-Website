@@ -32,13 +32,13 @@ a img{
   color: white;
 }
 ::-moz-selection {
-  background-color: #6ab344;
-  color: #fff;
+  background-color: #BDBDBD;
+
 }
 
 ::selection {
-  background-color: #6ab344;
-  color: #fff;
+  background-color: #BDBDBD;
+
 }
 
 .android-search-box .mdl-textfield__input {
@@ -56,16 +56,16 @@ a img{
   width: auto;
 }
 
-.android-fab {
+.land-fab {
   position: absolute;
   right: 20%;
   bottom: -26px;
   z-index: 3;
-  background: #64ffda !important;
-  color: black !important;
+  background: #FFC107 !important;
+  color: white !important;
 }
 
-.android-mobile-title {
+.land-mobile-title {
   display: none !important;
 }
 
@@ -75,6 +75,10 @@ a img{
   width: 140px;
 }
 
+.mdl-layout__drawer-button {
+  background: transparent;
+  color: #767777;
+}
 
 
 .land-header {
@@ -86,10 +90,6 @@ a img{
     color: #767777 !important;
   }
 
-  .land-header .mdl-layout__drawer-button {
-    background: transparent;
-    color: #767777;
-  }
 
   .land-header .mdl-navigation__link {
     color: #757575;
@@ -108,7 +108,7 @@ a img{
         width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .android-navigation {
+  .land-navigation {
     /* ... and now make sure the content is actually LTR */
     direction: ltr;
     -webkit-justify-content: flex-end;
@@ -150,32 +150,32 @@ a img{
   }
 
 
-.android-drawer {
+.land-drawer {
   border-right: none;
 }
 
-  .android-drawer-separator {
+  .land-drawer-separator {
     height: 1px;
     background-color: #dcdcdc;
     margin: 8px 0;
   }
 
-  .android-drawer .mdl-navigation__link.mdl-navigation__link {
+  .land-drawer .mdl-navigation__link.mdl-navigation__link {
     font-size: 14px;
     color: #757575;
   }
 
-  .android-drawer span.mdl-navigation__link.mdl-navigation__link {
+  .land-drawer span.mdl-navigation__link.mdl-navigation__link {
     color: #8bc34a;
   }
 
-  .android-drawer .mdl-layout-title {
+  .land-drawer .mdl-layout-title {
     position: relative;
     background: #6ab344;
     height: 160px;
   }
 
-    .android-drawer .android-logo-image {
+    .land-drawer .android-logo-image {
       position: absolute;
       bottom: 16px;
     }
@@ -188,13 +188,18 @@ a img{
   background: url('/dist/public/images/landing/title-bg.jpeg') center 30% no-repeat;
   background-size: cover;
 }
+.land-slogan-section-overlay{
+  background-color:rgba(0, 0, 0, 0.3);
+  height: 800px;
 
-.logo-font {
+}
+
+/*.logo-font {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   line-height: 1;
   color: #455A64;
   font-weight: 500;
-}
+}*/
 .land-slogan-font {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   line-height: 1;
@@ -216,7 +221,7 @@ a img{
   padding-top: 400px;
 }
 
-  .android-create-character a {
+  .land-create-character a {
     text-decoration: none;
     color: #767777;
     font-weight: 300;
@@ -228,7 +233,7 @@ a img{
   padding-bottom: 80px;
 }
 
-.android-screens {
+.land-080-pic {
   text-align: right;
   width: 100%;
   white-space: nowrap;
@@ -322,7 +327,7 @@ a img{
   height: 800px;
 }
 
-.android-wear-band {
+.land-qrcode-section-band {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -330,7 +335,7 @@ a img{
   background-color: #37474f;
 }
 
-.android-wear-band-text {
+.land-qrcode-section-band-text {
   max-width: 800px;
   margin-left: 25%;
   padding: 24px;
@@ -338,7 +343,7 @@ a img{
   color: white;
 }
 
-  .android-wear-band-text p {
+  .land-qrcode-section-band-text p {
     padding-top: 8px;
   }
 
@@ -357,17 +362,17 @@ a img{
     vertical-align: middle;
   }
 
-.android-alt-link {
+.land-alt-link {
   text-decoration: none;
   color: #64ffda !important;
   font-size: 16px;
 }
 
-  .android-alt-link:hover {
+  .land-alt-link:hover {
     color: #00bfa5 !important;
   }
 
-  .android-alt-link .material-icons {
+  .land-alt-link .material-icons {
     position: relative;
     top: 6px;
   }
@@ -392,15 +397,19 @@ a img{
   background-size: cover;
   height: 400px;
 }
-
-.android-more-section {
+.land-try-section{
+  background-color: #546E7A;
+  width: 100%;
+}
+.land-try-band {
   padding: 80px 0;
   max-width: 1044px;
+  color: white;
   margin-left: auto;
   margin-right: auto;
 }
 
-  .android-more-section .android-section-title {
+  .land-try-band .land-section-title {
     margin-left: 12px;
     padding-bottom: 24px;
   }
@@ -443,32 +452,32 @@ a img{
     font-size: 16px;
   }
 
-.android-footer {
+.land-footer {
   background-color: #fafafa;
   position: relative;
 }
 
-  .android-footer a:hover {
+  .land-footer a:hover {
     color: #8bc34a;
   }
 
-  .android-footer .mdl-mega-footer--top-section::after {
+  .land-footer .mdl-mega-footer--top-section::after {
     border-bottom: none;
   }
 
-  .android-footer .mdl-mega-footer--middle-section::after {
+  .land-footer .mdl-mega-footer--middle-section::after {
     border-bottom: none;
   }
 
-  .android-footer .mdl-mega-footer--bottom-section {
+  .land-footer .mdl-mega-footer--bottom-section {
     position: relative;
   }
 
-  .android-footer .mdl-mega-footer--bottom-section a {
+  .land-footer .mdl-mega-footer--bottom-section a {
     margin-right: 2em;
   }
 
-  .android-footer .mdl-mega-footer--right-section a .material-icons {
+  .land-footer .mdl-mega-footer--right-section a .material-icons {
     position: relative;
     top: 6px;
   }
@@ -476,6 +485,10 @@ a img{
 
 .android-link-menu:hover {
   cursor: pointer;
+}
+.land-title {
+  color: #757575;
+
 }
 .ghost-button-transition {
   display: inline-block;
@@ -503,11 +516,11 @@ a img{
     display: none;
   }
 
-  .android-title {
+  .land-title {
     display: none !important;
   }
 
-  .android-mobile-title {
+  .land-mobile-title {
     display: block !important;
     position: absolute;
     left: calc(50% - 70px);
@@ -518,8 +531,8 @@ a img{
   /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
      consecutive "+" operators in some cases. Therefore, we need to use both
      here to cover all the bases. */
-  .android.android-search-box.is-focused ~ .android-mobile-title,
-  .android-search-box.is-focused + .android-navigation-container + .android-mobile-title {
+  .android.android-search-box.is-focused ~ .land-mobile-title,
+  .android-search-box.is-focused + .android-navigation-container + .land-mobile-title {
     opacity: 0;
   }
 
@@ -538,7 +551,9 @@ a img{
   .land-slogan-section {
     height: 350px;
   }
-
+  .land-slogan-section-overlay{
+    height: 350px;
+  }
   .android-slogan {
     font-size: 26px;
     margin: 0 16px;
@@ -560,16 +575,16 @@ a img{
     height: 12px;
   }
 
-  .android-fab {
+  .land-fab {
     display: none;
   }
 
-  .android-wear-band-text {
+  .land-qrcode-section-band-text {
     margin-left: 0;
     padding: 16px;
   }
 
-  .android-footer .mdl-mega-footer--bottom-section {
+  .land-footer .mdl-mega-footer--bottom-section {
     display: none;
   }
 
