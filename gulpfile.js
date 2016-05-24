@@ -167,9 +167,9 @@ gulp.task('serve', [], () => {
   });
 
   gulp.watch(['views/*.ejs'], reload);
-  gulp.watch(['public/stylesheets/*.{scss,css}'], ['styles', reload]);
+  gulp.watch(['public/stylesheets/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['public/javascripts/**'], ['browserify', reload]);
-  gulp.watch(['public/images/*'], reload);
+  gulp.watch(['public/images/**/*'], reload);
 });
 
 gulp.task('nodemon', cb => {
