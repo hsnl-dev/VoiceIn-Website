@@ -117,13 +117,10 @@ a img{
     width: 800px;
   }
 
-  .android-search-box.is-focused + .android-navigation-container {
-    opacity: 0;
-    width: 100px;
-  }
 
 
-  .android-navigation .mdl-navigation__link {
+
+  .land-navigation .mdl-navigation__link {
     display: inline-block;
     height: 60px;
     line-height: 68px;
@@ -131,23 +128,9 @@ a img{
     border-bottom: 4px solid transparent;
   }
 
-    .android-navigation .mdl-navigation__link:hover {
+    .land-navigation .mdl-navigation__link:hover {
       border-bottom: 4px solid #8bc34a;
     }
-
-  .android-search-box {
-    -webkit-order: 2;
-        -ms-flex-order: 2;
-            order: 2;
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-
-  .android-more-button {
-    -webkit-order: 3;
-        -ms-flex-order: 3;
-            order: 3;
-  }
 
 
 .land-drawer {
@@ -240,21 +223,19 @@ a img{
   overflow-x: auto;
 }
 
-.android-screen {
+.land-080-pic {
   text-align: center;
 }
 
-.android-screen .android-link {
+.land-080-pic .android-link {
   margin-top: 16px;
   display: block;
   z-index: 2;
 }
 
-.android-image-link {
-  text-decoration: none;
-}
 
-.android-wear {
+
+/*.android-wear {
   display: inline-block;
   width: 160px;
   margin-right: 32px;
@@ -263,10 +244,10 @@ a img{
   .android-wear .android-screen-image {
     width: 40%;
     z-index: 1;
-  }
+  }*/
 
 
-.android-phone {
+/*.android-phone {
   display: inline-block;
   width: 64px;
   margin-right: 48px;
@@ -275,10 +256,10 @@ a img{
   .android-phone .android-screen-image {
     width: 100%;
     z-index: 1;
-  }
+  }*/
 
 
-.android-tablet {
+/*.android-tablet {
   display: inline-block;
   width: 110px;
   margin-right: 64px;
@@ -292,10 +273,10 @@ a img{
   .android-tablet .android-link {
     display: block;
     z-index: 2;
-  }
+  }*/
 
 
-.android-tv {
+/*.android-tv {
   display: inline-block;
   width: 300px;
   margin-right: 80px;
@@ -304,10 +285,10 @@ a img{
   .android-tv .android-screen-image {
     width: 100%;
     z-index: 1;
-  }
+  }*/
 
 
-.android-auto {
+/*.android-auto {
   display: inline-block;
   width: 300px;
   overflow: hidden;
@@ -317,7 +298,7 @@ a img{
     display: block;
     height: 300px;
     z-index: 1;
-  }
+  }*/
 
 
 .land-qrcode-section{
@@ -347,16 +328,16 @@ a img{
     padding-top: 8px;
   }
 
-.android-link {
+.land-link {
   text-decoration: none;
   color: #8bc34a !important;
 }
 
-  .android-link:hover {
+  .land-link:hover {
     color: #7cb342 !important;
   }
 
-  .android-link .material-icons {
+  .land-link .material-icons {
     position: relative;
     top: -1px;
     vertical-align: middle;
@@ -377,22 +358,22 @@ a img{
     top: 6px;
   }
 
-.android-customized-section {
+.land-customized-section {
   text-align: center;
 }
 
-.android-customized-section-text {
+.land-customized-section-text {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
   padding: 80px 16px 0 16px;
 }
 
-  .android-customized-section-text p {
+  .land-customized-section-text p {
     padding-top: 16px;
   }
 
-.android-customized-section-image {
+.land-customized-section-image {
   background: url('images/devices.jpg') center top no-repeat;
   background-size: cover;
   height: 400px;
@@ -413,41 +394,56 @@ a img{
     margin-left: 12px;
     padding-bottom: 24px;
   }
-
-.android-card-container {
-}
-
-  .android-card-container .mdl-card__media {
-    overflow: hidden;
-    background: transparent;
+.land-more-section {
+    padding: 80px 0;
+    max-width: 1044px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-    .android-card-container .mdl-card__media img {
-      width: 100%;
+    .land-more-section .land-section-title {
+      margin-left: 12px;
+      padding-bottom: 24px;
     }
 
-  .android-card-container .mdl-card__title {
+
+.land-card-container {
+}
+
+  .land-card-container .mdl-card__media {
+    overflow: hidden;
+    background: #B2DFDB;
+    text-align: center;
+  }
+
+    .land-card-container .mdl-card__media img {
+      width: 128px;
+      margin: 15px;
+
+    }
+
+  .land-card-container .mdl-card__title {
     background: transparent;
     height: auto;
   }
 
-  .android-card-container .mdl-card__title-text {
+  .land-card-container .mdl-card__title-text {
     color: black;
     height: auto;
   }
 
-  .android-card-container .mdl-card__supporting-text {
+  .land-card-container .mdl-card__supporting-text {
     height: auto;
     color: black;
     padding-bottom: 56px;
   }
 
-  .android-card-container .mdl-card__actions {
+  .land-card-container .mdl-card__actions {
     position: absolute;
     bottom: 0;
   }
 
-  .android-card-container .mdl-card__actions a {
+  .land-card-container .mdl-card__actions a {
     border-top: none;
     font-size: 16px;
   }
@@ -512,7 +508,7 @@ a img{
 
 /**** Mobile layout ****/
 @media (max-width: 900px) {
-  .android-navigation-container {
+  .land-navigation-container {
     display: none;
   }
 
@@ -531,12 +527,12 @@ a img{
   /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
      consecutive "+" operators in some cases. Therefore, we need to use both
      here to cover all the bases. */
-  .android.android-search-box.is-focused ~ .land-mobile-title,
-  .android-search-box.is-focused + .android-navigation-container + .land-mobile-title {
+  .land.land-search-box.is-focused ~ .land-mobile-title,
+  .land-search-box.is-focused + .land-navigation-container + .land-mobile-title {
     opacity: 0;
   }
 
-  .android-more-button {
+  .land-more-button {
     display: none;
   }
 
