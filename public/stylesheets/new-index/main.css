@@ -189,10 +189,11 @@ a img{
   background-size: cover;
   background-position: 50% 80%;
 }
+
 .land-slogan-section-overlay{
   background-color:rgba(0, 0, 0, 0.3);
   height: 800px;
-
+  z-index: -1;
 }
 
 .land-slogan-font {
@@ -262,6 +263,7 @@ a img{
   background: url('/dist/public/images/landing/title-bg.jpeg') center top no-repeat;
   background-size: cover;
   height: 800px;
+  z-index: -1;
 }
 
 .land-qrcode-section-band {
@@ -338,6 +340,27 @@ a img{
 
 .bottom-section-text {
   color: #eeeeee;
+}
+
+.demo-section {
+  position: relative;
+  text-align: center;
+}
+
+.demo-section span {
+  width: 245.2px;
+  position: absolute;
+  left: 0px;
+  background-color: #eee;
+  color: gray;
+  z-index: 99;
+}
+
+.demo-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 245.2px;
 }
 
 .land-customized-section-image {
@@ -481,6 +504,12 @@ a img{
 
 /**** Mobile layout ****/
 @media (max-width: 900px) {
+  .cd-iphone-5s {
+    position: relative !important;
+    margin: 0 auto !important;
+  }
+
+
   .land-navigation-container {
     display: none;
   }
@@ -516,10 +545,14 @@ a img{
 
   .land-slogan-section {
     height: 350px;
+    z-index: -1;
   }
+
   .land-slogan-section-overlay{
     height: 350px;
+    z-index: -1;
   }
+
   .android-slogan {
     font-size: 26px;
     margin: 0 16px;
