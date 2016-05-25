@@ -76,8 +76,13 @@ a img{
 }
 
 .mdl-layout__drawer-button {
-  background: transparent;
-  color: #eeeeee;
+  background: white;
+  padding: 0px;
+  border-radius: 50px;
+  -moz-border-radius: 50px;
+  -o-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  color: lightgray;
 }
 
 
@@ -504,6 +509,17 @@ a img{
 
 /**** Mobile layout ****/
 @media (max-width: 900px) {
+  .mdl-layout__drawer-button {
+    background: white;
+    padding: 0px;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -o-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    color: lightgray;
+    border: 1px solid gray;
+  }
+
   .cd-iphone-5s {
     position: relative !important;
     margin: 0 auto !important;
