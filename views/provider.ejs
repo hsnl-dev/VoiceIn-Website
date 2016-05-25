@@ -230,25 +230,25 @@
         <div class="mdl-card__supporting-text">
           <p>
             如果確認對方資料無誤<br/>
-            請您輸入以下資料資料加入對方。<br/>
+            請於以下輸入您的聯絡資訊加入 <%= name %> 為聯絡人。<br/>
             <a href="#">為什麼要輸入資料?</a><br/>
             *電話號碼對方將不會看見，請放心。
           </p>
           <form class="user-information-form" action="#">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="name">
-              <label class="mdl-textfield__label" for="name">姓名</label>
+              <label class="mdl-textfield__label" for="name">您的姓名</label>
             </div><br/>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label phonenumber-field">
               <input class="mdl-textfield__input" pattern="[0-9]{10}" id="phoneNumber" type="tel" inputmode="numeric">
-              <label class="mdl-textfield__label" for="phoneNumber">請輸入台灣手機號碼</label>
+              <label class="mdl-textfield__label" for="phoneNumber">您的手機號碼</label>
               <span class="mdl-textfield__error">只能輸入手機號碼，例如 0988123456 </span>
             </div><br/>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="company">
-              <label class="mdl-textfield__label" for="company">公司</label>
+              <label class="mdl-textfield__label" for="company">您的公司</label>
             </div>
             <!-- <div class="mdl-textfield mdl-js-textfield">
               <textarea class="mdl-textfield__input" type="text" rows= "3" id="profile"></textarea>
@@ -259,7 +259,7 @@
         <% } else {%>
           <div class="mdl-card__supporting-text">
             <p>
-              這是為您特製的 QRCode 聯絡 Icon，請放心將此網頁加至主畫面
+              這是為您特製的 QRCode 聯絡 Icon，請放心加入 <%= name %> 為聯絡人。
             </p>
           </div>
 
