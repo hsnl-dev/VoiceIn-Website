@@ -190,7 +190,7 @@
           <p>
             <%= provider.location %>
           </p>
-          <h5>方便通話時間</h5>
+          <h5>您的方便通話時間</h5>
           <button class="period-btn--started mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
             <%= availableStartTime %>
           </button>
@@ -198,7 +198,9 @@
           <button class="period-btn--ended mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
             <%= availableEndTime %>
           </button>
-          <h5>允許對方來電?</h5>
+          <br/>
+          *設定對方可來電的時間
+          <h5>是否允許對方來電?</h5>
             <label class="isEnable-switch mdl-switch mdl-js-switch mdl-js-ripple-effect" for="isEnable-switch">
             <% if (isEnable === true) {%>
               <input type="checkbox" class="mdl-switch__input" checked>
