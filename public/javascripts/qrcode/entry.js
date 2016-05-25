@@ -33,7 +33,7 @@ $(() => {
         $switchToSafariAlert.addClass('content-hidden');
       }
 
-      $('.ua-section').html(`${result.browser.name} ${result.device.model} ${result.device.vendor}`);
+      $('.ua-section').html(`${result.browser.name} 於 ${result.device.model} @ ${result.device.vendor}`);
       console.log(result);
 
       $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {
@@ -81,6 +81,7 @@ $(() => {
           return response;
         } else {
           var error = new Error(response.statusText);
+
           error.response = response;;
           throw error;
         }
