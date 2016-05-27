@@ -1,18 +1,20 @@
 VoiceIn Website
 ==
-install deps
+[![Build Status](https://codeship.com/projects/154644/status?branch=master)](https://codeship.com/projects/154644)  
+
+Install deps
 ```sh
 $ npm i -g bower
 $ npm i -g gulp
 $ npm install
 ```
 
-bower
+Bower
 ```sh
 $ bower install
 ```
 
-Dev
+Develop
 ==
 Build
 ```sh
