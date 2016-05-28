@@ -23,6 +23,7 @@ const app = express();
 const passport = require('passport');
 const expressSession = require('express-session');
 const MemcachedStore = require('connect-memcached')(expressSession);
+const isProduction = process.env.NODE_ENV === 'production';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,17 +41,16 @@ app.use(flash());
 
 var sessionConfig = {
     secret: 'voicein-secret-key-hswirq1',
+    key: 'loginCache',
     resave: false,
     saveUninitialized: false,
     signed: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
+    proxy: 'true',
+    store: new MemcachedStore({
+      hosts: [process.env.MEMCACHE_URL || '127.0.0.1:11211'],
+    }),
   };
-
-// if (process.env.NODE_ENV === 'production') {
-//   sessionConfig.store = new MemcachedStore({
-//     hosts: ['127.0.0.1:11211'],
-//   });
-// }
 
 app.use(expressSession(sessionConfig));
 app.use(passport.initialize());
