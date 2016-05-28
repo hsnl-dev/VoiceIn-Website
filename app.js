@@ -39,7 +39,7 @@ app.use(flash());
 app.use(expressSession({
     secret: 'voicein-secret-key-hswirq1',
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: { secure: true },
   }));
 
