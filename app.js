@@ -39,10 +39,8 @@ app.use(flash());
 app.use(expressSession({
     secret: 'voicein-secret-key-hswirq1',
     resave: true,
-    saveUninitialized: false,
-    cookie: { secure: true },
+    saveUninitialized: true,
   }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
