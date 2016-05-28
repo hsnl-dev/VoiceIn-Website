@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(flash());
 
-let sessionConfig = {
+var sessionConfig = {
     secret: 'voicein-secret-key-hswirq1',
     resave: false,
     saveUninitialized: false,
