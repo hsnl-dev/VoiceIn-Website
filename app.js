@@ -27,6 +27,7 @@ const MemcachedStore = require('connect-memcached')(expressSession);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('trust proxy', true);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -37,12 +38,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(flash());
 
-app.use(expressSession({
+let sessionConfig = {
     secret: 'voicein-secret-key-hswirq1',
     resave: false,
     saveUninitialized: false,
     signed: true,
-  }));
+  };
 
 if (process.env.NODE_ENV === 'production') {
   sessionConfig.store = new MemcachedStore({
@@ -50,6 +51,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.use(expressSession(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
