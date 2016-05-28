@@ -45,11 +45,11 @@ var sessionConfig = {
     signed: true,
   };
 
-if (process.env.NODE_ENV === 'production') {
-  sessionConfig.store = new MemcachedStore({
-    hosts: ['127.0.0.1:11211'],
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   sessionConfig.store = new MemcachedStore({
+//     hosts: ['127.0.0.1:11211'],
+//   });
+// }
 
 app.use(expressSession(sessionConfig));
 app.use(passport.initialize());
