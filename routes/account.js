@@ -33,7 +33,11 @@ module.exports = (passport) => {
   /* GET login page. */
   router.get('/login', (req, res) => {
     console.log(req);
-    res.render('account/login', { message: req.flash('message') });
+    if (req.isAuthenticated()) {
+      res.redirect('/account/me');
+    } else {
+      res.render('account/login', { message: req.flash('message') });
+    }
   });
 
   /* Handle Login POST */
