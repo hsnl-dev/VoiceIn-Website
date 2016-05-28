@@ -36,11 +36,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(flash());
 
+app.set('trust proxy', 1);
 app.use(expressSession({
     secret: 'voicein-secret-key-hswirq1',
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: { secure: true },
   }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
