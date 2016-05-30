@@ -191,6 +191,8 @@
             <%= provider.location %>
           </p>
           <h5>您的方便通話時間</h5>
+          *設定對方可來電的時間
+          <br/><br>
           <button class="period-btn--started mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
             <%= availableStartTime %>
           </button>
@@ -198,8 +200,6 @@
           <button class="period-btn--ended mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
             <%= availableEndTime %>
           </button>
-          <br/>
-          *設定對方可來電的時間
           <h5>是否允許對方來電?</h5>
             <label class="isEnable-switch mdl-switch mdl-js-switch mdl-js-ripple-effect" for="isEnable-switch">
             <% if (isEnable === true) {%>
