@@ -63,19 +63,23 @@ module.exports = (passport) => {
         url: `${api.apiRoute}/${api.latestVersion}/avatars/${user.profilePhotoId}?size=mid`,
         headers: headers,
       };
-      let image = '';
+      let image = '../dist/public/images/qrcode/user.png';
 
-      // get the user's avatars and response.
-      request.get(options, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-          let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+      if (user.profilePhotoId != null) {
+        // get the user's avatars and response.
+        request.get(options, (error, response, body) => {
+          if (!error && response.statusCode == 200) {
+            let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
 
-          image = base64data;
-          user.credit = user.credit.toFixed(2);
-          res.render('account/me', { user: user, image: image });
-        }
-      });
-
+            image = base64data;
+            user.credit = user.credit.toFixed(2);
+            res.render('account/me', { user: user, image: image });
+          }
+        });
+      } else {
+        user.credit = user.credit.toFixed(2);
+        res.render('account/me', { user: user, image: image });
+      }
     });
   });
 
@@ -87,19 +91,23 @@ module.exports = (passport) => {
         url: `${api.apiRoute}/${api.latestVersion}/avatars/${user.profilePhotoId}?size=mid`,
         headers: headers,
       };
-      let image = '';
+      let image = '../dist/public/images/qrcode/user.png';
 
-      // get the user's avatars and response.
-      request.get(options, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-          let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+      if (user.profilePhotoId != null) {
+        // get the user's avatars and response.
+        request.get(options, (error, response, body) => {
+          if (!error && response.statusCode == 200) {
+            let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
 
-          image = base64data;
-          user.credit = user.credit.toFixed(2);
-          res.render('account/card', { user: user, image: image });
-        }
-      });
-
+            image = base64data;
+            user.credit = user.credit.toFixed(2);
+            res.render('account/card', { user: user, image: image });
+          }
+        });
+      } else {
+        user.credit = user.credit.toFixed(2);
+        res.render('account/card', { user: user, image: image });
+      }
     });
   });
 

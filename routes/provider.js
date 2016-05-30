@@ -6,7 +6,7 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const headers = require('../config/secret').webServiceHeader;
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   let qrCodeUuid = req.query.id;
   /**
     Get providers' information.
@@ -18,6 +18,7 @@ router.get('/', (req, res, next) => {
       if (res.status >= 400) {
         console.log('error');
         let error = new Error('Something happened..');
+
         error.response = res;
         throw(error);
       }
@@ -30,16 +31,26 @@ router.get('/', (req, res, next) => {
         headers: headers,
       };
 
-      // get the user's avatars and response.
-      request.get(options, (error, response, body) => {
-        if (!error && response.statusCode === 200) {
-          let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
-          userData.image = base64data;
-          userData.qrCodeUuid = qrCodeUuid;
-          console.log(userData);
-          res.render('provider', userData);
-        }
-      });
+      console.log(userData.avatarId);
+
+      if (userData.avatarId != null) {
+        // get the user's avatars and response.
+        request.get(options, (error, response, body) => {
+          if (!error && response.statusCode === 200) {
+            let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+
+            userData.image = base64data;
+            userData.qrCodeUuid = qrCodeUuid;
+            console.log(userData);
+            res.render('provider', userData);
+          }
+        });
+      } else {
+        userData.image = './dist/public/images/qrcode/user.png';
+        userData.qrCodeUuid = qrCodeUuid;
+        res.render('provider', userData);
+      }
+
     }).catch(err => {
       console.log(err);
       res.render('not-found');
@@ -47,7 +58,7 @@ router.get('/', (req, res, next) => {
 });
 
 // This route deals with adding new icon.
-router.post('/add/:qrCodeUuid', (req, res, next) => {
+router.post('/add/:qrCodeUuid', (req, res) => {
   let qrCodeUuid = req.params.qrCodeUuid;
   let payload = JSON.stringify(req.body);
 
