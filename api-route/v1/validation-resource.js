@@ -5,7 +5,7 @@ const fetch = require('isomorphic-fetch');
 const api = require('../../config/api-url');
 const headers = require('../../config/secret').webServiceHeader;
 
-router.post('/', (req, res, next) => {
+router.post('/', (req, res) => {
   let phoneNumber = req.body.phoneNumber;
   let mode = req.body.mode;
 
@@ -33,6 +33,7 @@ router.post('/', (req, res, next) => {
     .then(userData => {
       console.log(userData);
       var sess = req.session;
+
       sess.uuid = userData.userUuid;
       res.send(res.status).end();
     })

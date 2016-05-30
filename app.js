@@ -22,10 +22,13 @@ const app = express();
 // Configuring Passport
 const passport = require('passport');
 const expressSession = require('express-session');
+const MemcachedStore = require('connect-memcached')(expressSession);
+const isProduction = process.env.NODE_ENV === 'production';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('trust proxy', true);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -36,11 +39,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(flash());
 
-app.use(expressSession({
+var sessionConfig = {
     secret: 'voicein-secret-key-hswirq1',
-    resave: true,
-    saveUninitialized: true,
-  }));
+    key: 'loginCache',
+    resave: false,
+    saveUninitialized: false,
+    signed: true,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
+    proxy: 'true',
+    store: new MemcachedStore({
+      hosts: [`${process.env.MEMCACHE_PORT_11211_TCP_ADDR}:${process.env.MEMCACHE_PORT_11211_TCP_PORT}` || '127.0.0.1:11211'],
+    }),
+  };
+
+app.use(expressSession(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
