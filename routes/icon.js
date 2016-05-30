@@ -6,8 +6,9 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const headers = require('../config/secret').webServiceHeader;
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res) => {
   let iconId = req.params.id;
+
   console.log(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}`);
   fetch(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}`, {
     headers: headers,
@@ -27,14 +28,19 @@ router.get('/:id', (req, res, next) => {
         headers: headers,
       };
 
-      // get the user's avatars and response.
-      request.get(options, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-          let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
-          userData.image = base64data;
-          res.render('icon', userData);
-        }
-      });
+      if (userData.provider.profilePhotoId != null) {
+        // get the user's avatars and response.
+        request.get(options, (error, response, body) => {
+          if (!error && response.statusCode == 200) {
+            let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+            userData.image = base64data;
+            res.render('icon', userData);
+          }
+        });
+      } else {
+        userData.image = './dist/public/images/qrcode/user.png';
+        res.render('icon', userData);
+      }
     })
     .catch((error) => {
       console.error(error);
@@ -42,7 +48,7 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.post('/:id/call', (req, res, next) => {
+router.post('/:id/call', (req, res) => {
   let iconId = req.params.id;
   console.log(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}/calls`);
 
@@ -55,7 +61,7 @@ router.post('/:id/call', (req, res, next) => {
     });
 });
 
-router.put('/:id/edit', (req, res, next) => {
+router.put('/:id/edit', (req, res) => {
   let iconId = req.params.id;
   let payload = JSON.stringify(req.body);
   let updateRoute = `${api.apiRoute}/${api.latestVersion}/icons/${iconId}`;

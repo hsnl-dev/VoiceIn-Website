@@ -47,10 +47,13 @@ var sessionConfig = {
     signed: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
     proxy: 'true',
-    store: new MemcachedStore({
-      hosts: [`${process.env.MEMCACHE_PORT_11211_TCP_ADDR}:${process.env.MEMCACHE_PORT_11211_TCP_PORT}` || '127.0.0.1:11211'],
-    }),
   };
+
+if (isProduction) {
+  sessionConfig.store =  new MemcachedStore({
+    hosts: [`${process.env.MEMCACHE_PORT_11211_TCP_ADDR}:${process.env.MEMCACHE_PORT_11211_TCP_PORT}` || '127.0.0.1:11211'],
+  });
+}
 
 app.use(expressSession(sessionConfig));
 app.use(passport.initialize());
