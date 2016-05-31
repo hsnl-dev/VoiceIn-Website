@@ -108,7 +108,7 @@ $(() => {
         if (data.iconId) {
           let host = 'https://voicein.kits.tw';
 
-          if (location.host === 'voicein.kits.tw') {
+          if (location.host !== 'voicein.kits.tw') {
             host = 'https://voice-in.herokuapp.com';
           }
 
