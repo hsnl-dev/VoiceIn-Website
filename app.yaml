@@ -22,5 +22,5 @@ skip_files:
 env_variables:
   apiKey: 'def278b0-4414-4914-8337-31d9a0b43082'
   isProduction: 'true'
-  ALLPAY_MODE: 'test'
+  ALLPAY_MODE: 'production'
   MEMCACHE_URL: localhost:11211
