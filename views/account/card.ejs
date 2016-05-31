@@ -161,13 +161,19 @@
     <script src="/dist/public/javascripts/card/entry.bundle.js"></script>
     <script type="text/javascript">
       $(function () {
+        var host = 'https://voicein.kits.tw';
+
+        if (location.host === 'voicein.kits.tw') {
+          host = 'https://voice-in.herokuapp.com';
+        }
+
         $('#qrcode').qrcode(
           {
             render: 'canvas',
             size: 125,
             color: '#3a3',
             background: '#eeeeee',
-            text: 'https://voicein.kits.tw/qrcode?id=<%= user.qrCodeUuid %>',
+            text: host + '/qrcode?id=<%= user.qrCodeUuid %>',
             ecLevel: 'L',
           });
       });
