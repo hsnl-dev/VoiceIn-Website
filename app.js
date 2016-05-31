@@ -49,7 +49,7 @@ var sessionConfig = {
     proxy: 'true',
   };
 
-if (isProduction) {
+if (process.env.isProduction === 'true') {
   sessionConfig.store =  new MemcachedStore({
     hosts: [`${process.env.MEMCACHE_PORT_11211_TCP_ADDR}:${process.env.MEMCACHE_PORT_11211_TCP_PORT}` || '127.0.0.1:11211'],
   });
