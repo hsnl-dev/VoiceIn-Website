@@ -95,6 +95,7 @@ module.exports = (passport) => {
         url: `${api.apiRoute}/${api.latestVersion}/avatars/${user.profilePhotoId}?size=mid`,
         headers: headers,
       };
+
       let image = '../dist/public/images/qrcode/user.png';
 
       if (user.profilePhotoId != null) {
@@ -105,7 +106,22 @@ module.exports = (passport) => {
 
             image = base64data;
             user.credit = user.credit.toFixed(2);
-            res.render('account/card', { user: user, image: image });
+
+            options.url = `${api.apiRoute}/${api.latestVersion}/qrcodes/${user.qrCodeUuid}/image`;
+
+            request.get(options, (error, response, body) => {
+              if (!error && response.statusCode == 200) {
+                let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+
+                let qrcode = base64data;
+
+                user.credit = user.credit.toFixed(2);
+                res.render('account/card', { user: user, image: image, qrcode: qrcode });
+              } else {
+                res.render('not-found');
+              }
+            });
+
           } else {
             res.render('not-found');
           }
@@ -182,6 +198,7 @@ module.exports = (passport) => {
           throw err;
         } else {
           let form = result.html;
+
           res.send(form).end();
         }
       }).catch(err => {

@@ -74,6 +74,8 @@
           position: absolute;
           bottom: 5px;
           right: 15px;
+          width 125px;
+          height: 125px;
       }
 
       .download-btn {
@@ -98,7 +100,7 @@
               <% } else {%>
                 <img class="user-image" src="/dist/public/images/general/user.ico" alt="" />
               <% } %>
-              <div id="qrcode"></div>
+              <img src="<%= qrcode %>" id="qrcode"/>
             </div>
             <div class="mdl-color-text--grey-600 mdl-card__supporting-text user-information-section">
               <ul class="mdl-list">
@@ -159,24 +161,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js" charset="utf-8"></script>
     <script src="/public/javascripts/card/dom-to-image.js"></script>
     <script src="/dist/public/javascripts/card/entry.bundle.js"></script>
-    <script type="text/javascript">
-      $(function () {
-        var host = 'https://voicein.kits.tw';
-
-        if (location.host !== 'voicein.kits.tw') {
-          host = 'https://voice-in.herokuapp.com';
-        }
-
-        $('#qrcode').qrcode(
-          {
-            render: 'canvas',
-            size: 125,
-            color: '#3a3',
-            background: '#eeeeee',
-            text: host + '/qrcode?id=<%= user.qrCodeUuid %>',
-            ecLevel: 'L',
-          });
-      });
-    </script>
   </body>
 </html>
