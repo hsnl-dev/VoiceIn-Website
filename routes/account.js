@@ -138,7 +138,7 @@ module.exports = (passport) => {
     allpay.aioCheckOut({
       MerchantTradeNo: merchantNo,
       MerchantTradeDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '/'),
-      TotalAmount: reqBody.points,
+      TotalAmount: parseInt(reqBody.points),
       TradeDesc: `VoiceIn ${reqBody.points} 點數購買`,
       Items: [{
           name: '商品一',
