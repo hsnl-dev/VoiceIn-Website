@@ -74,6 +74,8 @@ module.exports = (passport) => {
             image = base64data;
             user.credit = user.credit.toFixed(2);
             res.render('account/me', { user: user, image: image });
+          } else {
+            res.render('not-found');
           }
         });
       } else {
@@ -102,6 +104,8 @@ module.exports = (passport) => {
             image = base64data;
             user.credit = user.credit.toFixed(2);
             res.render('account/card', { user: user, image: image });
+          } else {
+            res.render('not-found');
           }
         });
       } else {
