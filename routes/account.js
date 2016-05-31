@@ -139,7 +139,7 @@ module.exports = (passport) => {
       MerchantTradeNo: merchantNo,
       MerchantTradeDate: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '/'),
       TotalAmount: reqBody.points,
-      TradeDesc: 'VoiceIn ${reqBody.points} 點數購買',
+      TradeDesc: `VoiceIn ${reqBody.points} 點數購買`,
       Items: [{
           name: '商品一',
           quantity: '1',
@@ -149,6 +149,7 @@ module.exports = (passport) => {
       ReturnURL: isProduction ? 'https://voicein.kits.tw/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/success',
       ChoosePayment: 'ALL',
     }, function (err, result) {
+      console.log(err, result);
 
       let paymentRoute = `${api.apiRoute}/${api.latestVersion}/payments`;
       let payload = JSON.stringify({
