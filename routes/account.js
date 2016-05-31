@@ -9,7 +9,7 @@ const uuid = require('node-uuid');
 const allpaySecret = process.env.ALLPAY_MODE === 'production' ? require('../config/secret').allpaySecret : require('../config/secret').testAllpaySecret;
 let headers = require('../config/secret').webServiceHeader;
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.isProduction === 'true';
 
 let allpay = new Allpay({
   merchantID: allpaySecret.merchantID,
@@ -21,7 +21,7 @@ let allpay = new Allpay({
 
 const isAuthenticated = (req, res, next) => {
   // If not production (sandbox), login directly for convinience.
-  if (!isProduction || req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     return next();
   }
 
@@ -146,7 +146,7 @@ module.exports = (passport) => {
           price: reqBody.points,
         },
       ],
-      ReturnURL: isProduction ? 'https://voice-in.herokuapp.com/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/sandbox',
+      ReturnURL: isProduction ? 'https://voicein.kits.tw/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/success',
       ChoosePayment: 'ALL',
     }, function (err, result) {
 
