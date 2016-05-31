@@ -6,6 +6,7 @@ const request = require('request').defaults({ encoding: null });
 const api = require('../config/api-url');
 const Allpay = require('allpay');
 const uuid = require('node-uuid');
+const debug = require('debug')('app:appjs');
 const allpaySecret = process.env.ALLPAY_MODE === 'production' ? require('../config/secret').allpaySecret : require('../config/secret').testAllpaySecret;
 let headers = require('../config/secret').webServiceHeader;
 
@@ -33,6 +34,7 @@ module.exports = (passport) => {
   /* GET login page. */
   router.get('/login', (req, res) => {
     console.log(req);
+
     if (req.isAuthenticated()) {
       res.redirect('/account/me');
     } else {
@@ -55,9 +57,9 @@ module.exports = (passport) => {
 
   router.get('/me', isAuthenticated, (req, res) => {
     console.log(req.user);
-    console.log(req.session);
+
     User.findOne({ _id: req.user.id }, (err, user) => {
-      console.log(err, user);
+      console.log(user);
 
       let options = {
         url: `${api.apiRoute}/${api.latestVersion}/avatars/${user.profilePhotoId}?size=mid`,
@@ -87,7 +89,7 @@ module.exports = (passport) => {
 
   router.get('/card', isAuthenticated, (req, res) => {
     User.findOne({ _id: req.user.id }, (err, user) => {
-      console.log(err, user);
+      console.log(user);
 
       let options = {
         url: `${api.apiRoute}/${api.latestVersion}/avatars/${user.profilePhotoId}?size=mid`,
@@ -132,9 +134,7 @@ module.exports = (passport) => {
   });
 
   router.post('/buy/allpay', isAuthenticated, (req, res) => {
-    console.log(req.body);
-    console.log(process.env.NODE_ENV);
-    console.log(req.session.token);
+    console.log('Token /buy/allpay ' + req.session.token);
 
     let reqBody = req.body;
     let merchantNo = uuid.v4().split('-')[0].toUpperCase() + uuid.v4().split('-')[4].toUpperCase();
@@ -145,9 +145,9 @@ module.exports = (passport) => {
       TotalAmount: parseInt(reqBody.points),
       TradeDesc: `VoiceIn ${reqBody.points} 點數購買`,
       Items: [{
-          name: '商品一',
+          name: `VoiceIn ${reqBody.points} 點點數購買`,
           quantity: '1',
-          price: reqBody.points,
+          price: parseInt(reqBody.points),
         },
       ],
       ReturnURL: isProduction ? 'https://voicein.kits.tw/account/buy/allpay/success' : 'https://voice-in.herokuapp.com/account/buy/allpay/success',
@@ -182,7 +182,6 @@ module.exports = (passport) => {
           throw err;
         } else {
           let form = result.html;
-
           res.send(form).end();
         }
       }).catch(err => {
