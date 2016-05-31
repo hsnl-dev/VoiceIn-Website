@@ -197,9 +197,9 @@
       <span class="mdl-layout-title">VoiceIn 名片</span>
       <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="/">VoiceIn 首頁</a>
-        <a class="mdl-navigation__link" href="">聯絡我們</a>
-        <a class="mdl-navigation__link" href="">常見問題</a>
-        <a class="mdl-navigation__link" href="">關於 VoiceIn</a>
+        <a class="mdl-navigation__link" href="/">聯絡我們</a>
+        <a class="mdl-navigation__link" href="/">常見問題</a>
+        <a class="mdl-navigation__link" href="/">關於 VoiceIn</a>
       </nav>
     </div>
     <main class="mdl-layout__content vcard-content">
@@ -231,7 +231,7 @@
           <p>
             如果確認對方資料無誤<br/>
             請於以下輸入您的聯絡資訊加入<%= name %>為聯絡人。<br/>
-            <a href="#">為什麼要輸入資料?</a><br/>
+            <a href="#" class="explain-btn">為什麼要輸入資料?</a><br/>
             *您的手機號碼對方將不會看見，請放心。
           </p>
           <form class="user-information-form" action="#">
@@ -268,8 +268,8 @@
           <input type="hidden" id="company" value="<%= customerCompany %>">
         <% } %>
         <div class="mdl-card__actions mdl-card--border">
-          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>" target="_blank">
-            <i class="material-icons md-36">done</i>確認加入<%= name %>
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>" target="_blank">
+            <i class="material-icons md-36">done</i>確認加入 <%= name %>
           </a>
         </div>
         <div class="ua-section">
