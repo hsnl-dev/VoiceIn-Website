@@ -1,11 +1,13 @@
 $(() => {
   const api = require('../config/api-url.js');
   const $dialog = document.querySelector('#dialog');
+  let isConfirmClicked = false;
 
   let FormView = Backbone.View.extend({
     el: '.vcard-content',
     events: {
       'click .confirm-btn': 'addProvider',
+      'click .explain-btn': 'showExplainModal',
     },
     initialize: () => {
       let $switchToSafariAlert = $('.switch-to-safari-alert');
@@ -33,8 +35,9 @@ $(() => {
         $switchToSafariAlert.addClass('content-hidden');
       }
 
-      $('.ua-section').html(`${result.browser.name} 於 ${result.device.model} @ ${result.device.vendor}`);
-      console.log(result);
+      // The user agent detect.
+      // $('.ua-section').html(`${result.browser.name} 於 ${result.device.model} @ ${result.device.vendor}`);
+      // console.log(result);
 
       $dialog.querySelector('button:not([disabled])').addEventListener('click', function () {
         $dialog.close();
@@ -42,6 +45,12 @@ $(() => {
     },
 
     addProvider: (e) => {
+      if (isConfirmClicked) {
+        return;
+      } else {
+        isConfirmClicked = true;
+      }
+
       let $buttonClicked = $(e.currentTarget);
       let qrCodeUuid = $buttonClicked.data('qrcode-uuid');
       let payload = JSON.stringify({
@@ -58,11 +67,20 @@ $(() => {
           },
         });
 
-      let isInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
+      let isPhoneInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
+      let isNameInValid = $('#name').val().trim() === '';
 
-      if (isInValid) {
-        $('.notification-text').html('請輸入正確的電話號碼。');
+      if (isNameInValid) {
+        $('.notification-text').html('請輸入姓名喔。');
         $dialog.showModal();
+        isConfirmClicked = false;
+        return false;
+      }
+
+      if (isPhoneInValid) {
+        $('.notification-text').html('請輸入正確的電話號碼喔。');
+        $dialog.showModal();
+        isConfirmClicked = false;
         return false;
       }
 
@@ -101,7 +119,13 @@ $(() => {
         console.log('request failed', error);
         $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
         $dialog.showModal();
+        isConfirmClicked = false;
       });
+    },
+
+    showExplainModal: () => {
+      $('.notification-text').html('因為提供您的電話號碼後，我們的服務才能夠撥打電話給您，並讓您與此聯絡人通話。請放心，您的電話號碼對方將不會看見。');
+      $dialog.showModal();
     },
 
     render: () => {
