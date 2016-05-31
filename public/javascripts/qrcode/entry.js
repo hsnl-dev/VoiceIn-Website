@@ -107,7 +107,7 @@ $(() => {
         return res.json();
       }).then(data => {
         if (data.iconId) {
-          let host = 'https://voice-in.herokuapp.com';
+          let host = 'https://voicein.kits.tw';
           let url = `/icon/${data.iconId}`;
 
           $('.notification-text').html('成功加入，只剩下最後一步了!');
