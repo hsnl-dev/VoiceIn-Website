@@ -153,7 +153,7 @@ module.exports = (passport) => {
 
       let paymentRoute = `${api.apiRoute}/${api.latestVersion}/payments`;
       let payload = JSON.stringify({
-        money: reqBody.points,
+        money: parseInt(reqBody.points),
         method: null,
         status: 'pending',
         payId: merchantNo,
