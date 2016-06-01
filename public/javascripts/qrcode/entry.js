@@ -70,14 +70,14 @@ $(() => {
       let isNameInValid = $('#name').val().trim() === '';
 
       if (isNameInValid) {
-        $('.notification-text').html('請輸入姓名喔。');
+        $('.notification-text').html('請輸入您的暱稱或姓名。');
         $dialog.showModal();
         isConfirmClicked = false;
         return false;
       }
 
       if (isPhoneInValid) {
-        $('.notification-text').html('請輸入正確的電話號碼喔。');
+        $('.notification-text').html('請輸入您的手機號碼(09 開頭)。');
         $dialog.showModal();
         isConfirmClicked = false;
         return false;
@@ -114,7 +114,7 @@ $(() => {
 
           let url = `/icon/${data.iconId}`;
 
-          $('.notification-text').html('成功加入，只剩下最後一步了!');
+          $('.notification-text').html('快完成了，請跟隨教學加入聯絡人至主畫面。');
           $dialog.showModal();
 
           window.location = url;

@@ -44,7 +44,7 @@ $(function () {
 
     },
 
-    toggleEnableSwitch:function (e) {
+    toggleEnableSwitch: function (e) {
       let $toggleSwitch = $(e.currentTarget);
       let $userInfoSaveBtn = $('.edit-dialog-btn--saved');
 
@@ -54,7 +54,7 @@ $(function () {
       $userInfoSaveBtn.click();
     },
 
-    setTimeMoment: function (e) {
+    setTimeMoment: function () {
       let editTimeState = this.editTimeState;
       let $periodStart = $('.period-btn--started');
       let $periodEnd = $('.period-btn--ended');
@@ -62,6 +62,7 @@ $(function () {
 
       if (editTimeState === 'start') {
         let time = (this.mdTimePicker.time().format('HH:mm'));
+
         $periodStart.html(time);
       } else {
         let time = (this.mdTimePicker.time().format('HH:mm'));
@@ -72,18 +73,18 @@ $(function () {
       $userInfoSaveBtn.click();
     },
 
-    openStartTimePicker: function (e) {
+    openStartTimePicker: function () {
       this.mdTimePicker.toggle();
       let time = this.mdTimePicker.time();
       this.editTimeState = 'start';
     },
 
-    openEndTimePicker: function (e) {
+    openEndTimePicker: function () {
       this.mdTimePicker.toggle();
       this.editTimeState = 'end';
     },
 
-    showEditModal: function (e) {
+    showEditModal: function () {
       let dialog = document.querySelector('.edit-dialog');
       if (!dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
@@ -92,12 +93,12 @@ $(function () {
       dialog.show();
     },
 
-    hideEditModal: function (e) {
+    hideEditModal: function () {
       let dialog = document.querySelector('.edit-dialog');
       dialog.close();
     },
 
-    saveUserData: function (e) {
+    saveUserData: function () {
       let $buttonClicked = $('.edit-dialog-btn--saved');
       let iconUuid = $buttonClicked.data('icon-uuid');
       let payload = JSON.stringify({
@@ -136,6 +137,9 @@ $(function () {
           throw err;
         } else {
           $buttonClicked.html($buttonClicked.data('done-text'));
+          let dialog = document.querySelector('.edit-dialog');
+          dialog.close();
+          $buttonClicked.html($buttonClicked.data('original-text'));
         }
       }).catch(err => {
         alert('抱歉，儲存失敗，請再嘗試一次。');
@@ -143,12 +147,12 @@ $(function () {
       });
     },
 
-    hideAtnSection: function (e) {
+    hideAtnSection: function () {
       localStorage.setItem('hideAtnSection', true);
       $('.ath-section').hide();
     },
 
-    buttonClose: function (event) {
+    buttonClose: function () {
       let errdialog = $('dialog.error-dialog').get(0);
       if (!errdialog.showModal) {
         dialogPolyfill.registerDialog(errdialog);
@@ -157,7 +161,7 @@ $(function () {
       errdialog.close();
     },
 
-    initCall: function (e) {
+    initCall: function () {
       let iconUuid = $('.icon-info').data('iconid');
       let dialog = $('dialog.progress-dialog').get(0);
       let errdialog = $('dialog.error-dialog').get(0);
@@ -173,27 +177,27 @@ $(function () {
       fetch(`/icon/${iconUuid}/call`, options)
        .then(response => {
 
-         if (response.status >= 200 && response.status < 300) {
-           dialog.close();
-           return response;
-         } else {
-           if (response.status === 402) {
-             // payment required.
-             $('.error-dialog p').html('對方點數不足，無法撥打。');
-           }  else {
-             let error = new Error(response.statusText);
-             error.response = response;
-             throw error;
-           }
+        if (response.status >= 200 && response.status < 300) {
+          dialog.close();
+          return response;
+        } else {
+          if (response.status === 402) {
+            // payment required.
+            $('.error-dialog p').html('對方點數不足，無法撥打。');
+          }  else {
+            let error = new Error(response.statusText);
+            error.response = response;
+            throw error;
+          }
 
-         }
-       })
+        }
+      })
        .catch(error => {
 
-         dialog.close();
-         errdialog.showModal();
-         console.log('request failed', error);
-       });
+        dialog.close();
+        errdialog.showModal();
+        console.log('request failed', error);
+      });
     },
 
     closeAndroidTutorial: () => {

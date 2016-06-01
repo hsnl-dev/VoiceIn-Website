@@ -140,6 +140,13 @@
     .tutorial-section {
       text-align: left;
     }
+
+    .confirm-bar {
+      position: fixed;
+      bottom: 0;
+      background-color: white !important;
+      z-index: 4;
+    }
   </style>
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.2/dialog-polyfill.min.css" media="screen" title="dialog-polyfill" charset="utf-8">
@@ -219,36 +226,46 @@
           </p>
           <h5><i class="material-icons md-36">business</i>公司</h5>
           <p>
-            <%= company %>
+            <% if (company === '') {%>
+              對方未填寫
+            <% } else {%>
+              <%= company %>
+            <%}%>
           </p>
           <h5><i class="material-icons md-36">location_on</i>來自</h5>
           <p>
-            <%= location %>
+            <% if (location === '') {%>
+              對方未填寫
+            <% } else {%>
+              <%= location %>
+            <%}%>
           </p>
         </div>
         <% if (type !== 'special') { %>
         <div class="mdl-card__supporting-text">
+          <h3>請輸入您的聯絡資訊</h3>
           <p>
-            如果確認對方資料無誤<br/>
-            請於以下輸入您的聯絡資訊加入<%= name %>為聯絡人。<br/>
+            請於以下輸入您的聯絡資訊加入<strong><%= name %></strong>為聯絡人。<br/>
             <a href="#" class="explain-btn">為什麼要輸入資料?</a><br/>
             *您的手機號碼對方將不會看見，請放心。
+            <br/>
+            *您的暱稱或姓名對方將會看見。
           </p>
           <form class="user-information-form" action="#">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="name">
-              <label class="mdl-textfield__label" for="name">您的姓名</label>
+              <label class="mdl-textfield__label" for="name">您的暱稱或姓名(必要)</label>
             </div><br/>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label phonenumber-field">
               <input class="mdl-textfield__input" pattern="[0-9]{10}" id="phoneNumber" type="tel" inputmode="numeric">
-              <label class="mdl-textfield__label" for="phoneNumber">您的手機號碼</label>
+              <label class="mdl-textfield__label" for="phoneNumber">您的手機號碼(09開頭，必要)</label>
               <span class="mdl-textfield__error">只能輸入手機號碼，例如 0988123456 </span>
             </div><br/>
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="company">
-              <label class="mdl-textfield__label" for="company">您的公司</label>
+              <label class="mdl-textfield__label" for="company">您的公司(非必要)</label>
             </div>
             <!-- <div class="mdl-textfield mdl-js-textfield">
               <textarea class="mdl-textfield__input" type="text" rows= "3" id="profile"></textarea>
@@ -267,7 +284,10 @@
           <input type="hidden"  id="phoneNumber" value="<%= customerPhoneNum %>">
           <input type="hidden" id="company" value="<%= customerCompany %>">
         <% } %>
-        <div class="mdl-card__actions mdl-card--border">
+        <div class="" style="height: 80px;">
+          <!-- Blank Section -->
+        </div>
+        <div class="mdl-card__actions mdl-card--border confirm-bar">
           <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>" target="_blank">
             <i class="material-icons md-36">done</i>確認加入 <%= name %>
           </a>
