@@ -15,10 +15,17 @@ $(() => {
       let isApple = result.device.vendor === 'Apple';
       let isMobileSafari = result.browser.name === 'Mobile Safari' && result.device.type === 'mobile';
       let isMobileChrome = result.browser.name === 'Chrome';
+      let $nameField = $('#name');
+      let $phoneNumberField = $('#phoneNumber');
+      let $companyField = $('#company');
 
       if (!$dialog.showModal) {
         dialogPolyfill.registerDialog($dialog);
       }
+
+      $nameField.val(localStorage.getItem('name') != null ? localStorage.getItem('name') : '');
+      $phoneNumberField.val(localStorage.getItem('phoneNumber') != null ? localStorage.getItem('phoneNumber') : '');
+      $companyField.val(localStorage.getItem('company') != null ? localStorage.getItem('company') : '');
 
       // insert the current url to link.
       $('.copy-url-link').attr('href', window.location.href);
@@ -74,6 +81,8 @@ $(() => {
         $dialog.showModal();
         isConfirmClicked = false;
         return false;
+      } else {
+        localStorage.setItem('name', $('#name').val());
       }
 
       if (isPhoneInValid) {
@@ -81,6 +90,9 @@ $(() => {
         $dialog.showModal();
         isConfirmClicked = false;
         return false;
+      } else {
+        localStorage.setItem('phoneNumber', $('#phoneNumber').val());
+        localStorage.setItem('company', $('#company').val());
       }
 
       let options = {
@@ -102,9 +114,8 @@ $(() => {
           error.response = response;;
           throw error;
         }
-      }).then(res => {
-        return res.json();
-      }).then(data => {
+      }).then(res => res.json())
+      .then(data => {
         if (data.iconId) {
           let host = 'https://voicein.kits.tw';
 

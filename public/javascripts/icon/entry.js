@@ -4,6 +4,7 @@ $(function () {
     events: {
       'click .confirm-btn': 'initCall',
       'click #err-close': 'buttonClose',
+      'click #calling-modal-close': 'callingModalClose',
       'click .already-ath-btn': 'hideAtnSection',
       'click .edit-btn': 'showEditModal',
       'click .edit-dialog-btn--closed': 'hideEditModal',
@@ -126,10 +127,22 @@ $(function () {
         body: payload,
       };
 
-      let isInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
+      let isPhoneNumberInValid = $('.phonenumber-field').hasClass('is-invalid') || $('#phoneNumber').val() === '';
+      let isNameInValid = $('#name').val().trim() === '';
 
-      if (isInValid) {
-        console.log('電話號碼格式有誤');
+      if (isNameInValid) {
+        alert('電話號碼格式有誤');
+        return false;
+      } else {
+        localStorage.setItem('name', $('#name').val());
+      }
+
+      if (isPhoneNumberInValid) {
+        alert('電話號碼格式有誤');
+        return false;
+      } else {
+        localStorage.setItem('phoneNumber', $('#phoneNumber').val());
+        localStorage.setItem('company', $('#company').val());
       }
 
       $buttonClicked.html($buttonClicked.data('save-text'));
@@ -171,6 +184,16 @@ $(function () {
       errdialog.close();
     },
 
+    callingModalClose: function () {
+      let errdialog = $('dialog.progress-dialog').get(0);
+
+      if (!errdialog.showModal) {
+        dialogPolyfill.registerDialog(errdialog);
+      }
+
+      errdialog.close();
+    },
+
     initCall: function () {
       let iconUuid = $('.icon-info').data('iconid');
       let dialog = $('dialog.progress-dialog').get(0);
@@ -190,7 +213,7 @@ $(function () {
        .then(response => {
 
          if (response.status >= 200 && response.status < 300) {
-           dialog.close();
+           //  dialog.close();
            return response;
          } else {
            if (response.status === 402) {
