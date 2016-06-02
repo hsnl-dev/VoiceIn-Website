@@ -66,6 +66,7 @@ $(function () {
         $periodStart.html(time);
       } else {
         let time = (this.mdTimePicker.time().format('HH:mm'));
+
         $periodEnd.html(time);
       }
 
@@ -76,6 +77,7 @@ $(function () {
     openStartTimePicker: function () {
       this.mdTimePicker.toggle();
       let time = this.mdTimePicker.time();
+
       this.editTimeState = 'start';
     },
 
@@ -86,6 +88,7 @@ $(function () {
 
     showEditModal: function () {
       let dialog = document.querySelector('.edit-dialog');
+
       if (!dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
       }
@@ -95,6 +98,7 @@ $(function () {
 
     hideEditModal: function () {
       let dialog = document.querySelector('.edit-dialog');
+
       dialog.close();
     },
 
@@ -133,12 +137,17 @@ $(function () {
       fetch(`/icon/${iconUuid}/edit`, options)
       .then(response => {
         if (response >= 400) {
-          let err = new Error('Error!!!!!!!!!!');
+          let err = new Error('Error');
+
           throw err;
         } else {
           $buttonClicked.html($buttonClicked.data('done-text'));
           let dialog = document.querySelector('.edit-dialog');
-          dialog.close();
+
+          if (typeof dialog.close === 'function') {
+            dialog.close();
+          }
+
           $buttonClicked.html($buttonClicked.data('original-text'));
         }
       }).catch(err => {
@@ -154,6 +163,7 @@ $(function () {
 
     buttonClose: function () {
       let errdialog = $('dialog.error-dialog').get(0);
+
       if (!errdialog.showModal) {
         dialogPolyfill.registerDialog(errdialog);
       }
@@ -165,6 +175,7 @@ $(function () {
       let iconUuid = $('.icon-info').data('iconid');
       let dialog = $('dialog.progress-dialog').get(0);
       let errdialog = $('dialog.error-dialog').get(0);
+
       if (!dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
         dialogPolyfill.registerDialog(errdialog);
@@ -174,30 +185,32 @@ $(function () {
       let options = {
         method: 'POST',
       };
+
       fetch(`/icon/${iconUuid}/call`, options)
        .then(response => {
 
-        if (response.status >= 200 && response.status < 300) {
-          dialog.close();
-          return response;
-        } else {
-          if (response.status === 402) {
-            // payment required.
-            $('.error-dialog p').html('對方點數不足，無法撥打。');
-          }  else {
-            let error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-          }
+         if (response.status >= 200 && response.status < 300) {
+           dialog.close();
+           return response;
+         } else {
+           if (response.status === 402) {
+             // payment required.
+             $('.error-dialog p').html('對方點數不足，無法撥打。');
+           }  else {
+             let error = new Error(response.statusText);
 
-        }
-      })
+             error.response = response;
+             throw error;
+           }
+
+         }
+       })
        .catch(error => {
 
-        dialog.close();
-        errdialog.showModal();
-        console.log('request failed', error);
-      });
+         dialog.close();
+         errdialog.showModal();
+         console.log('request failed', error);
+       });
     },
 
     closeAndroidTutorial: () => {
