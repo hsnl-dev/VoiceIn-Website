@@ -225,7 +225,7 @@
     <div class="mdl-card__actions mdl-card--border caller-bar">
       <% if (isTargetEnable){ %>
         <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent confirm-btn">
-          <i class="material-icons md-36">phone</i>撥高品質免費電話給 <%= name %>
+          <i class="material-icons md-36">phone</i>撥高品質免費電話給 <%= provider.userName %>
         </a>
       <% } else {%>
         <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent sorry-btn">
@@ -240,7 +240,7 @@
     <h4 class="mdl-dialog__title">請稍後</h4>
     <div class="mdl-dialog__content">
       <p>
-        VoiceIn 雲端系統即將來電(02 開頭的電話)，請放心接通電話，即可與 <%= name %> 通話。
+        VoiceIn 雲端系統即將來電(02 開頭的電話)，請放心接通電話，即可與 <%= provider.userName %> 通話。
       </p>
       <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
       <br>
