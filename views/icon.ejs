@@ -190,7 +190,8 @@
           <p>
             <%= provider.location %>
           </p>
-          <h5>您的方便通話時間</h5>
+          <h5><i class="material-icons md-36">access_time</i> 設定對方是否可以打給您</h5>
+          <h6>ㄧ、您的方便通話時間</h6>
           *設定對方可來電的時間
           <br/><br>
           <button class="period-btn--started mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
@@ -200,7 +201,7 @@
           <button class="period-btn--ended mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
             <%= availableEndTime %>
           </button>
-          <h5>是否允許對方來電?</h5>
+          <h6>二、是否允許對方來電?</h6>
             <label class="isEnable-switch mdl-switch mdl-js-switch mdl-js-ripple-effect" for="isEnable-switch">
             <% if (isEnable === true) {%>
               <input type="checkbox" class="mdl-switch__input" checked>
@@ -223,12 +224,12 @@
 
     <div class="mdl-card__actions mdl-card--border caller-bar">
       <% if (isTargetEnable){ %>
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect confirm-btn">
-          <i class="material-icons md-36">phone</i>撥高品質免費電話
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent confirm-btn">
+          <i class="material-icons md-36">phone</i>撥高品質免費電話給 <%= name %>
         </a>
       <% } else {%>
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect sorry-btn">
-          <i class="material-icons md-36">phone_locked</i>抱歉，對方目前無法接聽電話
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent sorry-btn">
+          <i class="material-icons md-36">phone_locked</i>抱歉，<%= name %> 目前無法接聽電話
         </a>
       <%}%>
     </div>
@@ -239,9 +240,17 @@
     <h4 class="mdl-dialog__title">請稍後</h4>
     <div class="mdl-dialog__content">
       <p>
-        雲端系統即將來電，請放心接通電話，即可通話。
+        VoiceIn 雲端系統即將來電(02 開頭的電話)，請放心接通電話，即可與 <%= name %> 通話。
       </p>
       <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+      <br>
+      <p>
+        若超過 10 秒都未接到雲端系統的來電，請點關閉，並在"修改您的資料"中確認您的電話號碼輸入正確。
+      </p>
+    </div>
+    <br/>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button" id="calling-modal-close">關閉</button>
     </div>
   </dialog>
 
