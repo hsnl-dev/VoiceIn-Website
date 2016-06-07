@@ -40,8 +40,15 @@ $(function () {
             autostart: false,
             startDelay: 0,
           });
-          this.addtohome.show();
+
+          if (!window.navigator.standalone) {
+            this.addtohome.show();
+          }
         } else {
+          $('.android-ath-section').removeClass('content-hidden');
+        }
+      } else {
+        if (!isApple && !window.matchMedia('(display-mode: standalone)').matches) {
           $('.android-ath-section').removeClass('content-hidden');
         }
       }
@@ -176,7 +183,7 @@ $(function () {
           $buttonClicked.html($buttonClicked.data('done-text'));
           let dialog = document.querySelector('.edit-dialog');
 
-          if (typeof dialog.close === 'function') {
+          if ($(dialog).attr('open') === 'open') {
             dialog.close();
           }
 
@@ -306,6 +313,7 @@ $(function () {
     },
 
     closeAndroidTutorial: () => {
+      localStorage.setItem('hideAtnSection', true);
       $('.android-ath-section').addClass('content-hidden');
     },
 

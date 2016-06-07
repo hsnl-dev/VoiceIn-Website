@@ -129,7 +129,7 @@ $(() => {
           let url = `/icon/${data.iconId}`;
 
           if (!isApple) {
-            url = `intent:${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+            url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
           }
 
           $('.notification-text').html('快完成了，請跟隨教學加入聯絡人至主畫面。');
@@ -137,6 +137,8 @@ $(() => {
 
           window.location = url;
         }
+
+        isConfirmClicked = false;
       }).catch(error => {
         console.log('request failed', error);
         $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
