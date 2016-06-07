@@ -41,7 +41,7 @@ $(() => {
         $switchToSafariAlert.addClass('content-hidden');
         let url = window.location.href;
 
-        window.location = `intent${url.replace(/http|https/g, '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${url};end`;
+        window.location = `intent${url.replace(/https/g, '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${url};end`;
       }
 
       // The user agent detect.
