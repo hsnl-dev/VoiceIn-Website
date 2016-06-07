@@ -44,10 +44,6 @@ $(function () {
         } else {
           $('.android-ath-section').removeClass('content-hidden');
         }
-      } else {
-        if (!isApple && localStorage.getItem('hideAtnSection') !== true) {
-          $('.android-ath-section').removeClass('content-hidden');
-        }
       }
 
     },
@@ -310,7 +306,6 @@ $(function () {
     },
 
     closeAndroidTutorial: () => {
-      localStorage.setItem('hideAtnSection', true);
       $('.android-ath-section').addClass('content-hidden');
     },
 
