@@ -8,6 +8,9 @@ $(function () {
       'click .already-ath-btn': 'hideAtnSection',
       'click .edit-btn': 'showEditModal',
       'click .edit-dialog-btn--closed': 'hideEditModal',
+      'click .msg-btn': 'showMsgModal',
+      'click .msg-dialog-btn--closed': 'hideMsgModal',
+      'click .msg-dialog-btn--saved': 'sendMessageData',
       'click .edit-dialog-btn--saved': 'saveUserData',
       'click .period-btn--started': 'openStartTimePicker',
       'click .period-btn--ended': 'openEndTimePicker',
@@ -103,6 +106,22 @@ $(function () {
       dialog.close();
     },
 
+    showMsgModal: function () {
+      let dialog = document.querySelector('.message-dialog');
+
+      if (!dialog.showModal) {
+        dialogPolyfill.registerDialog(dialog);
+      }
+
+      dialog.show();
+    },
+
+    hideMsgModal: function () {
+      let dialog = document.querySelector('.message-dialog');
+
+      dialog.close();
+    },
+
     saveUserData: function () {
       let $buttonClicked = $('.edit-dialog-btn--saved');
       let iconUuid = $buttonClicked.data('icon-uuid');
@@ -164,7 +183,57 @@ $(function () {
           $buttonClicked.html($buttonClicked.data('original-text'));
         }
       }).catch(err => {
+        $buttonClicked.html($buttonClicked.data('original-text'));
         alert('抱歉，儲存失敗，請再嘗試一次。');
+        console.error(err);
+      });
+    },
+
+    sendMessageData: function () {
+      let $buttonClicked = $('.msg-dialog-btn--saved');
+      let iconUuid = $buttonClicked.data('icon-uuid');
+      let payload = JSON.stringify({
+        content: $('#message').val(),
+      });
+
+      let options = {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: payload,
+      };
+
+      let isMessageInValid = $('#message').val().trim() === '';
+
+      if (isMessageInValid) {
+        alert('請輸入點內容喔!');
+        return false;
+      }
+
+      $buttonClicked.html($buttonClicked.data('save-text'));
+
+      fetch(`/icon/${iconUuid}/ping`, options)
+      .then(response => {
+        if (response >= 400) {
+          let err = new Error('Error');
+
+          alert('傳送失敗');
+          throw err;
+        } else {
+          $buttonClicked.html($buttonClicked.data('done-text'));
+          let dialog = document.querySelector('.message-dialog');
+
+          if (typeof dialog.close === 'function') {
+            alert('傳送成功');
+            dialog.close();
+          }
+
+          $buttonClicked.html($buttonClicked.data('original-text'));
+        }
+      }).catch(err => {
+        $buttonClicked.html($buttonClicked.data('original-text'));
         console.error(err);
       });
     },

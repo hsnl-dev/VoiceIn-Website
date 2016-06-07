@@ -117,13 +117,20 @@ $(() => {
       }).then(res => res.json())
       .then(data => {
         if (data.iconId) {
-          let host = 'https://voicein.kits.tw';
+          let parser = new UAParser();
+          let result = parser.getResult();
+          let isApple = result.device.vendor === 'Apple';
+          let host = '://voicein.kits.tw';
 
           if (location.host !== 'voicein.kits.tw') {
-            host = 'https://voice-in.herokuapp.com';
+            host = '://voice-in.herokuapp.com';
           }
 
           let url = `/icon/${data.iconId}`;
+
+          if (!isApple) {
+            url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+          }
 
           $('.notification-text').html('快完成了，請跟隨教學加入聯絡人至主畫面。');
           $dialog.showModal();
