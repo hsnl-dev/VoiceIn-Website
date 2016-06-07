@@ -39,9 +39,6 @@ $(() => {
         }
       } else {
         $switchToSafariAlert.addClass('content-hidden');
-        let url = window.location.href;
-
-        window.location = `intent${url.replace(/https/g, '')}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${url};end`;
       }
 
       // The user agent detect.
@@ -130,6 +127,10 @@ $(() => {
           }
 
           let url = `/icon/${data.iconId}`;
+
+          if (!isApple) {
+            url = `intent:${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+          }
 
           $('.notification-text').html('快完成了，請跟隨教學加入聯絡人至主畫面。');
           $dialog.showModal();
