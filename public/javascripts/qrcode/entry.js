@@ -53,6 +53,10 @@ $(() => {
 
       let $buttonClicked = $(e.currentTarget);
       let qrCodeUuid = $buttonClicked.data('qrcode-uuid');
+      let parser = new UAParser();
+      let result = parser.getResult();
+      let isApple = result.device.vendor === 'Apple';
+
       let payload = JSON.stringify({
           providerUuid: qrCodeUuid,
           customer: {
@@ -99,7 +103,7 @@ $(() => {
       $('.notification-text').html('正在加入中...請稍候。');
       $dialog.showModal();
 
-      if (isApple) {
+      if (!isApple) {
         fetch(`/qrcode/add/${qrCodeUuid}`, options)
         .then(response => {
           if (response.status >= 200 && response.status < 300) {
@@ -113,9 +117,6 @@ $(() => {
         }).then(res => res.json())
         .then(data => {
           if (data.iconId) {
-            let parser = new UAParser();
-            let result = parser.getResult();
-            let isApple = result.device.vendor === 'Apple';
             let host = '://voicein.kits.tw';
 
             if (location.host !== 'voicein.kits.tw') {
