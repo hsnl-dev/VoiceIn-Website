@@ -1,6 +1,5 @@
 $(() => {
   const $dialog = document.querySelector('#dialog');
-  let isConfirmClicked = false;
 
   let FormView = Backbone.View.extend({
     el: '.vcard-content',
@@ -51,14 +50,13 @@ $(() => {
     },
 
     addProvider: (e) => {
-      if (isConfirmClicked) {
-        return;
-      } else {
-        isConfirmClicked = true;
-      }
 
       let $buttonClicked = $(e.currentTarget);
       let qrCodeUuid = $buttonClicked.data('qrcode-uuid');
+      let parser = new UAParser();
+      let result = parser.getResult();
+      let isApple = result.device.vendor === 'Apple';
+
       let payload = JSON.stringify({
           providerUuid: qrCodeUuid,
           customer: {
@@ -79,7 +77,6 @@ $(() => {
       if (isNameInValid) {
         $('.notification-text').html('請輸入您的暱稱或姓名。');
         $dialog.showModal();
-        isConfirmClicked = false;
         return false;
       } else {
         localStorage.setItem('name', $('#name').val());
@@ -88,7 +85,6 @@ $(() => {
       if (isPhoneInValid) {
         $('.notification-text').html('請輸入您的手機號碼(09 開頭)。');
         $dialog.showModal();
-        isConfirmClicked = false;
         return false;
       } else {
         localStorage.setItem('phoneNumber', $('#phoneNumber').val());
@@ -104,38 +100,89 @@ $(() => {
         body: payload,
       };
 
-      fetch(`/qrcode/add/${qrCodeUuid}`, options)
-      .then(response => {
-        if (response.status >= 200 && response.status < 300) {
-          return response;
-        } else {
-          var error = new Error(response.statusText);
+      $('.notification-text').html('正在加入中...請稍候。');
+      $dialog.showModal();
 
-          error.response = response;;
-          throw error;
-        }
-      }).then(res => res.json())
-      .then(data => {
-        if (data.iconId) {
-          let host = 'https://voicein.kits.tw';
+      if (isApple) {
+        fetch(`/qrcode/add/${qrCodeUuid}`, options)
+        .then(response => {
+          if (response.status >= 200 && response.status < 300) {
+            return response;
+          } else {
+            var error = new Error(response.statusText);
 
-          if (location.host !== 'voicein.kits.tw') {
-            host = 'https://voice-in.herokuapp.com';
+            error.response = response;;
+            throw error;
+          }
+        }).then(res => res.json())
+        .then(data => {
+          if (data.iconId) {
+            let host = '://voicein.kits.tw';
+
+            if (location.host !== 'voicein.kits.tw') {
+              host = '://voice-in.herokuapp.com';
+            }
+
+            let url = `/icon/${data.iconId}`;
+
+            if (!isApple) {
+              url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+            }
+
+            $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
+
+            if ($(dialog).attr('open') === 'open') {
+              dialog.close();
+              $dialog.showModal();
+            }
+
+            window.location = url;
           }
 
-          let url = `/icon/${data.iconId}`;
-
-          $('.notification-text').html('快完成了，請跟隨教學加入聯絡人至主畫面。');
+        }).catch(error => {
+          console.log('request failed', error);
+          $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
           $dialog.showModal();
+        });
+      } else {
+        $.ajax({
+          method: 'POST',
+          url: `/qrcode/add/${qrCodeUuid}`,
+          data: payload,
+          headers: options.headers,
+          contentType: 'application/json',
+          dataType: 'json',
+          success: (data) => {
+            if (data.iconId) {
+              let host = '://voicein.kits.tw';
 
-          window.location = url;
-        }
-      }).catch(error => {
-        console.log('request failed', error);
-        $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
-        $dialog.showModal();
-        isConfirmClicked = false;
-      });
+              if (location.host !== 'voicein.kits.tw') {
+                host = '://voice-in.herokuapp.com';
+              }
+
+              let url = `/icon/${data.iconId}`;
+
+              url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+
+              $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
+
+              if ($(dialog).attr('open') === 'open') {
+                dialog.close();
+                $dialog.showModal();
+              }
+
+              window.location = url;
+            }
+          },
+
+          error: (data) => {
+            console.log('request failed', error);
+            $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
+            $dialog.showModal();
+          },
+
+        });
+      }
     },
 
     showExplainModal: () => {

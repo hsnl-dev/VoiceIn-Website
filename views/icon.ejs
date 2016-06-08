@@ -24,6 +24,11 @@
   <meta name="apple-mobile-web-app-title" content="<%= provider.userName %>">
   <link rel="apple-touch-icon" href="<%= image %>">
   <style>
+    @media all and (display-mode: standalone) {
+      body {
+      }
+    }
+
     body {
 
     }
@@ -119,7 +124,7 @@
       width: 75%;
     }
 
-    .edit-dialog {
+    .edit-dialog, .message-dialog {
       /* center the edit dialog */
       position: absolute;
       top: 0;
@@ -128,6 +133,13 @@
       right: 0;
       height: 320px;
       margin: auto;
+    }
+
+    .msg-btn-section {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 999;
     }
 
   </style>
@@ -141,6 +153,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
+  <div class="msg-btn-section">
+    <button class="msg-btn mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+      傳送訊息
+    </button>
+  </div>
 
   <div class="demo-layout-transparent mdl-layout mdl-js-layout">
     <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -167,6 +184,7 @@
     </div>
 
     <main class="mdl-layout__content vcard-content">
+
       <div class="demo-card-wide mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
           <img class="profile-image" src="<%= image %>" alt="" />
@@ -229,7 +247,7 @@
         </a>
       <% } else {%>
         <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent sorry-btn">
-          <i class="material-icons md-36">phone_locked</i>抱歉，<%= name %> 目前無法接聽電話
+          <i class="material-icons md-36">phone_locked</i>抱歉，<%= provider.userName %> 目前無法接聽電話
         </a>
       <%}%>
     </div>
@@ -293,6 +311,28 @@
         儲存
       </button>
       <button class="edit-dialog-btn--closed mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+        取消
+      </button>
+    </div>
+  </dialog>
+
+  <dialog class="mdl-dialog message-dialog">
+    <h4 class="mdl-dialog__title">聊聊</h4>
+    傳送簡短訊息給<%= provider.userName %>
+    <div class="mdl-dialog__content">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="message" value="">
+        <label class="mdl-textfield__label" for="name">欲傳送的訊息</label>
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button
+        class="msg-dialog-btn--saved mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+        data-icon-uuid="<%= iconId %>" data-save-text="傳送中..." data-done-text="儲存完成" data-original-text="傳送"
+      >
+        傳送
+      </button>
+      <button class="msg-dialog-btn--closed mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
         取消
       </button>
     </div>

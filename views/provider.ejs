@@ -141,12 +141,6 @@
       text-align: left;
     }
 
-    .confirm-bar {
-      position: fixed;
-      bottom: 0;
-      background-color: white !important;
-      z-index: 4;
-    }
   </style>
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.2/dialog-polyfill.min.css" media="screen" title="dialog-polyfill" charset="utf-8">
@@ -215,6 +209,8 @@
           <img class="profile-image" src="<%= image %>" alt="" />
         </div>
         <div class="mdl-card__supporting-text">
+          # 請下滑點選確認按鈕加入 <%= name %> <br>
+          # Android 手機請下載 Chrome 開啟本網頁喔
           <h3><i class="material-icons md-36">contact_phone</i><%= name %> 的名片</h3>
           <h5><i class="material-icons md-36">face</i>關於</h5>
           <p>
@@ -284,13 +280,15 @@
           <input type="hidden"  id="phoneNumber" value="<%= customerPhoneNum %>">
           <input type="hidden" id="company" value="<%= customerCompany %>">
         <% } %>
-        <div class="" style="height: 80px;">
-          <!-- Blank Section -->
-        </div>
+        <a class="jump-to-chrome-link" href="" style="dispaly: none;"></a>  
         <div class="mdl-card__actions mdl-card--border confirm-bar">
           <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent confirm-btn" data-qrcode-uuid="<%= qrCodeUuid%>" target="_blank">
             <i class="material-icons md-36">done</i>確認加入 <%= name %>
           </a>
+        </div>
+
+        <div class="" style="height: 80px;">
+
         </div>
         <div class="ua-section">
 

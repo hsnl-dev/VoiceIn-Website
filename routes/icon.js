@@ -33,6 +33,7 @@ router.get('/:id', (req, res) => {
         request.get(options, (error, response, body) => {
           if (!error && response.statusCode == 200) {
             let base64data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(body).toString('base64');
+
             userData.image = base64data;
             res.render('icon', userData);
           }
@@ -50,6 +51,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/:id/call', (req, res) => {
   let iconId = req.params.id;
+
   console.log(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}/calls`);
 
   fetch(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}/calls`, {
@@ -70,12 +72,42 @@ router.put('/:id/edit', (req, res) => {
     method: 'PUT',
     body: payload,
   };
+
   console.log(options);
 
   fetch(updateRoute, options)
   .then(response => {
     if (response.status >= 400 && response.status !== 402) {
       let err = new Error('Some damn err...');
+
+      err.response = response;
+      throw err;
+    } else {
+      res.status(response.status).end();
+    }
+  }).catch(err => {
+    console.error(err);
+    res.status(err.response.status).end();
+  });
+});
+
+router.post('/:id/ping', (req, res) => {
+  let iconId = req.params.id;
+  let payload = JSON.stringify(req.body);
+  let updateRoute = `${api.apiRoute}/${api.latestVersion}/icons/${iconId}/ping`;
+  let options = {
+    headers: headers,
+    method: 'POST',
+    body: payload,
+  };
+
+  console.log(options);
+
+  fetch(updateRoute, options)
+  .then(response => {
+    if (response.status >= 400 && response.status !== 402) {
+      let err = new Error('Some damn err...');
+
       err.response = response;
       throw err;
     } else {
