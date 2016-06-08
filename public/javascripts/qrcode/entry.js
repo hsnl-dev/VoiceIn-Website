@@ -136,11 +136,7 @@ $(() => {
               $dialog.showModal();
             }
 
-            if (isApple) {
-              window.location = url;
-            } else {
-              window.open(url);
-            }
+            window.location = url;
           }
 
         }).catch(error => {
@@ -175,7 +171,7 @@ $(() => {
                 $dialog.showModal();
               }
 
-              window.location(url);
+              window.location = url;
             }
           },
 
