@@ -99,53 +99,91 @@ $(() => {
       $('.notification-text').html('正在加入中...請稍候。');
       $dialog.showModal();
 
-      fetch(`/qrcode/add/${qrCodeUuid}`, options)
-      .then(response => {
-        if (response.status >= 200 && response.status < 300) {
-          return response;
-        } else {
-          var error = new Error(response.statusText);
-
-          error.response = response;;
-          throw error;
-        }
-      }).then(res => res.json())
-      .then(data => {
-        if (data.iconId) {
-          let parser = new UAParser();
-          let result = parser.getResult();
-          let isApple = result.device.vendor === 'Apple';
-          let host = '://voicein.kits.tw';
-
-          if (location.host !== 'voicein.kits.tw') {
-            host = '://voice-in.herokuapp.com';
-          }
-
-          let url = `/icon/${data.iconId}`;
-
-          if (!isApple) {
-            url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
-          }
-
-          $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
-
-          if ($(dialog).attr('open') === 'open') {
-            dialog.close();
-            $dialog.showModal();
-          }
-
-          if (isApple) {
-            window.location = url;
+      if (isApple) {
+        fetch(`/qrcode/add/${qrCodeUuid}`, options)
+        .then(response => {
+          if (response.status >= 200 && response.status < 300) {
+            return response;
           } else {
-            window.open(url);
-          }
-        }
+            var error = new Error(response.statusText);
 
-      }).catch(error => {
-        console.log('request failed', error);
-        $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
-        $dialog.showModal();
-      });
+            error.response = response;;
+            throw error;
+          }
+        }).then(res => res.json())
+        .then(data => {
+          if (data.iconId) {
+            let parser = new UAParser();
+            let result = parser.getResult();
+            let isApple = result.device.vendor === 'Apple';
+            let host = '://voicein.kits.tw';
+
+            if (location.host !== 'voicein.kits.tw') {
+              host = '://voice-in.herokuapp.com';
+            }
+
+            let url = `/icon/${data.iconId}`;
+
+            if (!isApple) {
+              url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+            }
+
+            $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
+
+            if ($(dialog).attr('open') === 'open') {
+              dialog.close();
+              $dialog.showModal();
+            }
+
+            if (isApple) {
+              window.location = url;
+            } else {
+              window.open(url);
+            }
+          }
+
+        }).catch(error => {
+          console.log('request failed', error);
+          $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
+          $dialog.showModal();
+        });
+      } else {
+        $.ajax({
+          method: 'POST',
+          url: `/qrcode/add/${qrCodeUuid}`,
+          data: payload,
+          headers: options.headers,
+          contentType: 'application/json',
+          dataType: 'json',
+          success: (data) => {
+            if (data.iconId) {
+              let host = '://voicein.kits.tw';
+
+              if (location.host !== 'voicein.kits.tw') {
+                host = '://voice-in.herokuapp.com';
+              }
+
+              let url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+
+              $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
+
+              if ($(dialog).attr('open') === 'open') {
+                dialog.close();
+                $dialog.showModal();
+              }
+
+              window.open(url);
+            }
+          },
+
+          error: (data) => {
+            console.log('request failed', error);
+            $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
+            $dialog.showModal();
+          },
+
+        });
+      }
     },
 
     showExplainModal: () => {
