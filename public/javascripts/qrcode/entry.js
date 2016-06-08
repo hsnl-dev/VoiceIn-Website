@@ -51,9 +51,6 @@ $(() => {
 
     addProvider: (e) => {
 
-      $('.notification-text').html('正在加入中...請稍候。');
-      $dialog.showModal();
-
       let $buttonClicked = $(e.currentTarget);
       let qrCodeUuid = $buttonClicked.data('qrcode-uuid');
       let payload = JSON.stringify({
@@ -98,6 +95,9 @@ $(() => {
         },
         body: payload,
       };
+
+      $('.notification-text').html('正在加入中...請稍候。');
+      $dialog.showModal();
 
       fetch(`/qrcode/add/${qrCodeUuid}`, options)
       .then(response => {
