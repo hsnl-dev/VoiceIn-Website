@@ -103,7 +103,7 @@ $(() => {
       $('.notification-text').html('正在加入中...請稍候。');
       $dialog.showModal();
 
-      if (!isApple) {
+      if (isApple) {
         fetch(`/qrcode/add/${qrCodeUuid}`, options)
         .then(response => {
           if (response.status >= 200 && response.status < 300) {
