@@ -137,7 +137,7 @@ $(() => {
           if (isApple) {
             window.location = url;
           } else {
-            window.open(url, '_blank');
+            window.open(url);
           }
         }
 
