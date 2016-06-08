@@ -175,7 +175,7 @@ $(() => {
                 $dialog.showModal();
               }
 
-              window.open(url);
+              window.location(url);
             }
           },
 
