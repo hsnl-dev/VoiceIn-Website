@@ -164,7 +164,9 @@ $(() => {
                 host = '://voice-in.herokuapp.com';
               }
 
-              let url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
+              let url = `/icon/${data.iconId}`;
+
+              url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
 
               $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
 
