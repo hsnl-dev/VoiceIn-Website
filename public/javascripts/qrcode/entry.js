@@ -1,6 +1,5 @@
 $(() => {
   const $dialog = document.querySelector('#dialog');
-  let isConfirmClicked = false;
 
   let FormView = Backbone.View.extend({
     el: '.vcard-content',
@@ -51,11 +50,9 @@ $(() => {
     },
 
     addProvider: (e) => {
-      if (isConfirmClicked) {
-        return;
-      } else {
-        isConfirmClicked = true;
-      }
+
+      $('.notification-text').html('正在加入中...請稍候。');
+      $dialog.showModal();
 
       let $buttonClicked = $(e.currentTarget);
       let qrCodeUuid = $buttonClicked.data('qrcode-uuid');
@@ -79,7 +76,6 @@ $(() => {
       if (isNameInValid) {
         $('.notification-text').html('請輸入您的暱稱或姓名。');
         $dialog.showModal();
-        isConfirmClicked = false;
         return false;
       } else {
         localStorage.setItem('name', $('#name').val());
@@ -88,7 +84,6 @@ $(() => {
       if (isPhoneInValid) {
         $('.notification-text').html('請輸入您的手機號碼(09 開頭)。');
         $dialog.showModal();
-        isConfirmClicked = false;
         return false;
       } else {
         localStorage.setItem('phoneNumber', $('#phoneNumber').val());
@@ -132,18 +127,20 @@ $(() => {
             url = `intent${host}${url}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https${host}${url};end`;
           }
 
-          $('.notification-text').html('快完成了，請跟隨教學加入聯絡人至主畫面。');
-          $dialog.showModal();
+          $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
+
+          if ($(dialog).attr('open') === 'open') {
+            dialog.close();
+            $dialog.showModal();
+          }
 
           window.location = url;
         }
 
-        isConfirmClicked = false;
       }).catch(error => {
         console.log('request failed', error);
         $('.notification-text').html('抱歉... 網路或伺服器錯誤，請再嘗試一次。');
         $dialog.showModal();
-        isConfirmClicked = false;
       });
     },
 
