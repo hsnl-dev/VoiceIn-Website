@@ -289,12 +289,19 @@ $(function () {
        .then(response => {
 
          if (response.status >= 200 && response.status < 300) {
-           //  dialog.close();
+           // Calling is successful.
+           let timeToCloseDialog = window.setTimeout(function () {
+             dialog.close();
+             window.clearTimeout(timeToCloseDialog);
+           }, 10000);
+
            return response;
          } else {
            if (response.status === 402) {
              // payment required.
+             dialog.close();
              $('.error-dialog p').html('對方點數不足，無法撥打。');
+             errdialog.showModal();
            }  else {
              let error = new Error(response.statusText);
 
