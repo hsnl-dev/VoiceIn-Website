@@ -145,7 +145,7 @@ module.exports = (passport) => {
     });
   });
 
-  router.get('/buy', (req, res) => {
+  router.get('/buy', isAuthenticated, (req, res) => {
     // res.render('account/close');
     res.render('account/buy');
   });
