@@ -146,7 +146,8 @@ module.exports = (passport) => {
   });
 
   router.get('/buy', (req, res) => {
-    res.render('account/close');
+    // res.render('account/close');
+    res.render('account/buy');
   });
 
   router.post('/buy/allpay', isAuthenticated, (req, res) => {
