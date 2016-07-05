@@ -242,12 +242,18 @@
 
     <div class="mdl-card__actions mdl-card--border caller-bar">
       <% if (isTargetEnable){ %>
-        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent confirm-btn">
-          <i class="material-icons md-36">phone</i>撥高品質免費電話給 <%= provider.userName %>
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent call-btn confirm-btn">
+          <i class="material-icons md-36">phone</i>
+          <span class="call-text">
+            撥高品質免費電話給 <%= provider.userName %>
+          </span>
         </a>
       <% } else {%>
-        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent sorry-btn">
-          <i class="material-icons md-36">phone_locked</i>抱歉，<%= provider.userName %> 目前無法接聽電話
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent call-btn sorry-btn">
+          <i class="material-icons md-36">phone_locked</i>
+          <span class="call-text">
+            抱歉，<%= provider.userName %> 目前無法接聽電話
+          </span>
         </a>
       <%}%>
     </div>

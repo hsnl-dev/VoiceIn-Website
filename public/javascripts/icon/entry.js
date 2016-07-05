@@ -53,6 +53,53 @@ $(function () {
         }
       }
 
+      // Refresh the call button.
+      setInterval(function () {
+        let iconUuid = window.location.pathname.split('/')[2];
+
+        // Initialize the options including headers, method, body.
+        let options = {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+          },
+        };
+
+        // Do fetch the updated status.
+        fetch(`/icon/${iconUuid}/informations`, options)
+        .then(response => {
+          if (response >= 400) {
+            let err = new Error('Error');
+
+            throw err;
+          } else {
+            return response.json();
+          }
+        })
+        .then(response => {
+          let $callBtn = $('.call-btn');
+          let $callText = $('.call-text');
+          let $callIcon = $('.call-btn > .material-icons');
+
+          if (response.isTargetEnable) {
+            let innerHTML = `撥高品質免費電話給 ${response.userName}`;
+
+            $callBtn.removeClass('sorry-btn').addClass('confirm-btn');
+            $callText.html(innerHTML);
+            $callIcon.text('phone');
+          } else {
+            let innerHTML = `抱歉，${response.userName} 目前無法接聽電話`;
+
+            $callBtn.removeClass('confirm-btn').addClass('sorry-btn');
+            $callText.html(innerHTML);
+            $callIcon.text('phone_locked');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      }, 3000);
+
     },
 
     toggleEnableSwitch: function (e) {
