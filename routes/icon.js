@@ -49,6 +49,35 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/:id/informations', (req, res) => {
+  let iconId = req.params.id;
+
+  console.log(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}`);
+  fetch(`${api.apiRoute}/${api.latestVersion}/icons/${iconId}`, {
+    headers: headers,
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+
+      return res.json();
+    })
+    .then(userData => {
+      console.log(userData);
+      let response = {
+        isTargetEnable: userData.isTargetEnable,
+        userName: userData.provider.userName,
+      };
+
+      res.json(response).end();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(error.response.status).end();
+    });
+});
+
 router.post('/:id/call', (req, res) => {
   let iconId = req.params.id;
 
