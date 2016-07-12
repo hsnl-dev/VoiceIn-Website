@@ -131,6 +131,8 @@ $(() => {
 
             $('.notification-text').html('轉換頁面中，請跟隨教學加入聯絡人至主畫面。');
 
+            localStorage.setItem('hideAtnSection', false);
+
             if ($(dialog).attr('open') === 'open') {
               dialog.close();
               $dialog.showModal();

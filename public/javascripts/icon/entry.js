@@ -48,7 +48,9 @@ $(function () {
           $('.android-ath-section').removeClass('content-hidden');
         }
       } else {
-        if (!isApple && !window.matchMedia('(display-mode: standalone)').matches) {
+        let hideAtnSection = localStorage.getItem('hideAtnSection');
+
+        if (!hideAtnSection && !isApple && !window.matchMedia('(display-mode: standalone)').matches) {
           $('.android-ath-section').removeClass('content-hidden');
         }
       }
